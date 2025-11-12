@@ -1,0 +1,33 @@
+#contenedor{
+	width:415px; /* calculadas segun contenidos */
+    height:416px;
+	border: 2px solid #000;
+	text-align:center;
+	margin-top:10px;
+}
+
+.tipo0,.tipo1,.tipo2{ /* parte comun */
+    height:20px;
+}
+
+.tipo0{
+text-align:center;
+    width:80px;	
+	border: 1px solid;	
+}
+.tipo1,.tipo2{
+	 height:20px;
+	padding:10px;
+	margin:2px;
+    width:20px;
+	float:left;
+	border: 1px solid #000;	
+}
+.tipo1 {
+	background-color:#FD2;
+	color:black;
+}
+.tipo2 {
+	background-color:#432;
+	color:white;
+}

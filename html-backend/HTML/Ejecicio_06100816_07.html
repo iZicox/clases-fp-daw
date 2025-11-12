@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <style>
+        label {
+            display: block;
+            margin: 0.5rem 0;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <h1>Ejercicios de HTML. Formularui 8.</h1>
+    <form action="registro.php" method="get">
+        <label for="nombre">Nombre: <input type="text"></label>
+        <label for="corre">Correo electronico: <input type="email" placeholder="ejemplo@gmail.com"></label>
+        <label for="url">URL: <input type="url" placeholder="Escribe tu URL"></label>
+        <label for="fecha">Fehca: <input type="date"></label>
+        <label for="hora">Hora: <input type="time"></label>
+        <label for="mes">Mes: <input type="month"></label>
+        <label for="semana">Semana: <input type="week"></label>
+        <label for="numero">Numero favorito: <input type="number" min="1" max="10"></label>
+        <label for="telefono">Telefono: <input type="tel"></label>
+        <label for="busqueda">Termino de busqueda: <input type="search"></label>
+        <label for="color">Color favorito: <input type="color"></label>
+    </form>
+    <input type="submit" value="Enviar">
+</body>
+</html>

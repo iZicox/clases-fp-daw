@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Snake Game</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: #222;
+      color: #eee;
+      font-family: sans-serif;
+    }
+    #score {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+    canvas {
+      background: #333;
+      box-shadow: 0 0 10px #000;
+    }
+  </style>
+</head>
+<body>
+  <div id="score">Puntuación: 0</div>
+  <canvas id="game" width="400" height="400"></canvas>
+
+  <script>
+    // Configuración del tablero y la velocidad
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+    const gridSize = 20;             // Número de celdas por lado
+    const cellSize = canvas.width / gridSize;
+    let speed = 200;                 // Milisegundos por movimiento
+
+    // Estado del juego
+    let snake, direction, nextDirection, food, score;
+    let gameInterval;
+
+    // Inicializa o reinicia el juego
+    function initGame() {
+      snake = [{ x: 10, y: 10 }];    // Empieza en el centro
+      direction = { x: 0, y: 0 };
+      nextDirection = { x: 1, y: 0 };
+      placeFood();
+      score = 0;
+      updateScore();
+      clearInterval(gameInterval);
+      gameInterval = setInterval(gameLoop, speed);
+    }
+
+    // Coloca la comida en una posición aleatoria no ocupada
+    function placeFood() {
+      do {
+        food = {
+          x: Math.floor(Math.random() * gridSize),
+          y: Math.floor(Math.random() * gridSize)
+        };
+      } while (snake.some(segment => segment.x === food.x && segment.y === food.y));
+    }
+
+// Dibuja la serpiente, la comida y el tablero
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Dibujar comida
+  ctx.fillStyle = 'red';
+  ctx.fillRect(
+    food.x * cellSize,
+    food.y * cellSize,
+    cellSize,
+    cellSize
+  );
+
+  // Dibujar cabeza (color más oscuro)
+  ctx.fillStyle = 'darkgreen';
+  ctx.fillRect(
+    snake[0].x * cellSize,
+    snake[0].y * cellSize,
+    cellSize,
+    cellSize
+  );
+
+  // Dibujar resto del cuerpo
+  ctx.fillStyle = 'lime';
+  snake.slice(1).forEach(segment => {
+    ctx.fillRect(
+      segment.x * cellSize,
+      segment.y * cellSize,
+      cellSize,
+      cellSize
+    );
+  });
+}
+
+
+    // Actualiza posición de la serpiente y gestiona colisiones
+    function update() {
+      direction = nextDirection;
+
+      const head = {
+        x: snake[0].x + direction.x,
+        y: snake[0].y + direction.y
+      };
+
+      // Colisión con paredes o el cuerpo
+      if (checkCollision(head)) {
+        clearInterval(gameInterval);
+        ctx.fillStyle = 'white';
+        ctx.font = '2rem sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Game Over', canvas.width / 2, canvas.height / 2);
+        return false;
+      }
+
+      snake.unshift(head);
+
+      // Comer comida
+      if (head.x === food.x && head.y === food.y) {
+        score++;
+        updateScore();
+        placeFood();
+      } else {
+        snake.pop();
+      }
+
+      return true;
+    }
+
+    // Comprueba colisión con paredes o con el propio cuerpo
+    function checkCollision(pos) {
+      // Paredes
+      if (
+        pos.x < 0 || pos.x >= gridSize ||
+        pos.y < 0 || pos.y >= gridSize
+      ) return true;
+
+      // Cuerpo
+      return snake.some(segment => segment.x === pos.x && segment.y === pos.y);
+    }
+
+    // Bucle principal del juego
+    function gameLoop() {
+      if (update()) {
+        draw();
+      }
+    }
+
+    // Actualiza el marcador en pantalla
+    function updateScore() {
+      document.getElementById('score').textContent = 'Puntuación: ' + score;
+    }
+
+    // Captura las teclas de flecha y evita giros de 180º
+    window.addEventListener('keydown', e => {
+      const keyMap = {
+        ArrowUp:    { x: 0,  y: -1 },
+        ArrowDown:  { x: 0,  y: 1 },
+        ArrowLeft:  { x: -1, y: 0 },
+        ArrowRight: { x: 1,  y: 0 }
+      };
+      const newDir = keyMap[e.key];
+      if (newDir) {
+        // No permitir invertir dirección
+        if (snake.length > 1 &&
+            newDir.x === -direction.x &&
+            newDir.y === -direction.y) return;
+        nextDirection = newDir;
+      }
+    });
+
+    // Arranca el juego al cargar la página
+    initGame();
+  </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        label {
+            display: block;
+            margin: 0.5rem 0;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <h1>Ejercicio de HTML. Formularios. Ejercicio 7.</h1>
+    <h2>Formulario de registro</h2>
+    <form action="registro.php" method="get">
+    
+            <label for="">Nombre: <input type="text" placeholder="Tu nombre"></label>
+            <label for="">Apellidos: <input type="text"placeholder="Tus apellidos"></label>
+            <label for="">Sexo: <input name="sexo" type="radio" value="masculino">Masculino<input name="sexo" type="radio" value="femenino">Femenino</label>
+            <label for="">Correo electronico: <input type="email" placeholder="ejemplo@gmail.com"></label>
+            <label for=""><input type="checkbox"> Deseo recibir informacion sobre novedades y ofertas.</label>
+            <label for=""><input type="checkbox"> Declaro haber leido y aceptar las condiciones del programa y la normativa sobre proteccion de datos.</label>
+        
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+</html>

@@ -1,0 +1,85 @@
+a) Analizar como resuelven estas webs cada una de las siguientes tareas:
+
+# webs
+- https://www.zillow.com/
+- https://www.rightmove.co.uk/
+
+
+# zillow
+
+1. listado de productos
+El listado lo hace muy intuitivo con un mapa a la izquierda y una galeria a la dercha para que el usuario vea la ubicacion de las casas mientras hace su busqueda
+
+2. las caracteristicas de un producto.
+Antes de entrar en una casa nos muestra el precio por el numero de habitaciones en caso de rentas y en el casod de ventas nos muestra los datos mas importantes como habitaciones, baños, precio, area y localizacion
+Una vez dentro podemos ver mas informacion util de cada propiedad, una descripcion de esta e imagenes para que el usuario entienda mejor.
+
+3. navegación
+La navegacion con lo mas importante, venta, renta, hipoteca, agentes que son las principales dudas que tiene una persona al entrar a una pagina de este tipo
+
+4. retorno a home
+En cualquiera de los casos tenemos arriba el logo en el centro de zillow que sin importar donde estemos le podemos dar clic para regresar a home
+
+5. migas
+Son bantantes intuitivas ya que cuando entramos a una propiedad el enlace es el nombre de la misma
+
+6. filtros sobre los productos del listado
+Los filtros cumplen con todo lo que podemos pedir para una pagina de este estilo, ver rentas, ventas, numero de habitaciones, tipos de casas, area, etc.
+
+7. ordenación del listado
+Podemos ordenar como queramos, por precio, habitaciones, area, precio, etc.
+
+8. busqueda de un producto
+Con solo colocar el codigo postal, ciudad o distrito podemos iniciar la busqueda de las propiedades de la zona
+
+# rightmove
+
+1. listado de productos
+Las propiedades las coloca en forma de lista y no se aprecia mucho el mapa
+
+2. las caracteristicas de un producto.
+Podemos ver todas las caracteristicas pricipales de la casa como tipo de propiedad, habitaciones y baños
+
+3. navegación
+Navegacion simple y sobre lo que mas le interesa al usuario que es comprar, rent, encontrar agente y otras complementarias
+
+4. retorno a home
+En este caso el retorno esta en un logo arriba a la izquierda
+
+5. migas
+En este caso si son complicadas debido que al abrir un anuncio el link tiene un codigo que es dificil de entender para el usuario como lo seria si fuera la palabra principal del anuncio de la propiedad
+
+6. filtros sobre los productos del listado
+Tambien esta bien hecho dandote la opcion de escoger por precio, nnumero de habitaciones, tipo de propiedad, etc.
+
+7. ordenación del listado
+Te permite ordenar por precio y fecha de publicacion. 
+
+8. busqueda de un producto
+Con solo colocar el nombre de la ciudad o barrio te permite iniciar tu busqueda, puede confundir que cuando buscas te lleva a una pagina con los filtros son mostrarte ninguna casa lo que puede generar confusion en el usuario pero haciendo clic una vez mas en buscar te aparece el listado
+
+b) Identificar la mejor solución encontrada para cada apartado, indica la web y como lo resuelve.
+
+1. listado de productos
+zillow con su mapa mas interactivo y galeria de imagenes
+
+2. las caracteristicas de un producto.
+Ambos estan igual aunque destaca mas zillow por mostrarlo de forma mas minimalista
+
+3. navegación
+Ambas por igual
+
+4. retorno a home
+Ambas por igual la diferencia es si te gusta mas en el centro o la izquierda. Al final escogeria la de zillow en el centro
+
+5. migas
+En esto gana zillow porque te coloca el nombre del titulo del anuncio que lo hace mas facil de leer
+
+6. filtros sobre los productos del listado
+Ambos por igual
+
+7. ordenación del listado
+Ambos por igual
+
+8. busqueda de un producto
+zillow debido a que no te lleva a una pagina intermedia antes de mostrar el listado 

@@ -1,0 +1,286 @@
+<!DOCTYPE html><html xmlns='http://www.w3.org/1999/xhtml' lang='es' xml:lang='es'>
+<head>
+
+<title>paginador</title>
+<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+
+<script>
+/* GLOBALES ----------------------------------------------------------------- */
+var pagina;
+var color;
+const NE=aleatorio(1,100);	// total de elementos cargados
+const EP=10;		// elementos por pagina
+const colores=['ffe6cc','ff9933','66ffd9','00cc99','b3d9ff','80bfff'];
+
+
+/* ESTRUCTURA --------------------------------------------------------------- */
+function inicio(){
+	// crear los nodos para la estructura
+	estructura();
+	contenidos(document.getElementById('contenedorPaginador'));
+	paginador(document.getElementById('principal'));
+	filtro();
+	// [nota] se pueden ejecutar eventos desde codigo como un click	
+	document.getElementById('D0').click(); // [nota] sin pagina
+	document.getElementById('filtro').firstChild.click(); // [nota] sin filtro
+}
+function estructura(){
+	var d=document.getElementById('cabecera');
+	d.className+=' centrarV';	
+	document.getElementById('cabecera').innerHTML='tenemos '+NE+' elementos y '+EP+' por página';
+	var c=creaNodo(document.getElementById('principal'),'div');
+	c.id='contenedorPaginador';
+	c.className='centrarV';
+}
+function contenidos(p){
+	// crear elementos del contenedor
+	document.getElementById('contenedorPaginador').innerHTML='';
+	for (var j=0;j<NE;j++){
+		var b2=ponColor();	
+			caja1(creaNodo(p,'div'),'caja1',j,b2);		
+	}
+}
+function paginador(p){
+	// [nota] usamos :target con href='#id' para cambiar estilos por css con click
+	// al pinchar en href saltamos al elemento id de mi pagina y ademas se dispara :target
+	// aqui ponemos un estilo
+	// [nota] para hacerlo por js usamos .active , se la quiamos a todos y se la damos al que hizo click
+	var pg=NE/EP;
+	var b=creaNodo(p,'div');
+	b.id='paginador';
+	b.className='pagination'
+	// nodo inicial '-' para desseleccionar pagina j=-1
+	for (var j=-1;j<pg;j++){
+		var c=creaNodo(b,'a');
+		c.onclick=onclickPagina;
+		if (j==-1){
+			c.href='#D';
+			c.id='D';			
+			c.pagina=-1;		
+			c.innerHTML='-';
+		}else{
+			c.href='#D'+j;
+			c.id='D'+j;
+			c.pagina=j;		
+			c.innerHTML=j;
+		}
+	}
+}
+function filtro(){
+	var p=creaNodo(document.getElementById('menu'),'div');	
+	p.id='filtro';
+	p.className+=' centrarV';
+	var a=creaNodo(p,'div');
+	a.color=-1;
+	a.style.backgroundColor='#EEE 0.5';
+	a.innerHTML='';
+	setA(a);
+	for (x of colores){
+		var a=creaNodo(p,'div');
+		a.color='#'+x;
+		a.style.backgroundColor='#'+x;
+		setA(a);
+	}
+}
+/* EVENTOS -----*/
+function onclickPagina(){
+	pagina=this.pagina;
+	displayPagina();
+}
+function onclickFiltro(){
+	var t=document.getElementById("filtro").childNodes;
+	for (x of t){
+		x.style.borderWidth='1px';
+	}
+	this.style.borderWidth='2px';
+	color=this.color;
+	displayPagina();
+}
+function displayPagina(){
+	// reglas lógica para aplicar filtro + pagina
+	// [nota] ocultamos elementos con visibility+collapse asi desaparecen los huecos
+	var t=document.getElementById("contenedorPaginador").childNodes;
+	var z=0,visibles=0;
+	// estado inicial o no aplicamos el filtro
+	if (color==-1){color=undefined;}
+	if (pagina==-1){pagina=undefined;}	
+	for (x of t){			
+		// reglas lógicas true si el elemento cumple la regla
+		Bpagina=(z>=(pagina*EP)&&z<((pagina+1)*EP)); // elemento dentro de la pagina
+		Bcolor=(x.color==color); // elementos con ese color
+		x.style.visibility='collapse'; // apagar todos
+		// iluminar los elementos que cumplan las reglas		
+		// caso1: sin pagina sin filtroColor
+		if (pagina==undefined&&color==undefined){
+			x.style.visibility='visible';			
+		}
+		// caso2: solo filtroColor
+		if (pagina==undefined&&color!=undefined){
+			if (Bcolor){
+				x.style.visibility='visible';
+			}
+		}
+		// caso3: solo pagina
+		if (pagina!=undefined&&color==undefined){
+			if (Bpagina){
+				x.style.visibility='visible';
+			}
+		}
+		// caso4: pagina + filtroColor
+		if (pagina!=undefined&&color!=undefined){
+			if (Bcolor&&Bpagina){
+				x.style.visibility='visible';
+			}
+		}
+		if (x.style.visibility=='visible'){
+			visibles++;
+		}	
+		z++;
+	}
+	if (pagina!=undefined||color!=undefined){
+		document.getElementById("pie").innerHTML='ahora tienes '+visibles+' elementos';		
+	}else{
+		document.getElementById("pie").innerHTML='@ todos los derechos no reservados';
+	}
+}
+
+/* AUXILIARES --------------------------------------------------------------- */
+function setA(a){
+	a.onclick=onclickFiltro;
+	a.className='filtroColor';
+}
+function creaNodo(a,t){
+	var p=document.createElement(t);
+	a.appendChild(p);
+	return p;
+}
+function caja1(p,c,i,b){
+	p.className=c;
+	p.style.backgroundColor=b;
+	p.color=b;
+	p.innerHTML=i;
+}
+function ponColor(){
+	return '#'+colores[aleatorio(0,colores.length-1)];
+}
+function aleatorio(a,b) {
+	var x=Math.round(Math.random()*(b-a)+parseInt(a));
+	return x;
+}
+window.onload=inicio;
+</script>
+
+<style>
+	* {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
+
+	body{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		min-height: 100vh; /* sin esto el centrado vertical no funciona */
+		font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	}
+
+	/*centrado vertical*/
+	.centrarV {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	/*principal*/
+	.grid-container {
+		min-width: 700px;
+		min-height: 300px;
+		border: 10px solid gray;
+	}
+
+	/*cabecera*/
+	.item1 {
+	background-image: url(img/g.jpg);
+	background-size: cover;
+ 	background-position: center;
+	color: white;
+	text-align: center;
+	min-height: 60px;
+	font-size: 1.5rem;	
+	}
+
+	/*menu*/
+	.item2 {
+		min-height: 240px;
+		min-width: 50px;
+		float: left;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		border-right: 10px solid gray;
+		border-top: 10px solid gray;
+	}
+
+	/*filtro color*/
+	.item2 > div {
+		width: 50px;
+		height: 50px;
+		background-color: red;
+	}
+
+	.item3 {
+	width: 90%;
+	height: 200px;
+	padding: 20px;
+	
+	flex-direction: column;
+	flex-wrap: wrap;
+	gap: 20px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	}
+
+	.item3 > :first-child {
+	display: flex;
+	width: 250px;
+	/*overflow: auto;*/
+	justify-content: center;
+	align-items: center;
+	}
+
+
+	.caja1 {
+		width: 20px;
+		height: 100px;
+	}
+
+	/*pagination*/
+	.pagination {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	/*derechos*/
+	.item5 {
+		box-sizing: border-box;
+		text-align: center;
+		background-color: aqua;
+		padding: 20px 0;
+		border-top: 10px solid gray;
+	}
+</style>
+
+</head>
+<body>
+<div class="grid-container">
+  <div id='cabecera' class="item1"></div>
+  <div id='menu' class="item2"></div>
+  <div id='principal' class="item3"></div>
+  <div id='pie' class="item5"></div>
+</div>
+</body>
+</html>

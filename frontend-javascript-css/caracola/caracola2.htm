@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>caracola</title>
+
+<style>
+	div{
+		position: fixed;
+		border-radius:0px;
+	    border: 0px solid black;
+	    margin: 1px
+	}
+</style>
+
+<script>
+//<!--210,0,0,130,160,130,130,150 left-->
+//<!--0,130,0,0,80,100,80,80 top-->
+var intervalo,h,w,x=0,y=0,cid=0; 
+var z=[340,210,130,80,50,30,20,10]; //width
+//var y=[0,0,210,260,210,210,240,250]; //top
+var y=[0,130,0,0,80,100,80,80];
+// var x=[0,340,340+80,340,340,390,400,390]; left
+var x=[210,0,0,130,160,130,130,150];
+var r=[
+'0px 0px 0px 0px',
+'0px 0px 0px 0px',
+'0px 0px 0px 0px',
+'0px 0px 0px 0px',
+'0px 0px 0px 0px',
+'0px 0px 0px 0px',
+'0px 0px 0px 0px',
+'0px 0px 0px 0px'
+];
+var b=[
+'0px 0px 0px 0px',
+'0px 0px 0px 0px',
+'0px 0px 0px 0px',
+'0px 0px 0px 0px',
+'0px 0px 0px 0px',
+'0px 0px 0px 0px',
+'0px 0px 0px 0px',
+'0px 0px 0px 0px'
+];
+function iniciar(){
+	intervalo=setInterval(unaCaja,100); 
+}
+function unaCaja(){
+	var ele=document.createElement('div'); 
+	ele.style.width=z[cid]+'px';
+	ele.style.height=z[cid]+'px';
+	ele.style.top=y[cid]+'px';
+	ele.style.left=x[cid]+'px';	
+	ele.style.border=b[cid];
+	ele.style.backgroundColor=ponColor();
+	document.body.appendChild(ele);
+	ele.style.borderRadius=r[cid];
+	cid++;	
+	if (cid==z.length){
+		clearInterval(intervalo)
+	}
+}
+function ponColor(){
+	var r=aleatorio(0,255).toString(16).padStart(2,'0'); 
+	var g=aleatorio(0,255).toString(16).padStart(2,'0');
+	var b=aleatorio(0,255).toString(16).padStart(2,'0');
+	return ('#'+r+g+b); 
+}
+function aleatorio(a,b) {
+	// numero aleatorio entre a y b
+	var x=Math.round(Math.random()*(b-a)+parseInt(a));
+	return x;
+}
+window.onload = iniciar; 
+</script>
+
+</head>
+ 
+<body>
+</body>
+
+</html>
+

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head >
+<meta charset='UTF8'>
+<style type="text/css">
+div {
+	border:1px solid red;
+	width:100px;
+	height:100px;
+	float:left;
+	text-align:center;
+	background:url('ofi.png') center no-repeat;
+}
+.noImagen{
+	background:none;
+}
+.grande{
+	padding:10px;
+	width:204px;
+	height:204px;
+	border: 1px solid blue;
+}	
+.salto {
+	clear:left;
+}
+.repite{
+	background:url('ofi.png') center repeat-x;
+}
+.rosa{
+	background:pink;
+}
+</style>
+
+</head>
+<body>
+	<div class='imagen grande'>CAJA1</div>
+	<div class='noImagen grande'>
+		<div>2</div>
+		<div>3</div>
+		<div>4</div>
+		<div>5</div>		
+	</div>
+	<div class='noImagen salto grande'>
+		<div class='repite'>6</div>
+		<div class='rosa'>7</div>
+		<div class='rosa'>8</div>
+		<div class='repite'>9</div>		
+	</div>
+	<div class='imagen grande repite'>CAJA10</div>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        
+
+        .caja {
+            outline: solid gray;
+            width: 1000px;
+            height: 500px;
+            margin: 30px auto;
+        }
+
+        .arriba {
+            text-align: center;
+            outline: solid gray;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .abajo-izquierdo {
+            float: left;
+        }
+
+        .izquierdo {
+            outline: solid gray;
+            width: 50px;
+            height: 450px;
+            display: inline-block;
+        }
+
+        .color {
+            width: 30px;
+            height: 30px;
+            background-color: aqua;
+            margin: 20px auto;
+        }
+
+        .abajo-derecho {
+            float: right;
+        }
+
+        .principal {
+            outline: solid gray;
+            height: 450px;
+            width: 950px;
+            
+        }
+
+        .padre-elementos {
+            position: relative;
+            height: 400px;
+        }
+
+        .elementos {
+            outline: solid gray;
+            width: 100%;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .item {
+            background-color: red;
+            width: 80px;
+            height: 250px;
+            margin: 10px;
+        }
+
+        .menu-abajo {
+            position: absolute;
+            width: 500px;
+            height: 50px;
+            top:350px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+
+        .menu-abajo > div {
+            width: 30px;
+            height: 30px;
+            outline: solid gray;
+            display: inline-block;
+            line-height: 30px;
+        }
+
+        .derechos {
+            position:absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            outline: solid gray;
+            width: 950px;
+            height: 50px; 
+            text-align: center;
+            line-height: 50px;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="caja">
+        <div class="arriba">tenemos xx elementos en xx paginas</div> <!--arriba-->
+        <div class="abajo-izquierdo"> <!-- abajo -->
+            <div class="izquierdo"> <!-- menu izquierdo-->
+                <div class="color"></div>
+                <div class="color"></div>
+                <div class="color"></div>
+                <div class="color"></div>
+                <div class="color"></div>
+            </div>
+            
+        </div>
+        <div class="abajo-derecho">
+            <div class="principal"> <!-- conenedor principal-->
+                <div class="padre-elementos"> <!-- donde aparecen los elementos-->
+                    <div class="elementos"> <!-- elementos-->
+                        <div class="item"></div>
+                        <div class="item"></div>
+                        <div class="item"></div>
+                        <div class="item"></div>
+                        <div class="item"></div>
+                        <div class="item"></div>
+                        <div class="item"></div>
+                        <div class="item"></div>
+                    </div>
+                    <div class="menu-abajo"> <!-- el menu de abajo-->
+                        <div>-</div>
+                        <div>1</div>
+                        <div>2</div>
+                        <div>3</div>
+                        <div>4</div>
+                    </div>
+                    <div class="derechos"> <!-- derechos de autor-->
+                    @ todos los derechos no reservados
+                </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

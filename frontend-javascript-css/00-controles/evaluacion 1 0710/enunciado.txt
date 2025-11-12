@@ -1,0 +1,32 @@
+nombre: DW1D1E-GD1C1-NA23-RosalesManganoFranciscoAntonio.htm
+tiempo: 50m
+
+-Leer detenidamente, una vez comenzada la prueba no hay preguntas.
+-Puedes usar internet y el material de clase.
+-Se corrige en linux, pantalla de clase, firefox, zoom 100%
+
+Criterios **
+a- Nombre de fichero segun formato de entrega, ver primera linea.
+b- Entregas dentro del tiempo.
+c- Entregar cada 10 minutos, 0m 10m 20m 30m 40m 50m ...
+d- El programa debe ejecutar sin error.
+e- El código debe ser original del alumno.
+
+Prueba **
+Buscar seis fallos de usabilidad en la página web dada,
+crear una versión corregida de la página y enviar el htm.
+
+Apartados **
+Responder dentro de un comentario de bloque al inicio de la página. Numera cada fallo encontrado. Para cada fallo encontrado:
+1. Escribir la regla de usabilidad incumplida.
+2. Copiar las lineas de código que la incumplen y explicarlas.
+3. Describir la corrección necesaria.
+Corregir en la página:
+4. Corregir en el código de la página web el fallo, indicar con un comentario en cada linea modificada el número del fallo corregido. 
+
+Calificación:
+- No cumplir un criterio es un cero.
+- Solo apartados completos puntuan, incompletos son cero.
+- Pondera un 100% del RA6
+
+

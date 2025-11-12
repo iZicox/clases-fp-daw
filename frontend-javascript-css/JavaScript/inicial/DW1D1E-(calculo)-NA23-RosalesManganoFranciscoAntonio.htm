@@ -1,0 +1,30 @@
+<script>
+
+    // Solicitar valores al usuario
+    let alto = Number(prompt("Ingrese el valor del alto:"));
+    let ancho = Number(prompt("Ingrese el valor del ancho:"));
+    let fondo = Number(prompt("Ingrese el valor del fondo:"));
+
+
+    // declarando funcion
+    function calculoOperaciones(a, b, c) {
+      document.write("Alto = " + a + " <br>");
+      document.write("Anchoa = " + b + "<br>");
+      document.write("Fondo = " + c + "<br>");
+      
+      // convertir a pies
+      function metrosAPies(metros) {
+        pies = Math.round((metros) * 3.28);
+        return pies.toFixed(2);
+      }
+
+      document.write("Superficie = " + (b*c) + " ( " + metrosAPies((b*c)) + " ) pies<br>" );
+      document.write("Volumen = " + (a*b*c) + " ( " + metrosAPies((a*b*c)) + " ) pies<br>" );
+
+    }
+
+    // 3. Llamar a la función
+    calculoOperaciones(alto, ancho, fondo);
+
+    
+  </script>

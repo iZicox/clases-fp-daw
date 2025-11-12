@@ -1,0 +1,57 @@
+# periféricos
+- teclados
+- ratón
+- oled
+- monitor
+- escáner
+- Cámara web
+- micrófono
+- proyector
+- impresora
+- pendrive
+- adaptadores
+- alfombrilla
+
+#audio/sonido
+- altavoz
+- auriculares
+
+# imagen
+- Fotografía
+- filtro pantalla
+
+# Informática
+- fuente de alimentación
+- disco duro
+- placa base
+- grafica
+- RAM
+- cables
+- procesadores
+- batería
+- SSD
+- disco duro externo
+- cargadores
+- USB(cable)
+- ventiladores
+- disquetera
+
+# Dispositivos
+- portátiles
+- sobremesa
+- gaming
+- móviles
+- Tablet
+- consola
+- E-books
+- Apple
+
+# Sw
+- Licencias
+
+# Wifi
+- Router
+- NAS
+
+# Electrodomésticos
+- Roomba

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <form action="formulario.php" method="post">
+
+    <fieldset>
+      <legend>Matricula</legend>
+
+      <label for="clave">Clave</label><br>
+      <input type="password"><br>
+
+      <label for="lista">Lista de opciones</label><br>
+      <select name="lista" id="lista">
+        <option value="manana">Mañana</option>
+        <option value="tarde">Tarde</option>
+        <option value="noche">Noche</option>
+      </select><br>
+
+      <label for="preferencias">Preferencias</label><br>
+      <textarea name="preferencias" id="preferencias">
+        Se pueden escribir varias lineas de texto
+      </textarea><br>
+
+
+    </fieldset>
+
+    <fieldset>
+      <legend>Agrupacion de botones</legend><br>
+      <input type="reset" value="Resetear">
+      <input type="submit" value="Enviar"><br>
+
+
+
+    </fieldset>
+
+
+
+  </form>
+</body>
+</html>

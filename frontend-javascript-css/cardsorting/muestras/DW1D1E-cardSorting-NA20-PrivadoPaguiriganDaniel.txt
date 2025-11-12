@@ -1,0 +1,60 @@
+# PERIFERICOS
+- raton
+- teclados
+- monitor
+- escaner
+- impresora
+- proyector
+- wifi
+- router
+
+# IMAGEN Y SONIDO
+- audio
+- altavoz
+- auriculares
+- microfono
+- camara web
+- fotografia
+- oled
+
+# HARDWARE
+- nas
+- cables
+- adaptadores
+- cargadores
+- baterias
+
+# SW
+- licencias
+
+# COMPONENTES INFORMATICA
+- ram
+- fuente de alimentacion
+- placa base
+- procesadores
+- disco duro
+- disquetera
+- disco duro externo
+- ssd
+- usb
+- grafica
+- pendrive
+
+# GAMING
+- consolas
+- sobremesa
+- portatil
+
+# ELECTRODOMESTICOS
+- roomba
+- ventiladores
+
+# DISPOSITIVOS MOVILES Y TABLETS
+- mobile
+- tablet
+- apple
+- ebook
+
+# OTROS
+- filtro pantalla
+- alfombrilla

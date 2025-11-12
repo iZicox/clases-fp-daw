@@ -1,0 +1,1 @@
+revisar como funciona los objetos y acceder a los atributos

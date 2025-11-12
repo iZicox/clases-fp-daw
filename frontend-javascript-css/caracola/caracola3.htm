@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>caracola</title>
+
+<style>
+	div{
+		position: absolute;
+		border-radius:0px;
+	    outline: 1px solid #DDD;
+  		box-sizing: border-box;
+	}
+</style>
+
+<script>
+/*
+
+- usamos position absolute con top y left para posicionar los div
+- podemos dibujar de esta forma un div sobre otro
+- redonderar dos bordes consecutivos con la misma medida que el lado del div
+- podemos dibujar el borde que queramos
+- color de fondo blanco
+- fuente: https://es.wikipedia.org/wiki/Sucesi%C3%B3n_de_Fibonacci
+- eres capaz de optimizarlo y automatizarlo para continuar la caracola ?
+
+*/
+
+// timer
+var intervalo;
+
+// contador de cajas
+var cid=0; 
+
+// datos para dibujar
+var z=[340,210,130,80,50,30,20,10];
+var y=[0,0,210,260,210,210,240,250];
+var x=[0,340,420,340,340,390,400,390];
+var r=[
+'340px 0px 0px 0px',
+'0px 210px 0px 0px',
+'0px 0px 130px 0px',
+'0px 0px 0px 80px',
+'50px 0px 0px 0px',
+'0px 30px 0px 0px',
+'0px 0px 20px 0px',
+'0px 0px 0px 10px'
+];
+var b=['0440','4040','4004','0404','0440','4040','4004','0404'];
+ // desplazamiento del conjunto
+var dx=100;
+var dy=200;
+function unaCaja(){
+	otraCaja();
+	var ele=document.createElement('div'); 
+	ele.style.width=z[cid]+'px';
+	ele.style.height=z[cid]+'px';
+	ele.style.top=dx+y[cid]+'px';
+	ele.style.left=dy+x[cid]+'px';	
+	ele.style.borderRight=b[cid].charAt(0)+'px';
+	ele.style.borderLeft=b[cid].charAt(1)+'px';
+	ele.style.borderTop=b[cid].charAt(2)+'px';
+	ele.style.borderBottom=b[cid].charAt(3)+'px';
+	ele.style.borderStyle='solid';
+	ele.style.borderRadius=r[cid];	
+	//ele.setAttribute('z-index','1');
+	document.body.appendChild(ele);
+	cid++;	
+	// parar el dibujo el tereminar el array z
+	if (cid==z.length){
+		clearInterval(intervalo)
+	}
+}
+function otraCaja(){
+	var ele=document.createElement('div'); 
+	ele.style.width=z[cid]+'px';
+	ele.style.height=z[cid]+'px';
+	ele.style.top=dx+y[cid]+'px';
+	ele.style.left=dy+x[cid]+'px';	
+	document.body.appendChild(ele);
+}
+function iniciar(){
+	intervalo=setInterval(unaCaja,200); 
+}
+window.onload = iniciar; 
+</script>
+
+</head>
+ 
+<body>
+</body>
+
+</html>

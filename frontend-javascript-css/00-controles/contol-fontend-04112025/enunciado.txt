@@ -1,0 +1,36 @@
+nombre: DW1D1E-GD1C1-NBR-ApellidosNombre.htm
+tiempo: 70m
+
+-Leer detenidamente, una vez comenzada la prueba no hay preguntas.
+-Puedes usar internet y el material de clase.
+-Se corrige en linux, pantalla de clase, firefox, zoom 100%
+
+Criterios **
+a- Nombre de fichero segun formato de entrega, ver primera linea.
+b- Entregas dentro del tiempo.
+c- Entregar cada 10 minutos, 0m 10m 20m 30m 40m 50m ...
+d- El programa debe ejecutar sin error.
+e- El código debe ser original del alumno.
+
+Prueba **
+Crear un página htm. El fichero png y htm estarán en la misma carpeta. Entregar solo el fichero htm.
+
+Apartados **
+01-caja1 pixel del borde
+02-caja1 color del borde
+03-caja1 dimensiones
+04-caja1 texto centrado
+05-caja1 imagen centrada
+06-cajas azules en un tablero de 2x2
+07-cajas 2,3,4,5 en tablero 2x2
+08-cajas 2,3,4,5 imagenes centradas
+09-cajas 6,9,10 imagenes centradas repetidas
+10-cajas 7,8 color sin imagen
+
+Calificación **
+- No cumplir un criterio es un cero.
+- Solo apartados completos puntuan, incompletos son cero.
+- Pondera un 30% del RA2
+
+
+

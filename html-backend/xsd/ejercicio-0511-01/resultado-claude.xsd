@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  
+  <!-- Definición del tipo cantidad con restricción -->
+  <xs:simpleType name="tipoCantidad">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="bajo"/>
+      <xs:enumeration value="medio"/>
+      <xs:enumeration value="alto"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <!-- Definición del tipo semáforo con restricción -->
+  <xs:simpleType name="tipoSemaforo">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="rojo"/>
+      <xs:enumeration value="amarillo"/>
+      <xs:enumeration value="verde"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <!-- Definición del tipo alimento -->
+  <xs:complexType name="tipoAlimento">
+    <xs:sequence>
+      <xs:element name="proteinas" type="tipoCantidad"/>
+      <xs:element name="grasas" type="tipoCantidad"/>
+      <xs:element name="hidratos" type="tipoCantidad"/>
+      <xs:element name="semaforo" type="tipoSemaforo"/>
+    </xs:sequence>
+    <xs:attribute name="nombre" type="xs:string" use="required"/>
+  </xs:complexType>
+  
+  <!-- Elemento raíz alimentos -->
+  <xs:element name="alimentos">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="alimento" type="tipoAlimento" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

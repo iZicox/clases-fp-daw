@@ -1,0 +1,64 @@
+# electrodomesticos
+- roomba
+
+# informatica
+- sobremesa
+- portatiles
+- apple
+- tablet
+- ebooks
+- moviles
+- wifi
+- router
+
+# componentes
+- procesadores
+- placa base
+- grafica
+- ram
+- fuente de alimentacion
+- disco duro
+- disco duro externo
+- ssd
+- ventiladores
+- bateria
+- nas
+
+# perifericos
+- teclados
+- raton
+- alfombrilla
+- monitor
+- oled
+- proyector
+- impresora
+- escaner
+- disquetera
+- filtro pantalla
+- pendrive
+
+
+# imagen 
+- fotografia
+- camara web
+
+# sonido
+- altavoz
+- auriculares
+- microfono
+- audio
+
+# cables
+usb
+- adaptadores
+- cargadores
+
+# gaming
+- consola
+
+# software
+- licencias
+
+
+
+

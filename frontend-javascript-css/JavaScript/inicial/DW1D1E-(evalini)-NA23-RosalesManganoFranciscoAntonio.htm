@@ -1,0 +1,86 @@
+<script>
+
+/*
+
+1. Indica la IA que usaste y el prompt. Sino indica sin IA.
+https://chatgpt.com/share/68c97204-3494-8000-9588-58ab13d19317
+
+
+	Para crear el prompt Google ai studio
+		eres un experto en prompt engeniring, necesito que crees un prompt para poder resolver problemas de programacion para un estudiante en desarrollo web, es importante que tengas en cuenta explicar los pasos, como abordar el problema, que solucion usar y porque para que el estudiante tenga un buen entendimiento de lo que esta haciendo y pueda adquirir el conocimiento que busca transmitir el ejercicio. debes escribirlo en ingles
+
+	Luego lo coloque en chat gpt el prompt con el ejercicio
+		# ROLE & GOAL
+You are an expert programming mentor and senior web development instructor. Your primary goal is not just to provide an answer, but to teach the underlying concepts, problem-solving skills, and best practices. I am a web development student trying to improve my skills.
+
+# TASK
+I will provide you with a programming problem. Your task is to guide me through solving it by providing a comprehensive, educational response structured in the following sections. Maintain a patient, encouraging, and mentor-like tone throughout.
+
+# RESPONSE STRUCTURE
+
+**1. Understanding the Problem:**
+Briefly rephrase the problem in your own words to confirm your understanding. Identify the core requirements, inputs, and expected outputs.
+
+**2. Step-by-Step Approach (The Thought Process):**
+Outline a high-level, language-agnostic plan to solve the problem. Think out loud, as a senior developer would, breaking the complex problem into smaller, manageable steps. This section should describe the "what" and "why" of the strategy before any code is written.
+
+**3. Proposed Solution (Code):**
+Provide a clean, well-commented code solution in the requested language. If the language isn't specified, default to JavaScript, as it is central to web development. The code should be easy to read and understand.
+
+**4. Detailed Explanation of the Solution:**
+This is the most critical part. Go through the code block by block or line by line. Explain *what* each part does and, more importantly, *why* it's necessary. Explain the logic, the choice of methods or functions (e.g., "why I used `.map()` instead of a `for` loop here"), and how the code directly implements the steps from the "Approach" section.
+
+**5. Key Concepts & Learning Points:**
+Identify and explain the 2-3 core programming concepts demonstrated in the solution (e.g., "Array Manipulation," "Asynchronous JavaScript," "DOM Traversal," "Object Destructuring"). Explain why these concepts are important and where else they might be used in web development.
+
+**6. Alternative Solutions & Trade-offs (Optional but Recommended):**
+Briefly mention one or two alternative ways to solve the problem. Discuss the pros and cons (e.g., performance, readability, modern vs. older syntax) of your proposed solution versus the alternatives. This helps develop critical thinking.
+
+# PROBLEM TO SOLVE
+
+
+1. El programa solicia al usuario dos números. 
+2. Presentar por pantalla los números de entrada y sus resultados. 
+3. Presentar en una sola linea cada entrada y sus cálculos. 
+4. Creo una sola funcion para resolver los cálculos. 
+5. Resuelver la suma, resta correctamente 
+6. Resuelver la multiplicación, división correctamente. 
+7. Resolver exclusivamente con JS en un archivo .htm
+
+2. En que te puede ayudar usar IA para tu trabajo de desarrollo ?
+	En optimizar el tiempo de escribir, poder analizar problemas desde diferentes prespectivas y detectar problemas que no haz visto o no te habias planteado antes
+
+3. Te capacita como desarrolador desarrollar solo usando IA ? porque ?
+	Si depebdes 100% de la IA no, lo importante que tener el suficiente conocimiento para tener un criterio y analizar lo que la ia te entrega
+
+4. La IA crea mejor código ? porque ?
+	Siempre y cuenda estes actualizado con las ultimas tecnologías y expandas tus conocimientos para identificar si la IA te esta entregando un buen o mal resultado puedes llegar a usar cualquier IA para mejorar
+
+5. Tu IA favorita y porque.
+	Depende de la época debido a que siempre salen nuevas tecnologías que pueden hacer el trabajo mejor que alguna IA que sea muy popular, lo importante es no casarse con una tecnología sino usarlas todas y ver cual es mejor para tu caso. En mi caso suelo usar Chat GPT, Claude y Google ai studio 
+
+
+*/
+
+    // 1. Solicitar números al usuario
+    let num1 = Number(prompt("Ingrese el primer número:"));
+    let num2 = Number(prompt("Ingrese el segundo número:"));
+
+    // 2. Función para calcular y mostrar operaciones
+    function calcularOperaciones(a, b) {
+      document.write("Suma: " + a + " + " + b + " = " + (a + b) + ". ");
+      document.write("Resta: " + a + " - " + b + " = " + (a - b) + ". ");
+      document.write("Multiplicación: " + a + " x " + b + " = " + (a * b) + ". ");
+      
+      // División con validación para evitar dividir entre 0
+      if (b !== 0) {
+        document.write("División: " + a + " / " + b + " = " + (a / b) + ". ");
+      } else {
+        document.write("División: No se puede dividir entre 0<br>");
+      }
+    }
+
+    // 3. Llamar a la función
+    calcularOperaciones(num1, num2);
+  </script>
+

@@ -1,0 +1,66 @@
+# Redacta y numera 10 REGLAS lo mas concretas posibles de usabilidad. 
+1. Cada opción debe ser obvia (evita dudas semánticas; prioriza elecciones mecánicas).
+2. No cuentes clics; cuenta la fricción cognitiva (3 clics obvios > 1 confuso).
+3. Elimina palabras e instrucciones innecesarias (reduce ruido).
+4. Haz que lo clicable parezca clicable y sea consistente (convenciones > invención).
+5. Haz coincidir el texto del enlace con el título de la página de destino.
+6. Mantén una jerarquía visual clara (títulos, espaciado, peso, orden).
+7. Resalta explícitamente “Usted está aquí” (doble distinción visual si hace falta).
+8. Usa migas de pan como apoyo, no como la única navegación.
+9. Reduce el ruido visual al mínimo viable (líneas, fondos, adornos que no ayudan).
+10. Prioriza lo que el usuario busca, no adornos (no sacrifiques “funciona bien” por “parece bien”).
+
+# Navega y selecciona 5 WEBS que tengan mala o fallos grandes de usabilidad. 
+1. art.yale.edu
+2. pennyjuice.com
+3. www2.pnwx.com
+4. greatdreams.com
+5. arngren.net
+
+# Para cada una de las web indica 5 reglas fallidas de usabilidad, explica brevemente. 
+arngren.net
+Jerarquía visual inexistente: collage de imágenes y tipografías diminutas. 
+Ruido visual extremo: colores y bloques sin orden. 
+Clicabilidad poco distinguible (muchas imágenes parecen links sin patrón). 
+Decisiones no obvias: ¿por dónde empezar? exceso de opciones confusas. 
+Sin estructura de apoyo (no breadcrumbs ni navegación clara). 
+
+
+pennyjuice.com
+Jerarquía débil: titulares, piezas sociales y módulos compiten. 
+Texto redundante/marketing genérico sin guiar tareas (pedidos, sabores). 
+Enlaces/CTAs poco evidentes o secundarios. 
+Contraste/espaciado mejorables (bloques densos). 
+Flujo con fricción: llegar a “Order” no es inmediato/obvio. 
+
+
+greatdreams.com
+Jerarquía y arquitectura confusas (páginas larguísimas y secciones dispares). 
+Combinaciones de color y fondos que dificultan la lectura. 
+Páginas saturadas de texto sin edición (mucha “paja”). 
+Enlaces numerosos sin patrón visual claro. 
+Sin navegación de apoyo comprensible (breadcrumbs/estructura global). 
+
+
+www2.pnwx.com
+Tipografía/espaciado antiguos dificultan escaneo. 
+Contraste y anti-aliasing pobres en algunas secciones; poco “aire”. 
+Flujo de compra poco guiado (catálogo “es el sitio” sin llamadas claras). 
+Clicabilidad inconsistente entre páginas (texto vs. botones). 
+Carece de navegación moderna de apoyo (pocas ayudas contextuales). 
+
+
+art.yale.edu
+Fondo y animaciones cambiantes rompen jerarquía/consistencia. 
+Ruido visual por fondos GIF/animación; distrae del contenido. 
+Señales visuales sutiles; elementos se “pierden” según fondo activo. 
+La edición abierta provoca patrones de interfaz variables (decisiones no obvias). 
+Aunque tiene menú, falta una orientación estable (cambios constantes en apariencia). 
+
+
+# Ordena de mejor a peor navegabilidad estas 5 webs. - Cual es la web con peor usabilidad de estas 5 ?
+1. art.yale.edu
+2. pennyjuice.com
+3. www2.pnwx.com
+4. greatdreams.com
+5. arngren.net

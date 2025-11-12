@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>	
+	<title>unico</title>
+	<meta charset="utf-8">		
+<script>
+	/* datos de entrada */
+	var lista=[
+	['Colao','Colao','descripcion1','8'],
+	['Francisco-un-hombre-de-palabra','El papa','descripcion2','nota2'],
+	['Girl','Girl','descripcion3','2'],
+	['Girl','Girl','descripcion3','5']
+	];
+
+	window.onload = function(){
+		// BEGIN
+		var padre=document.body;
+		for (j=0;j<lista.length;j++){
+			var ficha=creaNodo(padre,'','ficha','div','ficha');
+			var enlace=creaNodo(ficha,'','L'+j,'a','');		
+			var titulo=creaNodo(ficha,lista[j][1],'t'+j,'div','');
+			var desc=creaNodo(ficha,lista[j][2],'d'+j,'div','');		
+			var nota=creaNodo(ficha,lista[j][3],'n'+j,'div','');
+			var foto=creaNodo(enlace,'','f'+j,'div',''); /* dentro de enlace */
+			foto.accion=nota; /* a que elemento aplico la clase aviso al hacer hover en la foto */ 
+			foto.onmouseover=ratonFoto; /* hover en un elemento y cambiar otro , no se puede por css */
+			foto.onmouseleave=ratonFotoFuera;		
+			foto.style.backgroundImage='url(img/'+lista[j][0]+'.jpg)';
+			enlace.setAttribute('href','https://www.google.com/search?q='+lista[j][1]); // lanzamos una busqueda de la pelicula
+			enlace.setAttribute('target','_blank'); // en otra pestaña
+		}
+		// END
+	}
+	function ratonFoto(){
+		this.accion.className='aviso';
+	}
+	function ratonFotoFuera(){
+		this.accion.className='';
+	}
+	function creaNodo(o,t,m,z,s){
+		// o: contenedor
+		// t: texto
+		// m: id
+		// z: tipo de elemento
+		// s: clase
+		var p = document.createElement(z);
+		var contenido = document.createTextNode(t);	 
+		p.id=''+m;
+		p.n=m;
+		if (s!=''){p.className=s;}
+		p.appendChild(contenido);	 
+		o.appendChild(p);
+		return p; // por si queremos trabajar con el elemento
+	}			
+
+
+</script>
+<style>
+/*
+
+Estructura de una ficha:;
+
+<div id="ficha" class="ficha">
+	<a id="L0" href="https://www.google.com/search?q=Colao" target="_blank">
+		<div id="f0" style="background-image: url(&quot;img/Colao.jpg&quot;);"></div>
+	</a>
+	<div id="t0">Colao</div>
+	<div id="d0">descripcion1</div>
+	<div id="n0">8</div>
+</div>
+
+*/
+
+
+/* ficha */
+.ficha {
+	position: relative;
+	width: 100%;
+	height: 180px;
+	padding: 20px;
+	border: 2px solid #841;
+	text-align: center;
+	max-width: 415px;
+	min-width: 300px;
+	margin: 20px auto;
+}
+
+.ficha > * {
+	float: left;
+}
+
+/* imagen */
+.ficha > :nth-child(1) > :nth-child(1) {
+	width: 118px;
+	height: 180px;
+	background-size: cover;
+	opacity: 0.6;
+}
+.ficha > :nth-child(1) > :nth-child(1):hover {
+	opacity: 1;
+}
+
+/* titulo */
+.ficha>:nth-child(2) { /* segundo hijo */
+	width: 280px;
+	height: 40px;
+	background-color: #dde;
+	font-size: 24px;
+	color: black;
+	align-content: center; /* para centrar verticalmente */
+}
+.ficha>:nth-child(2):hover { 
+	background-color: #a31!important;
+	cursor: help;
+}
+
+
+/* descripcion */
+.ficha>:nth-child(3) { /* tercer hijo */
+	width: 280px;
+	height: 140px;
+	background-color: #fea;
+	color: #333;
+	align-content: center; /* para centrar verticalmente */
+}
+
+/* nota */
+.ficha>:nth-child(4){
+	width: 60px;
+	height: 60px;
+	position: absolute;
+	top: 10px;
+	left: 380px;
+	background-color: #daa;
+	color: white;
+	border: 1px solid #555;
+	line-height: 60px;
+/*
+	background-color: red;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	color: white;
+	border: solid 1px black;
+	align-content: center;
+*/
+}
+
+
+
+
+
+
+</style>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="https://w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <!-- defino el tipo de datos tipoAlumno que contiene un elemento nombre y un atributo numAlumno-->
+    <xs:complexType name="tipoAlumno">
+        <xs:sequence>
+            <xs:element name="nombre" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="numAlumno" type="string" use="required"/>
+    </xs:complexType>
+
+    <!-- defino el tipo de datos tipoGrupo como una secuencia de elementos de tipoAlumno y un atributo idGrupo-->
+    <xs:complexType name="tipoGrupo">
+        <xs:sequence>
+            <xs:element name="alumno" type="tipoAlumno" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="idGrupo" type="xs:string"/>
+    </xs:complexType>
+
+    <!-- con las definiciones anteriores creo el elemento grupos que es una secuencia de elementos de tipo tipoGrupo -->
+     <xs:element name="grupos">
+        <xs:complexType>
+            <xs:sequence maxOccurs="unbounded">
+                <xs:element name="grupo" type="tipoGrupo"/>
+            </xs:sequence>
+        </xs:complexType>
+     </xs:element>
+
+</xs:schema>

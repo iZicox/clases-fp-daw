@@ -1,0 +1,38 @@
+Hacer pruebas de usabilidad con pocos recursos. 
+a) Selecciona una web, anotar url.
+https://www.lululemon.es
+
+b) Anotar una lista de 10 pruebas de usabilidad para esta web.
+1.  Buscar un producto específico usando el buscador interno (30seg)
+Ejemplo: “Encuentra una camisa ligera clara talla M usando el buscador.”
+2. 	Filtrar productos por características (30seg)
+Ejemplo: “Filtra los resultados para mostrar solo productos de alguna talla, color, etc.”
+3. 	Comparar dos productos similares (1min)
+Ejemplo: “Compara dos modelos de prendas y decide cuál comprar.”
+4. 	Añadir un producto al carrito (1min)
+Ejemplo: “Selecciona un producto que te guste y añádelo al carrito.”
+5. 	Modificar la cantidad en el carrito (1min)
+Ejemplo: “Cambia la cantidad de camisetas en el carrito de 1 a 3 o cualquier otra prenda.”
+6. 	Completar el proceso de compra (simulado) (3min)
+Ejemplo: “Finaliza el proceso de compra desde el carrito hasta el último paso, sin realizar el pago.”
+7. 	Buscar información sobre guia de tallas (3min)
+Ejemplo: “Encuentra la guia de tallas de la ecommerce.”
+8. 	Leer opiniones de otros usuarios sobre un producto (3min)
+Ejemplo: “Consulta las reseñas de clientes sobre un producto que te interese.”
+9. 	Localizar opciones de contacto con atención al cliente (2min)
+Ejemplo: “Busca cómo contactar con el servicio de atención al cliente por chat o email.”
+10. 	Evaluar la claridad de la información en una ficha de producto (1min)
+Ejemplo: “Lee la descripción de un producto y responde si entiendes claramente qué incluye y cómo se usa.”
+
+c) La prueba debe indicar una tarea concreta a realizar en la web y el tiempo para hacerla.
+Por ejemplo buscar un libro de un autor en la web espasaCalpe.
+d) Seleccionar tres compañeros para pasar tus pruebas, anotar el nombre entrevistado.
+e) Entrevistado anota, sin hablar, mientras pasa las pruebas: 
+1. ha sido realizada dentro del tiempo previsto
+2. realizada fuera del tiempo previsto
+3. no se ha podido realizar
+f) Anotar al terminar las prueba comentarios del entrevistado sobre usabilidad.
+g) Anotar recomendaciones de usuario sobre usabilidad de la página.
+i) Repetir seleccionando otro entrevistado.
+j) Anotar propuestas de usabilidad a la vista de las pruebas.
+k) Anotar tus conclusiones sobre este ejercicio.

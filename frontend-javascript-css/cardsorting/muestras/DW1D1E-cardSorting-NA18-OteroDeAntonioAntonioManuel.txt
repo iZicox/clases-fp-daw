@@ -1,0 +1,60 @@
+# Audio
+- Altavoz
+- Auriculares
+
+# Componentes
+- Batería
+- Cargadores
+- Disco Duro
+- Fuente De Alimentación
+- Gráfica
+- Placa Base
+- Procesadores
+- Ram
+- Ssd
+
+# Electrodomésticos
+- Roomba
+- Ventiladores
+
+# Gaming
+- Consola
+
+# Informática
+- Cables
+- Disquetera
+- Ebooks
+- Nas (Servidores)
+- Pendrive
+- Portátiles
+
+# Móviles
+- Apple
+
+# Periféricos
+- Adaptadores
+- Alfombrilla
+- Cámara Web
+- Disco Duro Externo
+- Escáner
+- Impresora
+- Micrófono
+- Ratón
+- Teclados
+- Router
+- Usb
+- Wifi
+
+# Sw
+- Licencias
+
+# Imagen
+- Filtro Pantalla
+- Fotografía
+- Monitor
+- Oled
+- Proyector
+
+# Otros
+- Sobremesa
+- Tablet

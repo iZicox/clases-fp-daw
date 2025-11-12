@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="libros.xsl"?>
+<libros xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="libros.xsd">
+  <libro>
+    <titulo>1984</titulo>
+    <autor>George Orwell</autor>
+    <anio>1949</anio>
+  </libro>
+  <libro>
+    <titulo>Fahrenheit 451</titulo>
+    <autor>Ray Bradbury</autor>
+    <anio>1953</anio>
+  </libro>
+</libros>

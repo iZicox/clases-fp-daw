@@ -1,0 +1,37 @@
+# Dispositivos de Entrada
+- Teclado
+- Ratón
+- Escáner
+- Cámara web
+- Micrófono
+
+# Dispositivos de Salida
+- Monitor
+- Altavoz
+- Impresora
+- Proyector
+- Auriculares
+
+# Dispositivos de Entrada/Salida
+- Pantalla táctil
+- Impresora multifunción
+- Router
+
+# Periféricos de Almacenamiento
+- Disco duro
+- SSD
+- Pendrive
+- Disco duro externo
+
+# Componentes
+- Fuente de alimentación
+- Placa base
+- Procesadores
+- RAM
+- Tarjeta gráfica
+
+# Dispositivos y Accesorios
+- Cargadores
+- Adaptadores
+- Licencias
+- Roomba

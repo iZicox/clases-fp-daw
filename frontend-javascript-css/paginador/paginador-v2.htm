@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 100px;
+        }
+
+        .container {
+            min-width: 700px;
+            min-height: 400px;
+            border: 3px solid gray;
+        }
+
+        .header {
+            text-align: center;
+            padding: 10px;
+            border-bottom: 3px solid gray;
+        }
+
+        .sidebar {
+            float: left;
+        }
+
+        .color {
+            width: 30px;
+            height: 30px;
+            background-color: aqua;
+            margin: 10px;
+        }
+
+        .main-content {
+            margin-left: 65px;
+            border-left: 3px solid gray;
+            padding-top: 20px;
+        }
+
+        .item {
+            background-color: green;
+            width: 50px;
+            height: 100px;
+            margin-left: 10px;
+            display: inline-block;
+        }
+
+        .paginacion {
+            padding-left: 100px;
+        }
+
+        .numero{
+            background-color: red;
+            width: 10px;
+            height: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">El titulo de esto</div>
+        <div class="sidebar">
+            <div class="color"></div>
+            <div class="color"></div>
+            <div class="color"></div>
+            <div class="color"></div>
+            <div class="color"></div>
+            <div class="color"></div>
+            <div class="color"></div>
+            <div class="color"></div>
+        </div>
+        
+
+        <div class="main-content">
+            <div class="item-container">
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+            </div>
+            <div class="pagination">
+                <div class="numero"></div>
+                <div class="numero"></div>
+                <div class="numero"></div>
+                <div class="numero"></div>
+                <div class="numero"></div>
+            </div>
+        </div>
+        
+        <div class="footer"></div>
+    </div>
+
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Reserva de Instalacion Deportiva</h2>
+   
+    <form action="formulario.php" method="post">
+    <fieldset>
+        <legend>Datos personales</legend>
+        <table border="1">
+            <tr>
+                <td>
+                    <label for="nombre">Nombre</label>
+                </td>
+                <td colspan="3">
+                    <input type="text" size="50">
+                </td>
+                <td>
+                    <label for="domicilio">Domicilio</label>
+                </td>
+                <td colspan="3">
+                    <input type="text" size="30">
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    <label for="documento">Documento</label>
+                </td>
+                <td>
+                    <select name="documento">
+                        <option value="--Elige--">--Elige--</option>
+                        <option value="nie">NIE</option>
+                        <option value="dni">DNI</option>
+                    </select>
+                </td>
+                <td>
+                    <label for="numerodocumento">Numero Doc</label>
+                </td>
+                <td>
+                    <input type="number">
+                </td>
+                <td>
+                    <label for="sexo">Sexo</label>
+                </td>
+                <td>
+                    <input name="sexo" type="radio" value="masculino">M 
+                    <input name="sexo" type="radio" value="femenino">F 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="tel">Telefono</label>
+                </td>
+                <td colspan="3">
+                    <input type="tel" size="40">
+                </td>
+                <td>
+                    <label for="email">Correo electronico</label>
+                </td>
+                <td colspan="3">
+                    <input type="email">
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+
+    <fieldset>
+        <legend>datos de la instalacion a Reserva</legend>
+        <table border="1">
+            <tr>
+                <td>
+                    <label for="instalacion">Instalacion</label>
+                </td>
+                <td>
+                    <select name="instalacion">
+                        <option value="--Elige--">--Elige--</option>
+                        <option value="instalacion 1">Instalacion 1</option>
+                        <option value="instalacion 2">Instalacion 2</option>
+                    </select>
+                </td>
+                <td>
+                    <label for="fecha">Fecha</label>
+                </td>
+                <td>
+                    <input type="date">
+                </td>
+                <td>
+                    <label for="hora-inicio">Hora inicio</label>
+                </td>
+                <td>
+                    <input type="time">
+                </td>
+                <td>
+                    <label for="numero-horas">Num. Horas (Max 3)</label>
+                </td>
+                <td>
+                    <input type="number" maxlength="3" minlength="1">
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    <label for="contratacion-iluminacion">Contratacion de iluminacion</label>
+                </td>
+                <td>
+                    <input name="iluminacion" type="radio" value="si">Si 
+                    <input name="iluminacion" type="radio" value="no">No 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8" align="center">
+                    <label for="terminos"><input type="checkbox">Aceptar terminos</label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8" align="center">
+                    <input type="submit" value="enviar"><input type="reset" value="borrar">
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+
+</form>
+</body>
+</html>
+<!-- 
+Formulario php
+metodo post
+tam 50-->

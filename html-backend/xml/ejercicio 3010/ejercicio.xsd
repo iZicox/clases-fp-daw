@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+     
+    <xs:element name="peliculas">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="pelicula" type="tipoPelicula" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>    
+
+</xs:schema>
+
+<!-- tienen atributos pero no tienen hijos es simple content-->

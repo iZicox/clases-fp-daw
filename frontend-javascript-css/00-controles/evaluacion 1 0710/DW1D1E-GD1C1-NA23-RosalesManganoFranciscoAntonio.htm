@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Página Web Sencilla Quizas es un poco largo el titulo de la pestaña</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            /*aqui cambiamos el color de texto y alineacion del header*/
+            background-color: #533;
+            color: white;
+            padding: 1rem;
+	        text-align: left;
+        }
+        main {
+            padding: 2rem;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+	a{
+	    font-size:10px;
+	}
+    </style>
+</head>
+
+<!--
+
+Fallos encontrados
+- El header aparece en la parte de abajo como si fuera un footer. Se debe ubicar arriba
+- El titulo principal de la pagina esta en un fondo oscuro con letras oscuras y no se lee bien. Tiene que haber contraste.
+- El titulo debe estar alineado a la izquierda porque es donde el usuario mira primero
+- En donde dice sobre mi hay muchis <b> inncesarios, es mas legible si todo el texto es de un solo estilo
+     <p>Esta <b>es</b> una <b>página</b> web <b>sencilla</b> creada solo con <b>HTML</b> y un poco de <b>CSS</b>.</p>
+- En la parte de pedidos no se entiende cuando dice "Tienes disponibles muchos productos para hacer tu pedido." seria mas facil decir "Tienes muchos productos disponibles para hacer tu pedido"
+- En la seccion de contacto no aparece el correo, sino que esta mas arribe. Hay que bajarla
+- Eliminar la linea que dice "Contactopuedes" que no se entiende y que mas abajo ya dice contacto
+- Hay algunas palabras sin sentido que tambien fueron comentadas y corregidas
+
+-->
+
+
+<body>
+
+    <!--subimos el header, el texto en blanco para que se lea mejor-->
+    <header>
+        <h1>Restraurarte El Pollo Frito</h1>
+    </header>
+    <main>
+
+        <!--Arreglamos el texto que no se entendia y lo subimos porque es lo mas importante. Arreglamos algunas faltas ortograficas de algunas palabras -->
+        <h1>Pedidos</h1>
+        <p>Ven al local para hacer tus pedidos. Sin duda es la mejor opción, puedes pasar en el momento que quieras y seras muy bien atendido. Tienes muchos productos disponibles para hacer tu pedido.</p>
+
+        <!--Subimos esta seccion por ser lo segundo mas importante, las ofertas-->
+        <h2>Ofertas</h2>
+        <p>Ven al local para descubrir las mejores ofertas.</p>
+
+        <!-- Debido que es una empresa eliminamos esto y vamos a dejar la de contacto porque aqui habla como si fuera una persona 
+         
+        <h2>Sobre Mí</h2>
+       
+        -->
+
+       
+       <!-- Cambiamos la parte del texto que no se entiende, luego mejor eliminamos esta parte porque no la veo necesaria debido a que ya hay un "contacto" abajo
+        <h2>Puedes contectarme en <a href="mailto:ejemplo@correo.com">ejemplo@correo.com</a></h2>
+       
+        -->
+        
+
+        <h2>Contacto</h2>
+        <p>Estamos para atenderte. <a href="mailto:ejemplo@correo.com">ejemplo@correo.com</a></p>
+        
+    </main>
+    <footer>
+        <!--Solo dejamos en bold HTML y CSS porque lo demas era innecesario y lo colocamos en el footer-->
+        <p>Esta es una página web sencilla creada solo con <b>HTML</b> y un poco de <b>CSS</b>.</p>
+        <p>© 2024 Mi Página Web</p>
+    </footer>
+
+</body>
+</html>

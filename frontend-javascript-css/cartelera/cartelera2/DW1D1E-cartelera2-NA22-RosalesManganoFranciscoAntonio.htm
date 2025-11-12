@@ -1,0 +1,110 @@
+<html>
+	<head>
+		<meta charset='UTF8'>
+		<title>CARTELERA</title>
+	</head>
+	<style>
+
+/*  reseteo */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.ficha{
+  width: 360px;
+  height: 120px;
+  margin: 10px;
+  position: relative;
+  font-size: 14px;
+}
+
+/* Columna amarilla*/
+.ficha > :nth-child(1){
+  float: left;
+  width: 80px;
+  height: 100%;
+  background: #ff0;
+  border: 1px dotted #7f7f7f;
+}
+
+.ficha > :nth-child(n+2){
+  margin-left: 80px;
+  height: 30px;
+  border: 1px dotted #7f7f7f;
+  background: #fff;
+ /* position: relative;*/
+  padding: 4px 8px;
+}
+
+/* Barra verde */
+.ficha > :nth-child(2){
+  background-color: #0a7810;
+}
+
+
+/* ultima fila */
+.ficha > :nth-child(5){
+  text-align: right;
+  padding-right: 18px;
+}
+
+/* Botones rojos */
+.ficha > :nth-child(5) > div{
+  display: inline-block;
+  width: 50px;
+  height: 15px;
+  background: #e31515;
+  margin-left: 10px;
+  border: 1px dotted #7f7f7f;
+}
+
+
+.ficha > div:nth-of-type(2)::after{
+  content: " afterCssTodos";
+}
+
+.ficha:nth-of-type(1) > div:nth-of-type(2)::before{
+  content: " beforeCss1";
+}
+
+.ficha:nth-of-type(2) > div:nth-of-type(2)::before{
+  content: " beforeCss2 ";
+}
+
+
+
+	</style>
+
+	<body>
+		<div class='ficha'>
+			<div></div>	
+			<div></div>
+			<div></div>
+			<div></div>	
+			<div>
+				<div></div>
+				<div></div>		
+			</div>		
+		</div>
+		<br/><br/>
+		<div class='ficha'>
+			<div></div>	
+			<div>HTML2</div>
+			<div></div>
+			<div></div>	
+			<div>
+				<div></div>
+				<div></div>		
+			</div>		
+		</div>
+		<br/><br/>	
+		<div class='ficha'>
+			<div></div>	
+			<div>HTML3</div>
+			<div></div>
+			<div></div>	
+			<div>
+				<div></div>
+				<div></div>		
+			</div>		
+		</div>	
+	</body>
+</html>

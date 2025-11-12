@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head><title>Transformación XSLT</title></head>
+<body>
+  <div id="resultado"></div>
+
+  <script>
+    // Cargar XML y XSLT
+    Promise.all([
+      fetch('productos.xml').then(res => res.text()),
+      fetch('transformar.xsl').then(res => res.text())
+    ]).then(([xmlText, xslText]) => {
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(xmlText, 'application/xml');
+      const xsl = parser.parseFromString(xslText, 'application/xml');
+
+      const xsltProcessor = new XSLTProcessor();
+      xsltProcessor.importStylesheet(xsl);
+
+      const resultado = xsltProcessor.transformToFragment(xml, document);
+      document.getElementById('resultado').appendChild(resultado);
+    });
+  </script>
+</body>
+</html>

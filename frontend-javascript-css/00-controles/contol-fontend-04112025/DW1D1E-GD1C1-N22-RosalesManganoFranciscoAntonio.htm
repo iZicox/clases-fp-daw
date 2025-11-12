@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+    
+        }
+        .caja-padre {
+            display: flex;
+            border: 1px solid blue;
+            width: 402px;
+            flex-wrap: wrap;
+
+        }
+
+        .caja-1 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+            height: 200px;
+            border: 1px solid blue;
+        }
+
+        .caja-1 p {
+            position: absolute;
+            top: 0;
+        }
+
+        /* caja 2*/
+        .caja-2 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            border: 1px solid blue;
+            width: 200px;
+            height: 200px;
+            padding: 10px 0;
+         
+        }
+
+        .caja-2 img {
+            width: 40px;
+        }
+
+        .caja-2 > div {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 90px;
+            height: 90px;
+            border: 1px solid red;
+        }
+
+        .caja-2 p {
+            position: absolute;
+            top: -15px;;
+        }
+        
+        /* caja 3 */
+
+        .caja-3 {
+            display: inline-flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            width: 200px;
+            height: 200px;
+            border: 1px solid blue;
+            padding: 10px 0;
+        }
+
+        .caja-3 img {
+            width: 40px;
+        }
+
+        .caja-3 > div {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 90px;
+            height: 90px;
+            border: 1px solid red;
+        }
+
+        .caja-3 p {
+            position: absolute;
+            top: -15px;;
+        }
+
+        .caja-3-6, .caja-3-9 {
+            overflow: hidden;
+        }
+
+        .caja-3-7, .caja-3-8 {
+            background-color: rgb(255 0 0 / 0.2);
+        }
+
+        /* caja 4 */
+        .caja-4 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+            height: 200px;
+            border: 1px solid blue;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .caja-4 p {
+            position: absolute;
+            top: -15px;
+        }
+
+       
+    </style>
+</head>
+<body>
+    <div class="caja-padre">
+
+        <div class="caja-1">
+            <p>CAJA 1</p>
+            <img src="ofi.png" alt="">
+        </div>
+
+        <div class="caja-2">
+            <div class="caja-2-2">
+                <p>2</p>
+                <img src="ofi.png" alt="">
+            </div>
+            <div class="caja-2-3">
+                <p>3</p>
+                <img src="ofi.png" alt="">
+            </div>
+            <div class="caja-2-4">
+                <p>4</p>
+                <img src="ofi.png" alt="">
+            </div>
+            <div class="caja-2-5">
+                <p>5</p>
+                <img src="ofi.png" alt="">
+            </div>
+        </div>
+
+        <div class="caja-3">
+            <div class="caja-3-6">
+                <p>6</p>
+                <img src="ofi.png" alt="">
+                <img src="ofi.png" alt="">
+                <img src="ofi.png" alt="">
+            </div>
+            <div class="caja-3-7">
+                <p>7</p>
+                
+            </div>
+            <div class="caja-3-8">
+                <p>8</p>
+                
+            </div>
+            <div class="caja-3-9">
+                <p>9</p>
+                <img src="ofi.png" alt="">
+                <img src="ofi.png" alt="">
+                <img src="ofi.png" alt="">
+            </div>
+        </div>
+
+        <div class="caja-4">
+            <p>CAJA 10</p>
+            <img src="ofi.png" alt="">
+            <img src="ofi.png" alt="">
+            <img src="ofi.png" alt="">
+            <img src="ofi.png" alt="">
+            <img src="ofi.png" alt="">
+        </div>
+
+    </div>
+</body>
+</html>
