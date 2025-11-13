@@ -120,18 +120,27 @@
         }
 
         section:first-of-type {
-            margin-top: 2rem;
             background-color: white;
-            padding: 2rem;
+            padding: 3rem 2rem;
         }
 
+        section:first-of-type > :first-child {
+            gap: 1rem;
+
+        }
+
+        section:last-of-type > div:last-of-type {
+            width: 100px;
+            height: 500px;
+            background-color: red;
+        }
 
 
     </style>
 </head>
 <body>
     <nav class="flex-container around">
-        <div class="flex-container">logo</div>
+        <div class="flex-container shadow-box">logo</div>
         <ul class="flex-container around">
             <li>Lorem.</li>
             <li>Lorem.</li>
@@ -143,15 +152,15 @@
         </div>
     </nav>
     <section>
-        <div>
+        <div class="flex-container column">
             <h1>Lorem ipsum dolor sit amet.</h1>
             <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus, in.</p>
             <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perferendis, eligendi.</p>
         </div>
         <div><img src="" alt=""></div>
     </section>
-    <section>
-        <div>
+    <section class="flex-container">
+        <div class="flex-container row-reverse">
             <div>
                 <img src="" alt="">
                 <div>
