@@ -1,0 +1,85 @@
+A partir del ficheros XML UMA.xml ( UMA.XML) resolver las expresiones XPATH solicitadas.
+Teniendo abierto el fichero XML la opci�n de validar expresiones XPATH.
+
+captura1
+
+Ejercicios de XPATH
+
+Dado el documento UMA.xml definir expresiones XPATH que recuperen:
+
+1. El nombre de la universidad
+2. El nombre de la �ltima carrera
+3. Los a�os de plan de estudio de las carreras
+4. Los id de todas las carreras
+5. Los datos de la carrera cuyo id es �c04�
+6. El centro en el que se estudia la carrera con id �c01�
+7. Nombre de los alumnos que est�n haciendo proyecto
+8. Nombre de los centros que tengan subdirector
+9. Apellidos y nombre de los alumnos con beca
+10. Nombre de las asignaturas de la titulaci�n �c04�
+11. C�digos de las asignaturas que estudian mujeres
+12. Nombre de las asignaturas de segundo cuatrimestre
+13. Nombre de las asignaturas que no tienen cuatro cr�ditos te�ricos
+14. C�digo de la carrera que estudia el �ltimo alumno
+15. Nombre de los alumnos matriculados en la asignatura cuyo id es �a02�
+16. Codigos de las carreras que estudian los alumnos matriculados en alguna asignatura
+17. Nombre de la carrera que estudia Federico
+18. Apellidos de todos los hombres.
+
+
+https://fp.josedomingo.org/lmgs/u04/ejercicio_xpath.html
+
+/universidad/carreras/carrera/@id
+el @ sirve para seleccionar un atributo
+
+datos de carrera con id="c01"
+//carrera[@id='c01']
+
+6. centro donde se estudia la carrera cuyo id es c02
+//carrera[@id='c02']/centro
+
+7. Nombre de las carreras que tengan sub director
+//carrera/nombre[../subdirector]
+
+8. Nombre de los alumnos que esten haciendo proyectos
+//alumno/nombre[..//proyecto]
+
+9. Codigo de las carreras en las que hay un alumno matriculado
+//alumno/estudios/carrera/@codigo
+
+10. Apellidos y nombre de los alumnos con beca
+//alumno[@beca='si']/nombre | //alumno[@beca='si']/apellido1 | //alumno[@beca='si']/apellido2
+
+11. Nombre de las asignaturas de la titulacion c04
+//asignatura[@titulacion='c04']/nombre
+
+12. Nombre de las asignaturas se segundo trimestre
+//asignatura/nombre[../cuatrimestre=2]
+
+13. Nombre de las asignaturas que no tienen 4 creditos teoricos
+//asignatura/nombre[../creditos_teoricos!=4]
+
+14. Codigo de la carrera que estudia el ultimo alumno
+//alumno[last()]/estudios/carrera/@codigo
+
+15. Codigo de las asignaturas que estudian mujeres
+/universidad/alumnos/alumno[sexo='Mujer']/estudios/asignaturas/asignatura/@codigo
+
+16. Nombre de los alumnos que matriculados en la asignatura a02.
+//alumno[.//asignatura/@codigo='a02']/nombre
+
+17. Códigos de las carreras que estudian los alumnos matriculados en alguna asignatura.
+
+
+18. Apellidos de todos los hombres
+//alumno[sexo='Hombre']/apellido1 | //alumno[sexo='Hombre']/apellido2
+
+19. Nombre de la carrera que estudia Víctor Manuel:
+20. Nombre de las asignaturas que estudia Luisa:
+21. Primer apellido de los alumnos matriculados en Ingeniería del Software:
+22. Nombre de las carreras que estudian los alumnos matriculados en la asignatura
+Tecnología de los Alimentos:
+23. Nombre de los alumnos matriculados en carreras que no tienen subdirector:
+24. Nombre de las alumnos matriculados en asignaturas con 0 créditos prácticos y que estudien la carrera de I.T. Informática
+25. Nombre de los alumnos que estudian carreras cuyos planes son anteriores a 2002
+
