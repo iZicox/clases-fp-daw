@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+           
+        }
+
+        
+
+        /* flezbox container classes */
+        .flex-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .f-start{
+            justify-content: flex-start;
+        }
+
+        .f-end{
+            justify-content: flex-end;
+        }
+
+        .around {
+            justify-content: space-around;
+        }
+
+        .between {
+            justify-content: space-between;
+        }
+
+        .evenly {
+            justify-content: space-evenly;
+        }
+
+        .column {
+            flex-direction: column;
+        }
+
+        .column-reverse {
+            flex-direction: column-reverse;
+        }
+
+        .row-reverse {
+            flex-direction: row-reverse;
+        }
+
+        .align-start {
+            align-items: flex-start;
+        }
+
+        .align-end {
+            align-items: flex-end;
+        }
+
+        .align-stretch {
+            align-items: stretch;
+        }
+
+        .align-center {
+            align-items: center;
+        }
+
+        .align-baseline {
+            align-items: baseline;
+        }
+
+        /* shadow box */
+        .shadow-box {
+            box-shadow: 3px 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /** menu styles **/
+
+        nav {
+            background-color: #495837;
+            padding: 1rem 2rem;
+            color: #FEFAE0;
+        }
+
+        nav ul{
+            gap: 2rem;
+        }
+        nav li {
+            list-style: none;
+        }
+
+        nav div:nth-of-type(2) {
+            width: 8rem;
+            height: 3rem;
+            background-color: #606C38;
+            color: aliceblue;
+            border-radius: 2rem;
+        }
+
+        nav div:first-of-type {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background-color: #606C38;
+            color: aliceblue;
+            width: 5rem;
+            height: 5rem;
+            border-radius: 50%;
+            
+        }
+
+        section:first-of-type {
+            margin-top: 2rem;
+            background-color: white;
+            padding: 2rem;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <nav class="flex-container around">
+        <div class="flex-container">logo</div>
+        <ul class="flex-container around">
+            <li>Lorem.</li>
+            <li>Lorem.</li>
+            <li>Lorem.</li>
+            <li>Lorem.</li>
+        </ul>
+        <div class="flex-container shadow-box">
+            <p>Lorem, ipsum.</p>
+        </div>
+    </nav>
+    <section>
+        <div>
+            <h1>Lorem ipsum dolor sit amet.</h1>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus, in.</p>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perferendis, eligendi.</p>
+        </div>
+        <div><img src="" alt=""></div>
+    </section>
+    <section>
+        <div>
+            <div>
+                <img src="" alt="">
+                <div>
+                    <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. In illum suscipit modi vel soluta tenetur porro numquam provident libero itaque.</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta vel optio maiores labore dolorem corrupti reprehenderit rem in illum amet. Quis quasi esse dolores voluptates nihil placeat eligendi perspiciatis rem deserunt illum ad culpa quia sed voluptatem delectus sunt, rerum et velit iusto est necessitatibus vel! Distinctio doloribus nobis quam?</p>
+                </div>
+            </div>
+            <div>
+                <hr>
+                <div>
+                    <h3>Lorem, ipsum dolor.</h3>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum velit impedit autem fuga perferendis minima officia molestiae ipsam quidem amet. Distinctio corporis officiis at eum numquam, est eligendi cumque dolor!</p>
+                </div>
+                <div>
+                    <h3>Lorem, ipsum dolor.</h3>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum velit impedit autem fuga perferendis minima officia molestiae ipsam quidem amet. Distinctio corporis officiis at eum numquam, est eligendi cumque dolor!</p>
+                </div>
+            </div>
+        </div>
+        <div>
+            <img src="" alt="">
+        </div>
+    </section>
+</body>
+</html>
