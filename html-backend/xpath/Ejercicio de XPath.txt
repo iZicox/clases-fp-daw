@@ -69,17 +69,29 @@ datos de carrera con id="c01"
 //alumno[.//asignatura/@codigo='a02']/nombre
 
 17. Códigos de las carreras que estudian los alumnos matriculados en alguna asignatura.
-
+//alumno//asignatura/../../carrera/@codigo
 
 18. Apellidos de todos los hombres
 //alumno[sexo='Hombre']/apellido1 | //alumno[sexo='Hombre']/apellido2
 
 19. Nombre de la carrera que estudia Víctor Manuel:
+//carrera[@id=//alumno[nombre='Victor Manuel']//carrera/@codigo]/nombre
+
 20. Nombre de las asignaturas que estudia Luisa:
+
+
 21. Primer apellido de los alumnos matriculados en Ingeniería del Software:
+
+
 22. Nombre de las carreras que estudian los alumnos matriculados en la asignatura
 Tecnología de los Alimentos:
+
+
 23. Nombre de los alumnos matriculados en carreras que no tienen subdirector:
+
+
 24. Nombre de las alumnos matriculados en asignaturas con 0 créditos prácticos y que estudien la carrera de I.T. Informática
+
+
 25. Nombre de los alumnos que estudian carreras cuyos planes son anteriores a 2002
 
