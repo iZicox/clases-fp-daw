@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       
+        /*galeria*/
+        .galeria {
+            width: 100%;
+        }
+        .galeria > h2 {
+            font-size: 3rem;
+            text-align: center;
+        }
+        img {
+            width: 30rem;
+        }
+
+        section{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        section > div {
+            width: 30rem;
+            height: 30rem;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+         /* Modal */
+        .modal {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .modal:target {
+            opacity: 1;
+            pointer-events: auto;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            position: relative;
+            width: 80%;
+            height: 80%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: white;
+            font-size: 3rem;
+            text-decoration: none;
+        }
+
+        /* Slideshow automático */
+        .slide {
+            position: absolute;
+            opacity: 0;
+            animation: slideshow 27s infinite;
+        }
+
+        .slide:nth-child(1) { animation-delay: 0s; }
+        .slide:nth-child(2) { animation-delay: 3s; }
+        .slide:nth-child(3) { animation-delay: 6s; }
+        .slide:nth-child(4) { animation-delay: 9s; }
+        .slide:nth-child(5) { animation-delay: 12s; }
+        .slide:nth-child(6) { animation-delay: 15s; }
+        .slide:nth-child(7) { animation-delay: 18s; }
+        .slide:nth-child(8) { animation-delay: 21s; }
+        .slide:nth-child(9) { animation-delay: 24s; }
+
+        @keyframes slideshow {
+            0%, 11.11% { opacity: 1; }
+            11.12%, 100% { opacity: 0; }
+        }
+        
+
+
+    </style>
+</head>
+<body>
+      <div class="galeria">
+        <h2>Galeria de imagenes</h2>
+        <section>
+            <div>
+                <a href="#modal">
+                    <img src="https://i.pinimg.com/736x/6e/7e/66/6e7e66eafe063b2bfbf7b9edef0fc4fc.jpg" alt="">
+                </a>
+            </div>
+            <div>
+                <a href="#modal">
+                    <img src="https://i.pinimg.com/736x/79/69/de/7969de5cb5f0be2dfd4cd3b71ce9995a.jpg" alt="">
+                </a>
+            </div>
+            <div>
+                <a href="#modal">
+                    <img src="https://i.pinimg.com/736x/f6/1c/3c/f61c3c4d59df9587b5b67a8b8faa76f1.jpg" alt="">
+                </a>
+            </div>
+            <div>
+                <a href="#modal">
+                    <img src="https://i.pinimg.com/736x/30/c3/e9/30c3e92b9b6a5cdfb7385bd13b33b9e8.jpg" alt="">
+                </a>
+            </div>
+            <div>
+                <a href="#modal">
+                    <img src="https://i.pinimg.com/736x/cc/4e/ff/cc4eff3294bea2f20abf3b7cb33720de.jpg" alt="">
+                </a>
+            </div>
+            <div>
+                <a href="#modal">
+                    <img src="https://i.pinimg.com/736x/da/60/dc/da60dcd1e4685a6dcf1c4825439c9b2b.jpg" alt="">
+                </a>
+            </div>
+            <div>
+                <a href="#modal">
+                    <img src="https://i.pinimg.com/736x/1c/69/49/1c69495d02e8b9e8869a33f7ceec8896.jpg" alt="">
+                </a>
+            </div>
+            <div>
+                <a href="#modal">
+                    <img src="https://i.pinimg.com/1200x/d5/17/f8/d517f814961d33df87bb43e1862665e5.jpg" alt="">
+                </a>
+            </div>
+            <div>
+                <a href="#modal">
+                    <img src="https://i.pinimg.com/736x/fc/5d/3d/fc5d3de92354f67ae0bcaeabbd434c40.jpg" alt="">
+                </a>
+            </div>
+        </section>
+    </div>
+    
+    <div id="modal" class="modal">
+        <a href="#" class="close">X</a>
+        <div class="modal-content">
+            <img class="slide" src="https://i.pinimg.com/736x/6e/7e/66/6e7e66eafe063b2bfbf7b9edef0fc4fc.jpg" alt="">
+            <img class="slide" src="https://i.pinimg.com/736x/79/69/de/7969de5cb5f0be2dfd4cd3b71ce9995a.jpg" alt="">
+            <img class="slide" src="https://i.pinimg.com/736x/f6/1c/3c/f61c3c4d59df9587b5b67a8b8faa76f1.jpg" alt="">
+            <img class="slide" src="https://i.pinimg.com/736x/30/c3/e9/30c3e92b9b6a5cdfb7385bd13b33b9e8.jpg" alt="">
+            <img class="slide" src="https://i.pinimg.com/736x/cc/4e/ff/cc4eff3294bea2f20abf3b7cb33720de.jpg" alt="">
+            <img class="slide" src="https://i.pinimg.com/736x/da/60/dc/da60dcd1e4685a6dcf1c4825439c9b2b.jpg" alt="">
+            <img class="slide" src="https://i.pinimg.com/736x/1c/69/49/1c69495d02e8b9e8869a33f7ceec8896.jpg" alt="">
+            <img class="slide" src="https://i.pinimg.com/1200x/d5/17/f8/d517f814961d33df87bb43e1862665e5.jpg" alt="">
+            <img class="slide" src="https://i.pinimg.com/736x/fc/5d/3d/fc5d3de92354f67ae0bcaeabbd434c40.jpg" alt="">
+        </div>
+    </div>
+    
+</body>
+</html>
