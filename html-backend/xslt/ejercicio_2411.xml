@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Comentario opcional: descripción del ejercicio -->
+<xsl:stylesheet
+    version="1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+    <!-- 1️⃣  Declaración de salida (opcional) -->
+    <xsl:output method="html" encoding="UTF-8" indent="yes"/>
+
+    <!-- 2️⃣  Plantilla principal (match="/") -->
+    <xsl:template match="/">
+        <!-- Aquí se escribe el HTML resultante -->
+        <html>
+            <head>
+                <title>Resultado del ejercicio 2411</title>
+                <!-- Puedes añadir CSS o meta‑tags -->
+            </head>
+            <body>
+                <!-- 3️⃣  Llamada a otras plantillas o procesamiento -->
+                <xsl:apply-templates/>
+            </body>
+        </html>
+    </xsl:template>
+
+    <!-- 4️⃣  Plantillas específicas para los nodos del XML origen -->
+    <!-- Ejemplo: procesar cada <producto> -->
+    <xsl:template match="producto">
+        <div class="producto">
+            <h2><xsl:value-of select="nombre"/></h2>
+            <p>Precio: <xsl:value-of select="precio"/></p>
+        </div>
+    </xsl:template>
+
+    <!-- 5️⃣  Otras plantillas auxiliares (si son necesarias) -->
+    <!-- … -->
+
+</xsl:stylesheet>
