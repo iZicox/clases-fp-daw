@@ -1,0 +1,3 @@
+CREATE USER prueba_dcl IDENTIFIED BY oracle123 DEFAULT TABLESPACE users quota 1m ON users; 
+
+GRANT CREATE SESSION TO prueba_dcl;
