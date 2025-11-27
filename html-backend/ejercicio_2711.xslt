@@ -120,11 +120,22 @@ forma de lista en varios niveles.
                 <title>Ejemplo XSLT</title>
             </head>
             <body>                    
-                    <xsl:for-each select="//*">
+                    <xsl:for-each select="//dia">
                         <ul>
-                            <li>Posición: <xsl:value-of select="position()"/></li>
-                            <li>Nombre del nodo: <xsl:value-of select="name()"/></li>
-                            <li>Número de hijos: <xsl:value-of select="count(child::*)"/></li>
+                            <li><strong><xsl:value-of select="position()"/> Dia</strong> - Hijos <xsl:value-of select="count(child::*)"/></li>
+                            
+                                <ul>
+                                    <xsl:for-each select="*">
+                                        <li><strong><xsl:value-of select="position()"/><xsl:text> </xsl:text><xsl:value-of select="local-name()"/> </strong> - Hijos <xsl:value-of select="count(child::*)"/></li>
+                                        <xsl:if test="child::*">
+                                            <ul>
+                                                <xsl:for-each select="child::*">
+                                                    <li><xsl:value-of select="position()"/><xsl:text> </xsl:text><xsl:value-of select="local-name()"/> - Hijos <xsl:value-of select="count(child::*)"/></li>
+                                                </xsl:for-each>
+                                            </ul>
+                                        </xsl:if>
+                                    </xsl:for-each>
+                                </ul>
                         </ul>
                     </xsl:for-each>     
             </body>
