@@ -146,7 +146,7 @@ SELECT t.NAME ,
 CASE 
 	WHEN length(t.name) > 20 THEN 'Largo'
 	ELSE 'Corto'
-END AS nose
+END AS longitud
 FROM TRACK t ;
 /*
 22. Haz una lista de las facturas sacando la fecha, el importe y al lado un campo que las
@@ -160,19 +160,30 @@ SELECT
 		WHEN i.total > 8 THEN 'Caras'
 		WHEN i.total < 4 THEN 'Baratas'
 		ELSE 'Normales'
-	END
-
+	END AS calificacion
 FROM INVOICE i 
-
 INNER JOIN CUSTOMER c 
 	ON i.CUSTOMERID = c.CUSTOMERID 
 WHERE c.COUNTRY IN ('USA','Canada');
-
-SELECT DISTINCT country FROM CUSTOMER c ;
+/*
 23. Haz una lista de empleados con 3 columnas: nombre del empleado, días que han pasado
 desde que nació hasta que le contrataron y días que han pasado desde que le contrataron
 hasta ahora.
-24. Haz una lista de clientes con nombre, apellidos y la compañía. Si la compañía es nula, que
+*/
+SELECT e.FIRSTNAME , 
+		round(MONTHS_BETWEEN(e.HIREDATE, e.BIRTHDATE)*30) AS dias_nac_cont,
+		ROUND(MONTHS_BETWEEN(TO_DATE(sysdate),e.HIREDATE)*30) AS dias_cont_hoy
+FROM EMPLOYEE e; 
+/*
+24. Haz una lista de clientes con nombre, apellidos y la compañía. 
+Si la compañía es nula, que
 ponga “Cliente Persona Física”. No se puede utilizar el CASE.
-25. Haz una lista de clientes con nombre, apellidos. El nombre lo queremos relleno con * por la
+*/
+SELECT c.FIRSTNAME ,c.LASTNAME , NVL(c.COMPANY ,'Persona fisica')
+FROM CUSTOMER c ;
+/*
+25. Haz una lista de clientes con nombre, apellidos. 
+El nombre lo queremos relleno con * por la
 derecha hasta 50 posiciones y el apellido con & hasta 30 posiciones por la izquierda
+*/
+SELECT RPAD(c.FIRSTNAME ,50,'*') , LPAD(c.LASTNAME ,30,'&')  FROM CUSTOMER c ;
