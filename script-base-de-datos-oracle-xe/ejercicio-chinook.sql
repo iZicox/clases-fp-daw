@@ -148,9 +148,27 @@ CASE
 	ELSE 'Corto'
 END AS nose
 FROM TRACK t ;
+/*
 22. Haz una lista de las facturas sacando la fecha, el importe y al lado un campo que las
 cualifique en CARAS (más de 8€), NORMALES (entre 4€ y 8€) y BARATAS (menos de 4€). Sólo
 para facturas en USA y Canada
+*/
+SELECT 
+	i.INVOICEID ,
+	i.TOTAL , 
+	CASE 
+		WHEN i.total > 8 THEN 'Caras'
+		WHEN i.total < 4 THEN 'Baratas'
+		ELSE 'Normales'
+	END
+
+FROM INVOICE i 
+
+INNER JOIN CUSTOMER c 
+	ON i.CUSTOMERID = c.CUSTOMERID 
+WHERE c.COUNTRY IN ('USA','Canada');
+
+SELECT DISTINCT country FROM CUSTOMER c ;
 23. Haz una lista de empleados con 3 columnas: nombre del empleado, días que han pasado
 desde que nació hasta que le contrataron y días que han pasado desde que le contrataron
 hasta ahora.
