@@ -78,7 +78,7 @@ datos de carrera con id="c01"
 //carrera[@id=//alumno[nombre='Victor Manuel']//carrera/@codigo]/nombre
 
 20. Nombre de las asignaturas que estudia Luisa:
-
+//asignatura[@id=//alumno[nombre='Luisa']//asignatura/@codigo]/nombre
 
 21. Primer apellido de los alumnos matriculados en Ingeniería del Software:
 
