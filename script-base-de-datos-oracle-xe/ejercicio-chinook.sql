@@ -146,7 +146,7 @@ SELECT t.NAME ,
 CASE 
 	WHEN length(t.name) > 20 THEN 'Largo'
 	ELSE 'Corto'
-END AS nose
+END AS longitud
 FROM TRACK t ;
 22. Haz una lista de las facturas sacando la fecha, el importe y al lado un campo que las
 cualifique en CARAS (más de 8€), NORMALES (entre 4€ y 8€) y BARATAS (menos de 4€). Sólo

@@ -126,11 +126,24 @@ forma de lista en varios niveles.
                             
                                 <ul>
                                     <xsl:for-each select="*">
-                                        <li><strong><xsl:value-of select="position()"/><xsl:text> </xsl:text><xsl:value-of select="local-name()"/> </strong> - Hijos <xsl:value-of select="count(child::*)"/></li>
+                                        <li>
+                                            <strong>
+                                                <xsl:value-of select="position()"/>
+                                                <xsl:text> </xsl:text>
+                                                <xsl:value-of select="local-name()"/>
+                                            </strong> - Hijos 
+                                            <xsl:value-of select="count(child::*)"/>
+                                        </li>
+
                                         <xsl:if test="child::*">
                                             <ul>
                                                 <xsl:for-each select="child::*">
-                                                    <li><xsl:value-of select="position()"/><xsl:text> </xsl:text><xsl:value-of select="local-name()"/> - Hijos <xsl:value-of select="count(child::*)"/></li>
+                                                    <li>
+                                                        <xsl:value-of select="position()"/>
+                                                        <xsl:text> </xsl:text>
+                                                        <xsl:value-of select="local-name()"/> - Hijos 
+                                                        <xsl:value-of select="count(child::*)"/>
+                                                    </li>
                                                 </xsl:for-each>
                                             </ul>
                                         </xsl:if>
