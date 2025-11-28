@@ -127,8 +127,10 @@ INNER JOIN CITY c2 ON c.CODE = c2.COUNTRYCODE
 WHERE c2.POPULATION BETWEEN 500000 AND 1000000
 ORDER BY c.NAME ASC, c2.POPULATION DESC ;
 /*
-8\. Devuelve un listado de las ciudades de Asia de más de 2.000.000 y las ciudades de
-América de más de 1.000.000. Ordena la consulta por población de la ciudad
+8\. Devuelve un listado de las ciudades de Asia de más de 
+2.000.000 y las ciudades de
+América de más de 1.000.000. Ordena la consulta por población 
+de la ciudad
 descendente
 */
 SELECT c.name, c2.CONTINENT, c.POPULATION   FROM CITY c 
