@@ -43,7 +43,9 @@ SELECT
 		MEDIAN(c.POPULATION ),
 		SUM(c.POPULATION )
 FROM CITY c 
-WHERE c.CONTINENT IN ('Europe');
+INNER JOIN COUNTRY c2 
+	ON c.COUNTRYCODE = c2.CODE 
+WHERE c2.CONTINENT IN ('America');
 /*
 9. Muestra el número total de personas que tiene cada continente. Se mostrará en dos
 columnas, una con el nombre del continente y otra con el número total de personas. Debe

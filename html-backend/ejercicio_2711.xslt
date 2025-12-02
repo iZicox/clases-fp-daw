@@ -154,4 +154,144 @@ forma de lista en varios niveles.
             </body>
         </html>    
     </xsl:template>
+</xsl:stylesheet> 
+
+<!-- D
+--> 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:template match="horario">
+        <html>
+            <head>
+                <title>Horario</title>
+            </head>
+            <body>
+
+                <xsl:apply-templates select="dia">
+                    <!-- Ejercicion E: Ordenar por dia -->
+                    <xsl:sort select="numdia" data-type="number" order="ascending"/>
+                </xsl:apply-templates>
+            </body>
+        </html>
+    </xsl:template>
+
+    <xsl:template match="dia">
+            <p>Dia <xsl:value-of select="numdia"/></p>
+            <xsl:apply-templates select="tarea"/>
+    </xsl:template>
+
+    <xsl:template match="tarea">
+            <ul>
+                <li>
+                    <strong>
+                        <xsl:value-of select="nombre"/>
+                    </strong>
+                    - Prioridad:
+                    <xsl:value-of select="./@prioridad"/>
+                    De <xsl:value-of select="hora-ini"/> 
+                    a <xsl:value-of select="hora-fin"/>
+                </li>
+            </ul>
+    </xsl:template>
+
+</xsl:stylesheet>
+
+
+<!-- 
+F
+--> 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:template match="horario">
+        <html>
+            <head>
+                <title>Horario</title>
+            </head>
+            <body>
+
+                <xsl:apply-templates select="dia">
+                    <!-- Ejercicion E: Ordenar por dia -->
+                    <xsl:sort select="numdia" data-type="number" order="ascending"/>
+                </xsl:apply-templates>
+            </body>
+        </html>
+    </xsl:template>
+
+    <xsl:template match="dia">
+            <p>Dia <xsl:value-of select="numdia"/></p>
+            <xsl:apply-templates select="tarea"/>
+    </xsl:template>
+
+    <xsl:template match="tarea">
+            <ul>
+                <li>
+                    <strong>
+                        <xsl:value-of select="nombre"/>
+                    </strong>
+                   <xsl:if test="@prioridad">
+                        - Prioridad:
+                        <xsl:value-of select="./@prioridad"/>
+                    </xsl:if>
+                    De <xsl:value-of select="hora-ini"/> 
+                    a <xsl:value-of select="hora-fin"/>
+                </li>
+            </ul>
+    </xsl:template>
+
+</xsl:stylesheet>
+
+<!-- 
+Sea el siguiente documento XML con información sobre libros:
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type= text/xsl href= dlibros3.xsl ?>
+<repertorio>
+    <libro>
+        <titulo>Don Quijote de la Mancha</titulo>
+        <autor>Miguel de Cervantes</autor>
+        <anyo_pub>1987</anyo_pub>
+        <isbn>84-568-94-3</isbn>
+    </libro>
+    <libro>
+        <titulo>La Galatea</titulo>
+        <autor>Miguel de Cervantes</autor>
+        <anyo_pub>1989</anyo_pub>
+        <isbn>84-568-9424</isbn>
+    </libro>
+    <libro>
+        <titulo>La Celestina</titulo>
+        <autor>Fernando de Rojas</autor>
+        <anyo_pub>1998</anyo_pub>
+        <isbn>84-568-95-12</isbn>
+    </libro>
+</repertorio>
+Escribir una hoja XSLT para transformar el documento anterior en otro
+ documento XML que incluya sólo los libros
+cuyo autor es Miguel de Cervantes.
+C.F.G.S. ASIR / DAW / DAM Página 6/6
+-->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:template match="//libro">
+    <h1>Libros de Miguel de Cervantes</h1>
+        <xsl:apply-templates select="libro"/>
+    </xsl:template>
+
+    <xsl:template match="//libro">
+        <xsl:if test="autor='Miguel de Cervantes'">
+        <ul>
+            <li>
+                <xsl:value-of select="titulo"/>
+            </li>
+            <li>
+                <xsl:value-of select="isbn"/>
+            </li>    
+            <li>
+                <xsl:value-of select="anyo_pub"/>
+            </li>
+        </ul>
+        </xsl:if>
+    </xsl:template>
 </xsl:stylesheet>
