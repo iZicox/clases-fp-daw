@@ -295,3 +295,34 @@ C.F.G.S. ASIR / DAW / DAM Página 6/6
         </xsl:if>
     </xsl:template>
 </xsl:stylesheet>
+
+<!---->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:template match="//libro">
+        
+            <xsl:apply-templates select="libro"/>
+     
+        
+    </xsl:template>
+
+    <xsl:template match="//libro">
+        <xsl:choose>
+            <xsl:when test="autor='Miguel de Cervantes'">
+                <ul>
+                    <li>
+                        <xsl:value-of select="autor"></xsl:value-of>: <xsl:value-of select="titulo"></xsl:value-of>
+                    </li>
+                </ul>
+            </xsl:when>
+            <xsl:otherwise>
+                <ul>
+                    <li>
+                        <xsl:value-of select="autor"></xsl:value-of>: <xsl:value-of select="anyo_pub"></xsl:value-of>
+                    </li>
+                </ul>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+</xsl:stylesheet>

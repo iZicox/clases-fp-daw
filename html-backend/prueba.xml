@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hobbies>
+    <hobby difficulty="Moderate">
+        <name>Photography</name>
+        <description>Capturing moments through the lens of a camera, exploring the art of visual storytelling.</description>
+        <popularity>High</popularity>
+    </hobby>
+    <hobby difficulty="Easy">
+        <name>Gardening</name>
+        <description>Cultivating plants and creating a beautiful outdoor space for relaxation and enjoyment.</description>
+        <popularity>Moderate</popularity>
+    </hobby>
+    <hobby difficulty="Moderate">
+        <name>Board Games</name>
+        <description>Engaging in strategic and social tabletop games with friends and family.</description>
+        <popularity>High</popularity>
+    </hobby>
+    <hobby>
+        <name>Reading</name>
+        <description>Exploring imaginary worlds through books, a relaxing and enriching pastime.</description>
+        <popularity>Moderate</popularity>
+    </hobby>
+    <hobby difficulty="Difficult">
+        <name>Hiking</name>
+        <description>Exploring nature trails, enjoying outdoor adventures, and staying active.</description>
+        <popularity>High</popularity>
+    </hobby>
+</hobbies>
