@@ -42,7 +42,7 @@ SELECT * FROM ARTIST WHERE LENGTH(NAME ) > 10;
 SELECT * FROM ALBUM a INNER JOIN ARTIST a2 ON a.ARTISTID = a2.ARTISTID 
 WHERE a2.NAME IN ('Led Zeppelin','Iron Maiden')
 AND (a.TITLE LIKE '%1%'
-OR a.TITLE LIKE '%2%');
+OR (a.TITLE LIKE '%2%');
 
 /*
 8. Saca un listado de facturas (INVOICE) emitidas en los 3 primeros meses de cualquier año y
