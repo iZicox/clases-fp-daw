@@ -1,0 +1,42 @@
+nombre: DW1D1E-GD1E2-NBR-ApellidosNombre.htm
+tiempo: 80m
+
+-Leer detenidamente, una vez comenzada la prueba no hay preguntas.
+-Puedes usar internet y el material de clase.
+-Se corrige en linux, pantalla de clase, firefox, zoom 100%
+
+Criterios **
+a- Nombre de fichero segun formato de entrega, ver primera linea.
+b- Entregas dentro del tiempo.
+c- Entregar cada 10 minutos, 0m 10m 20m 30m 40m 50m ...
+d- El programa debe ejecutar sin error.
+e- El código debe ser original del alumno.
+
+Prueba **
+Usando el fichero dado htm, crear en el mismo los estilos necesarios para cumplir el contenido de las capturas.
+El HTML del fichero NO SE PUEDE modificar, se usará el HTML dado para evaluar. 
+
+Apartados **
+01- tres primeras cajas rojas centradas y alineadas
+02- presentar el color gris al pasar sobre caja roja (según video)
+03- cajas(D-A) iguales, alineación, dimensiones y orden
+04- cajas negras (1-4) iguales, alineación, dimensiones y orden
+05- cajas(a-d) iguales, alineación, dimensiones y orden
+06- todas las lupas insertadas en la posiciónes correctas
+07- cajas(D-A,a-d) presentan el mismo ancho del box model (captura2)
+08- color amarillo al pasar sobre las cajas negras (según video)
+09- alargamiento de la caja al pasar por encima (según video)
+10- añade los asteriscos en la caja(a) sin tocar HTML
+11- presenta el texto en la caja(d) con ellipsis sin tocar HTML
+12- alineación de la fila de botones(L,M,R) dentro de su contenedor -NO
+13- enlaza a BS5 para ver LMR estilizados -NO
+14- click caja(L) efecto en la primera caja roja -NO
+15- click caja(M) deshacer efecto anterior -NO
+16- cuatra caja roja girada (aproximada)
+
+Calificación **
+- No cumplir un criterio es un cero.
+- Solo apartados completos puntuan, incompletos son cero.
+- Pondera un 70% del RA2
+
+
