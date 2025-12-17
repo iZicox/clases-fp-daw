@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>E</title>
+	<style>
+		*{
+			box-sizing: border-box;
+		}
+
+		body{
+			padding: 3rem 2rem;
+		}
+		
+		.contenedor {
+			border: 3px solid red;
+			padding: 1rem;
+			margin-bottom: 1rem;
+		}
+
+		/* cuadro uno */
+		.contenedor.uno {
+			display: flex;
+			flex-direction: column;
+			gap: 0.25rem;
+			background-color: rgba(49, 49, 49, 0);
+			transition: background-color 0.5s ease;
+			&:hover{
+				background-color: rgba(49, 49, 49, 0.312);
+				
+			}
+		}
+
+		.contenedor div{
+			border: 2px solid black;
+			display: inline-block;
+			width: 6rem;
+			height: 3rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: width 1.5s ease;
+			&:hover{
+				background-color: yellow;
+			}
+		}
+
+		.contenedor.uno div:nth-child(1):hover{
+			width: 20rem
+		}
+
+		.contenedor div:nth-last-of-type(2), .contenedor div:nth-last-of-type(3){
+
+			background-image: url(lupa.png);
+			background-repeat: no-repeat;
+			background-position: left;
+			background-position: 10% 50%;
+		}
+
+		.contenedor.uno div:nth-of-type(1){
+			order: 4;
+		}
+
+		.contenedor.uno div:nth-of-type(2){
+			order: 3;
+		}
+		.contenedor.uno div:nth-of-type(3){
+			order: 2;
+		}
+		.contenedor.uno div:nth-of-type(4){
+			order: 1;
+		}
+		/* cuadro dos*/
+		.contenedor.dos {
+			display: flex;
+			
+		
+		}
+		.contenedor.dos > table {
+			border-collapse: collapse;
+			margin: 0;
+		}
+		.contenedor.dos td{
+			border: 2px solid black;
+			display: inline-block;
+			width: 5rem;
+			height: 3rem;
+			text-align: center;
+			line-height: 3rem;
+			&:hover{
+				background-color: yellow;
+			}
+		}
+
+		.contenedor.dos td:nth-of-type(2){
+			background-image: url(lupa.png);
+			background-repeat: no-repeat;
+			background-position: left;
+			background-position: 10% 50%;
+		}
+
+		/* contenedor 3*/
+		.contenedor.tres ul{
+			list-style-type: none;
+			padding-left: 0;
+    		margin-left: 0;
+		}
+
+		.contenedor.tres li{
+			display: inline-block;
+			width: 5rem;
+			height: 3rem;
+			padding: 0.25rem;
+			border: 2px solid black;
+			text-align: center;
+			line-height: 2.5rem;
+			&:hover{
+				background-color: yellow;
+			}
+		}
+
+		
+		.contenedor.tres > ul > li:nth-of-type(4){
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.contenedor.tres > ul > li:nth-of-type(1)::before{
+			content: "**";
+		}
+
+		.contenedor.tres > ul{
+			display: flex;
+			gap: 0.25rem;
+		}
+		/* contenedor 4 */
+		.contenedor.cuatro {
+			margin-top: 7rem;
+			transform: rotate(5deg);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.contenedor.cuatro > div {
+			border: none;
+		}
+
+		.contenedor.cuatro > div > button {
+			
+			width: 5rem;
+			height: 2rem;
+		}
+	</style>
+</head>
+<body>
+	<div class="contenedor uno">
+		<div>A</div>
+		<div>B</div>
+		<div>C</div>
+		<div>D</div>
+	</div>
+	<div class="contenedor dos">
+		<table>
+			<tr>
+				<td>1</td>
+				<td>2</td>
+				<td>3</td>
+				<td>4</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div class="contenedor tres">
+		<ul>
+			<li>a</li> 
+			<li>b</li>
+			<li>c</li>
+			<li>d: soy el ultimo hijo</li>
+		</ul>
+	</div>
+	
+	<div class="contenedor cuatro">
+		<div class="btn-group" role="group" aria-label="Basic mixed styles example">
+			<button type="button" class="btn btn-danger">L</button>
+			<button type="button" class="btn btn-warning">M</button>
+			<button type="button" class="btn btn-success">R</button>
+		</div>
+	</div>
+</body>
+</html>

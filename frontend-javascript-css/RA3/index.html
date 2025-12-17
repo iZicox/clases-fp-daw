@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MinimalistWeb - Simplicity First</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --primary: #f9f506;
+            --bg-body: #f8f8f5;
+            --bg-white: #ffffff;
+            --text-main: #1c1c0d;
+            --text-muted: #4a4a40;
+            --border-color: #e5e5dc;
+            --radius-lg: 1rem;
+            --radius-xl: 2rem;
+            --radius-full: 9999px;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }* {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Spline Sans', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        button {
+            border: none;
+            background: none;
+            font-family: inherit;
+            cursor: pointer;
+        }.wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .container {
+            width: 100%;
+            max-width: 1152px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: rgba(248, 248, 245, 0.95);
+            backdrop-filter: blur(4px);
+            border-bottom: 1px solid var(--border-color);
+            width: 100%;
+        }
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 5rem;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            background-color: var(--primary);
+            border-radius: 50%;
+            color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .site-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+        .main-nav {
+            display: none;align-items: center;
+            gap: 2.5rem;
+        }
+        .nav-link {
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-link:hover {
+            color: #9e9d47;
+        }
+        .mobile-menu-btn {
+            display: block;
+        }
+        @media (min-width: 768px) {
+            .main-nav {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: none;
+            }
+        }main {
+            flex-grow: 1;
+        }
+        .hero-section {
+            padding: 3rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        @media (min-width: 768px) {
+            .hero-section {
+                padding: 6rem 0;
+            }
+        }
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 2rem;
+            max-width: 48rem;margin: 0 auto;
+        }
+        .version-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #9e9d47;
+        }
+        .pulse-dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            background-color: var(--primary);
+            border-radius: 50%;
+        }
+        h1.hero-title {
+            font-size: 3rem;
+            line-height: 1.1;
+            font-weight: 900;
+            letter-spacing: -0.025em;
+        }
+        @media (min-width: 768px) {
+            h1.hero-title {
+                font-size: 4.5rem;
+            }
+        }
+        .highlight-wrap {
+            position: relative;
+            display: inline-block;
+            z-index: 10;
+        }
+        .highlight-bg {
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background-color: rgba(249, 245, 6, 0.6);
+            transform: rotate(-2deg);
+            z-index: -1;
+            border-radius: 0.5rem;
+        }
+        .hero-desc {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            max-width: 36rem;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        .cta-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+            width: 100%;
+            align-items: center;
+        }
+        @media (min-width: 640px) {
+            .cta-group {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+        .btn {
+            height: 3.5rem;
+            min-width: 200px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: transform 0.2s, background-color 0.2s;
+            padding: 0 2rem;
+        }
+        .btn:active {
+            transform: scale(0.95);
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        .btn-primary {
+            background-color: var(--primary);
+            color: black;
+            box-shadow: 0 10px 15px -3px rgba(249, 245, 6, 0.2);
+        }
+        .btn-outline {
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+        .btn-outline:hover {
+            background-color: #fcfcf8;
+        }.visual-container {
+            margin-top: 4rem;
+            width: 100%;
+            max-width: 56rem;margin-left: auto;
+            margin-right: auto;
+        }
+        .visual-frame {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background-color: #f0f0eb;
+            border-radius: 1rem;overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        .bg-image {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.9;
+        }
+        .overlay-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, var(--bg-body), transparent);
+            opacity: 0.2;
+        }
+        .info-card {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            right: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .info-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .info-text strong {
+            display: block;
+            font-size: 0.875rem;
+            color: var(--text-main);
+        }
+        .info-text span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }.features-grid {
+            margin-top: 6rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        @media (min-width: 768px) {
+            .features-grid {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+        }
+        .feature-item {
+            flex: 1;
+            min-width: 250px;
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            transition: border-color 0.2s;
+        }
+        .feature-item:hover {
+            border-color: rgba(249, 245, 6, 0.5);
+        }
+        .icon-circle {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background-color: rgba(249, 245, 6, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+            color: black;
+        }
+        .feature-item h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        .feature-item p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }footer {
+            border-top: 1px solid var(--border-color);
+            background-color: var(--bg-white);
+            margin-top: auto;
+        }
+        .footer-content {
+            padding: 3rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .footer-top {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .footer-top {
+                flex-direction: row;
+            }
+        }
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .footer-logo-icon {
+            width: 2rem;
+            height: 2rem;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: black;
+        }
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+        }
+        .footer-links a {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: color 0.2s;
+        }
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        .social-links a {
+            color: var(--text-muted);
+            transition: color 0.2s;
+        }
+        .social-links a:hover {
+            color: var(--primary);
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .copyright p {
+            font-size: 0.875rem;
+            color: #9e9d47;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }.text-primary { color: var(--primary); }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+<header>
+<div class="container header-inner">
+<div class="logo-area">
+<div class="logo-icon">
+<span class="material-symbols-outlined">grid_view</span>
+</div>
+<h2 class="site-title">MinimalistWeb.</h2>
+</div>
+<nav class="main-nav">
+<a class="nav-link" href="#">Home</a>
+<a class="nav-link" href="#">Manifesto</a>
+<a class="nav-link" href="#">Contact</a>
+</nav>
+<div class="mobile-menu-btn">
+<span class="material-symbols-outlined" style="cursor: pointer;">menu</span>
+</div>
+</div>
+</header>
+<main>
+<div class="container">
+<div class="hero-section">
+<div class="hero-content">
+<div class="version-badge">
+<span class="pulse-dot"></span>
+                        Version 1.0
+                    </div>
+<h1 class="hero-title">
+                        Simplicity is the <br/>
+<span class="highlight-wrap">
+<span style="position: relative; z-index: 1;">Ultimate</span>
+<span class="highlight-bg"></span>
+</span>
+                        Sophistication.
+                    </h1>
+<p class="hero-desc">
+                        This is a demonstration of a clean, JavaScript-free web environment. We focus on semantic HTML and styling that prioritizes speed and readability above all else.
+                    </p>
+<div class="cta-group">
+<button class="btn btn-primary">
+                            Get Started
+                        </button>
+<button class="btn btn-outline">
+                            Read Documentation
+                        </button>
+</div>
+</div>
+<div class="visual-container">
+<div class="visual-frame">
+<div class="bg-image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDOiS1TjOjq1WSNShLWhEGAtlHjMSsJMl1_OUHhupU38XObPB9yH4MFR60Y6ysnrMzslLq7f3x9xRsA9ESrTRld-9EWPcfByiXbOcK55KZ6wo8DhtxeoBh46ociaBtiumVlsR1e_dH6MBs7-j05rLkiMgQaG3zJy3r6ZMMN5pIcLEJSNNzNAPr72HYUQTNrpBOsXuPAEV-ZOT-Zt9-N4-8J-Y715JpCyRbEXOVTAjUvzdHpcgIgeLLwPUBLviuSPHy2lc2MgRYew0gU");'></div>
+<div class="overlay-gradient"></div>
+<div class="info-card">
+<div class="info-left">
+<span class="material-symbols-outlined text-primary" style="font-size: 24px;">bolt</span>
+<div class="info-text">
+<strong>Fast &amp; Lightweight</strong>
+<span>0.2s Load Time</span>
+</div>
+</div>
+<div style="display: none;">
+<span class="material-symbols-outlined">arrow_forward</span>
+</div>
+<style>
+                                @media(min-width: 640px) {
+                                    .info-card .material-symbols-outlined { display: block; }
+                                }
+                            </style>
+<span class="material-symbols-outlined" style="display:none;">arrow_forward</span>
+</div>
+</div>
+</div>
+<div class="features-grid">
+<div class="feature-item">
+<div class="icon-circle">
+<span class="material-symbols-outlined text-primary">format_paint</span>
+</div>
+<h3>Pure Design</h3>
+<p>Stripped of unnecessary elements, focusing purely on visual hierarchy.</p>
+</div>
+<div class="feature-item">
+<div class="icon-circle">
+<span class="material-symbols-outlined text-primary">code</span>
+</div>
+<h3>Semantic HTML</h3>
+<p>Accessible and SEO-friendly structure that makes sense to machines and humans.</p>
+</div>
+<div class="feature-item">
+<div class="icon-circle">
+<span class="material-symbols-outlined text-primary">speed</span>
+</div>
+<h3>Blazing Fast</h3>
+<p>No heavy frameworks. Just the raw power of the browser rendering engine.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer>
+<div class="container footer-content">
+<div class="footer-top">
+<div class="footer-logo">
+<div class="footer-logo-icon">
+<span class="material-symbols-outlined" style="font-size: 18px;">grid_view</span>
+</div>
+<span style="font-weight: 700;">MinimalistWeb.</span>
+</div>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+<a href="#">Sitemap</a>
+</div>
+<div class="social-links">
+<a href="#">
+<span style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;">Twitter</span>
+<svg aria-hidden="true" fill="currentColor" style="height: 1.25rem; width: 1.25rem;" viewBox="0 0 24 24">
+<path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+</svg>
+</a>
+<a href="#">
+<span style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;">GitHub</span>
+<svg aria-hidden="true" fill="currentColor" style="height: 1.25rem; width: 1.25rem;" viewBox="0 0 24 24">
+<path clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" fill-rule="evenodd"></path>
+</svg>
+</a>
+</div>
+</div>
+<div class="copyright">
+<p>© 2024 MinimalistWeb. Designed with CSS. No JS Required.</p>
+</div>
+</div>
+</footer>
+</div>
+
+</body></html>
