@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>paginaBasica</title>
+
+<script>
+function iniciar(){
+	console.log('paso por iniciar');	
+	var ele=document.getElementById('caja1'); // cargar en ele el objeto
+	ele.style.backgroundColor='aqua'; // modificar las propiedades
+	ele.style.width='100px';
+	ele.style.height='100px';
+	ele.style.border='1px solid #000'; // poner borde a la caja
+	ele.colorin='red'; // añadimos una propiedad nueva al elemento
+	ele.addEventListener('click',clickCaja); // añadir un evento elemento.evento=manejador
+}
+function clickCaja(){
+	this.style.backgroundColor=this.colorin;// this el objeto que origino la llamada
+	this.style.border='none'; // quitar el borde a la caja
+	}
+
+// evento semántico : sin parentesis , al final del head
+// salto a iniciar() al cargar a pagina
+window.onload = iniciar; 
+</script>
+
+</head>
+ 
+<body>
+
+<div id='caja1'>HOLA</div> 	
+
+</body>
+</html>

@@ -4,6 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <script>
+
+        function iniciar(){
+
+            for(var i = 0; i < 3; i++){
+
+                var ele = crearNodo('div');
+                var nombre = 'menu' + ' ' + (i+1);
+
+                ele.innerHTML = nombre;
+                ele.style.float = 'left';
+                ele.style.width = '50px';
+                ele.style.height = '20px';
+                ele.style.border = '1px solid';
+                ele.style.display = 'inline';
+                ele.style.padding = '0.5rem';
+                ele.style.margin = '0.5rem';
+                ele.style.cursor = 'pointer';
+
+                ele.addEventListener('click', clickCaja);
+            }
+
+            var ele2 = crearNodo('div');
+            ele2.style.clear = 'both';
+        }
+
+        function clickCaja(){
+            var existente = document.querySelector('p');
+            if (existente) {
+                existente.remove();
+            }
+
+            var ele = crearNodo('p');
+            ele.innerHTML = generarTexto();
+
+
+        }
+
+        function generarTexto(){
+            var oracionesIpsum = [
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.",
+                "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.",
+                "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt."
+            ];
+
+            return oracionesIpsum[Math.floor(Math.random() * oracionesIpsum.length)];
+        }
+
+        function crearNodo(tipo){
+            var ele = document.createElement(tipo);
+            document.body.appendChild(ele);
+            return ele;
+        }
+
+        window.onload = iniciar;
+    </script>
 </head>
 <body>
     
