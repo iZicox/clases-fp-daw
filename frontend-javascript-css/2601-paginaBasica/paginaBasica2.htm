@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>paginaBasica2</title>
+
+<script>
+function iniciar(){
+	// crear nodo en el dom
+	var ele=creaNodo('div');
+	// propiedades del div
+	ele.id='caja';
+	ele.innerHTML='HOLA2';
+	ele.style.backgroundColor='aqua';
+	ele.style.width='100px';
+	ele.style.height='50px';	
+}
+function creaNodo(tipo){
+	var ele=document.createElement(tipo);
+	document.body.appendChild(ele);	// posicionarlo en DOM 
+	return ele;	// lo retornamos para trabajar con el
+}
+window.onload = iniciar; // sin parentesis , al final del head
+</script>
+
+</head>
+ 
+<body>
+</body>
+
+</html>
