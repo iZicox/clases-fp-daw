@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+
+        function iniciar(){
+
+            for(var i = 0; i < 20; i++){
+
+                var ele = crearNodo('div');
+                var nombre = 'menu' + ' ' + (i+1);
+
+                ele.innerHTML = nombre;
+                ele.style.float = 'left';
+                ele.style.width = '80px';
+                ele.style.height = '20px';
+                ele.style.border = '1px solid';
+                ele.style.display = 'inline';
+                ele.style.padding = '0.5rem';
+                ele.style.margin = '0.5rem';
+                ele.style.cursor = 'pointer';
+
+                ele.addEventListener('click', clickCaja);
+            }
+
+            var ele2 = crearNodo('div');
+            ele2.style.clear = 'both';
+
+            var instrucciones = crearNodo('p');
+            instrucciones.innerHTML = 'instrucciones';
+
+        }
+
+        function clickCaja(){
+            var existente = document.querySelector('p');
+            if (existente) {
+                existente.remove();
+            }
+
+            var ele = crearNodo('p');
+            ele.innerHTML = generarTexto(80);
+
+
+        }
+
+        function generarTexto(caracteres){
+            let letras = "qwertyuiopasdfghjklñzxcvbnm";
+            let min = 0;
+            let max = 27;
+            
+
+            
+            let resultado = '';
+
+            for(let i = 0; i < caracteres; i++){
+                let aleatorio = Math.floor(Math.random() * (max - min + 1)) + min;
+                resultado += letras[aleatorio];
+            }
+
+            return resultado;
+        } 
+
+        function crearNodo(tipo){
+            var ele = document.createElement(tipo);
+            document.body.appendChild(ele);
+            return ele;
+        }
+
+        window.onload = iniciar;
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
