@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function iniciar(){
+            for(var i = 0; i < 40; i ++){
+                var ele = crearNodo('div', 'H');
+                ele.style.width = '100px';
+                ele.style.height = '100px';
+                ele.style.margin = '10px';
+                ele.style.backgroundColor = 'aqua';
+                ele.style.float = 'left';
+                if((i%7) === 0){
+                    var clear = crearNodo('div', '');
+                    clear.style.clear = 'both';
+                }
+            }
+        }
+
+        function crearNodo(tipo, inner){
+            var ele = document.createElement(tipo);
+            document.body.appendChild(ele);
+            ele.innerHTML = inner;
+            return ele;
+        }
+
+        window.onload = iniciar;
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

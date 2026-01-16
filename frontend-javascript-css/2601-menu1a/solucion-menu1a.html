@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>menu1a</title>
+ <style>
+    div:hover{	
+		background-color: grey;
+}
+</style>
+<script>
+
+const nMenu=3; // numero de opciones del menu
+const txtIntro='instrucciones: pulsa alguna opción del menu superior';
+const texto='Lorem ipsum olor sit amet consectetur adipiscing elit feugiat, montes ad euismod suspendisse libero egestas pulvinar, condimentum taciti felis tincidundt vestibulum at diam. Tempus praesent primis nascetur eleifend dui velit mauris egestas class magnis arcu viverra proin, vestibulum placerat phasellus donec duis vivamus cubilia mollis senectus fringilla suspendisse. Erat sociis pharetra velit himenaeos ligula nisl mi imperdiet pretium a curae feugiat, non accumsan lacinia diam et phasellus potenti vitae parturient porta dictumst.';
+
+function probar(){
+	for (let j=0;j<100;j++){
+		aleatorio(4,32);
+	}
+}
+
+function iniciar(){
+probar();
+	// crear los nodos
+	for (let j=0;j<nMenu;j++){
+		var ele=crearNodo('div','menu '+'<i>'+(j+1)+'</i>','m'+j);
+		ele.style.border='1px solid black';			
+
+		ele.style.backgroundColor='white';
+		// !!! añadir backgroundColor anula el hover del style !!!		
+		// ver menu1aa,menu1ab,menu1ac
+		
+		//ele.setAttribute("style", "background-color:white;"); 
+		// NO : https://www.w3schools.com/jsref/met_element_setattribute.asp
+		
+		ele.style.height='20px';
+		ele.style.width='100px';
+		ele.style.margin='3px';
+		ele.style.padding='2px';
+		ele.style.textAlign='center'; // centrar texto
+		ele.style.cursor='pointer'; // manita
+		ele.style.float='left'; // cajas en linea
+		ele.addEventListener('click',clickMenu);
+	}
+	var ele=crearNodo('p','<br/>'+txtIntro,'p1');	
+	ele.style.clear='left'; // fin del float volvemos a modo bloque 
+}
+
+function clickMenu(){
+	var ele=document.getElementById('p1');
+	// texto aleatorio
+	ele.innerHTML='<br/><b>'+this.innerHTML+'</b><br/>'+texto.substr(aleatorio(1,20),80);
+}
+function crearNodo(tipo,inner,id){
+	// crea el nodo, lo pone en el body
+	var ele=document.createElement(tipo);
+	document.body.appendChild(ele);
+	ele.innerHTML=inner; // contenido
+	ele.id=id; // id del nodo
+	return ele; // retorna la referencia
+}
+function aleatorio(minimo,maximo){
+	var x=Math.floor(Math.random()*((maximo+1)-minimo) + minimo);
+	console.log('prueba:',minimo,maximo,x);
+	return x;
+}
+
+function cambiarColor(){
+    this.addEventListener('mouseover')
+}
+window.onload=iniciar; // inicio de js al terminar la carga de la pagina
+</script>
+
+</head>
+ 
+
+<body>
+</body>
+
+
+</html>
