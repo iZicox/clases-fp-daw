@@ -7,15 +7,16 @@
     <script>
         function iniciar(){
             for(var i = 0; i < 40; i ++){
-                var ele = crearNodo('div', 'H');
+                var n = 'H';
+                var ele = crearNodo('div', n);
                 ele.style.width = '100px';
                 ele.style.height = '100px';
                 ele.style.margin = '10px';
                 ele.style.backgroundColor = 'aqua';
                 ele.style.float = 'left';
-                if((i%7) === 0){
-                    var clear = crearNodo('div', '');
-                    clear.style.clear = 'both';
+                if((i%8) === 0 && i !== 0){
+                    ele.style.clear = 'both';
+                    //ele.style.removeProperty('float');
                 }
             }
         }
