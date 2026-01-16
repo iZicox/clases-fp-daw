@@ -22,7 +22,10 @@ CREATE TABLE matricula (
     dni VARCHAR2(10) REFERENCES alumos(dni),
     codasignatura NUMBER REFERENCES asignatura(codasignatura)
     
-)
+);
+
+SELECT b.NOMBRE FROM BOMBONES b ;
+
 
 
 
