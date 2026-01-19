@@ -9,6 +9,8 @@
 
         function iniciar(){
 
+            document.body.style.width='100vw';
+
             for(var i = 0; i < 20; i++){
 
                 var ele = crearNodo('div');
@@ -25,6 +27,14 @@
                 ele.style.cursor = 'pointer';
 
                 ele.addEventListener('click', clickCaja);
+
+                ele.addEventListener('mouseover', function(){
+                    this.style.backgroundColor='grey';
+                });
+
+                ele.addEventListener('mouseleave', function(){
+                    this.style.backgroundColor='white';
+                });
             }
 
             var ele2 = crearNodo('div');
@@ -42,7 +52,7 @@
             }
 
             var ele = crearNodo('p');
-            ele.innerHTML = generarTexto(80);
+            ele.innerHTML = generarTexto(240);
 
 
         }

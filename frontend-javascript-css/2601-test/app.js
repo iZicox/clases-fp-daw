@@ -20,11 +20,17 @@ function iniciar() {
         ele.style.height = '50px';
         ele.style.backgroundColor = 'red';
         ele.style.margin = '5px';
+        ele.addEventListener('mouseover',  eventoClick);
         principal.appendChild(ele);
     }
 }
+function eventoClick() {
+        var nombre = this.innerText;
+        console.log('Evento activado: click en el contenedor ' + nombre);
+    }
 function crearNodo(tipo) {
     var ele = document.createElement(tipo);
+    
     return ele;
 }
 window.onload = iniciar;
