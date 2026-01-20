@@ -8,10 +8,20 @@
     <script>
 
         function iniciar(){
-            var eleP = crearNodo('div');
 
+            //contenedor flex
+            var body = document.body;
+            body.style.display = 'flex';
+            body.style.flexDirection = 'column';
+
+            //instrucciones
+            var instrucciones = crearNodo('p');
+            instrucciones.innerHTML = 'Instrucciones: haz clic en alguna caja para generar un texto aleatorio.';
+            
+
+            var eleP = crearNodo('div');
             eleP.style.width='120px';
-            eleP.style.float='left';
+            eleP.style.display='left';
 
 
             for(var i = 0; i < 20; i++){
@@ -37,21 +47,13 @@
             //var ele2 = crearNodo('div');
             //ele2.style.clear = 'both';
 
-            var instrucciones = crearNodo('p');
-            instrucciones.innerHTML = 'Instrucciones: haz clic en alguna caja para generar un texto aleatorio.';
+            
 
         }
 
         function clickCaja(){
             var existente = document.querySelector('p');
-            if (existente) {
-                existente.remove();
-            }
-
-            var ele = crearNodo('p');
-            ele.innerHTML = generarTexto(80);
-
-
+            existente.innerHTML = generarTexto(80);
         }
 
         function generarTexto(caracteres){
