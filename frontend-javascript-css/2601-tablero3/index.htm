@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function iniciar(){
+            
+            let columnas = 8;
+            let filas = 8;
+            let max = filas * columnas;
+            for(let i = 0; i < max; i ++){
+                let n = 'H';
+                let ele = crearNodo('div', n);
+                
+                ele.style.width = '100px';
+                ele.style.height = '100px';
+                ele.style.margin = '10px';
+                ele.style.backgroundColor = 'aqua';
+                ele.style.float = 'left';
+                if((i % columnas) === 0 && i !== 0){
+                    ele.style.clear = 'both';
+                    //ele.style.removeProperty('float');
+                }
+
+                if(i === (max-1)){
+                    ele.addEventListener('click',function(){
+                        
+                        let cuadros = document.querySelectorAll('body div');
+                        for(let j = 0; j < cuadros.length; j++){
+                            cuadros[j].innerHTML = '';
+                        }
+                    })
+                } else {
+                    ele.addEventListener('click', function (){
+                        ele.innerText='caja'+(i+1);
+                
+                    });
+                }
+                
+            }
+        }
+
+        function crearNodo(tipo, inner){
+            var ele = document.createElement(tipo);
+            document.body.appendChild(ele);
+            ele.innerHTML = inner;
+            return ele;
+        }
+
+        window.onload = iniciar;
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

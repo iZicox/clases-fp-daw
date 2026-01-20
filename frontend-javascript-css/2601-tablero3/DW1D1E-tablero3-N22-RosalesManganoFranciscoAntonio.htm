@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function iniciar(){
+            let filas = 8;
+            let cols = 8;
+            let inner = 'H';
+            let min = 50;
+            let max = 100;
+            for(let i = 0; i < filas; i ++){
+                for(let j = 0; j < cols; j ++){
+
+                    let identificador = 'caja' + i + j;
+                    let anchoDiv = aleatorio(min,max);
+                    let altoDiv = aleatorio(min,max);
+                    let ele = crearNodo('div', inner+i+j, identificador);
+            
+                    ele.style.width = `${anchoDiv}px`;
+                    ele.style.height = `${altoDiv}px`;
+                    ele.style.margin = '5px';
+                    ele.style.border = '1px solid';
+                    ele.style.backgroundColor = 'aqua';
+                    ele.style.float = 'left';
+                    ele.style.textAlign = 'center';
+
+                    //validar ultimo cuadro
+                    if(identificador === `caja${filas-1}${cols-1}`){
+                        //evento para eliminar todo el contenido
+                        ele.addEventListener('click', function(){
+                        
+                        let cuadros = document.querySelectorAll('body div');
+                        for(let j = 0; j < cuadros.length; j++){
+                            cuadros[j].innerHTML = '';
+                        }})
+                    } else {
+                        ele.addEventListener('click', function (){
+                            ele.innerText='C'+i+j;
+                
+                        });
+                        
+                    }
+
+                }
+                
+                //salto de linea con clear
+                let salto = crearNodo('div', '', '');
+                salto.style.clear = 'both';
+                
+                   
+            }
+        }
+
+        function aleatorio(minimo,maximo){
+            return Math.floor(Math.random()*((maximo+1)-minimo) + minimo);  
+        }
+
+        function crearNodo(tipo, inner, identificador){
+            var ele = document.createElement(tipo);
+            ele.innerHTML = inner;
+            ele.id = identificador;
+            document.body.appendChild(ele);
+            return ele;
+        }
+
+        window.onload = iniciar;
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

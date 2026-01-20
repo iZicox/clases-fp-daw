@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function iniciar(){
+            let filas = 8;
+            let cols = 8;
+            let inner = 'H';
+            let cont = 1;
+            let bombas = 0;
+            for(let i = 0; i < filas; i ++){
+                for(let j = 0; j < cols; j ++){
+
+                    let identificador = 'caja' + i + j;
+                    let ele = crearNodo('div', cont, identificador);
+                    cont++;
+
+                    ele.style.display = 'flex';
+                    ele.style.justifyContent = 'center';
+                    ele.style.alignItems = 'center';
+                    ele.style.fontSize = '2rem';
+                    ele.style.width = '100px';
+                    ele.style.height = '100px';
+                    ele.style.margin = '10px';
+                    ele.style.border = '1px solid';
+                    ele.style.backgroundColor = 'aqua';
+                    ele.style.float = 'left';
+
+                    if(aleatorio(1,2) === 1){
+                        bombas++;
+                        ele.addEventListener('click', function(){
+                            ele.innerHTML = '💣<br>Perdiste';
+                            
+                        })
+                    } else {
+                        ele.addEventListener('click', function (){
+                            this.remove();
+
+                        })
+                    }
+
+                    
+                }
+                
+                //salto de linea con clear
+                let salto = crearNodo('div', '', '');
+                salto.style.clear = 'both';
+                
+                   
+            }
+
+            let mensajeBombas = crearNodo('div',`Hay ${bombas} bombas. Suerte.`, 'info');
+            mensajeBombas.style.fontSize = '3rem';
+
+        }
+
+        function aleatorio(minimo,maximo){
+            return Math.floor(Math.random()*((maximo+1)-minimo) + minimo);  
+        }
+
+        function hexAleatorio() {
+            let letras = "0123456789ABCDEF";
+            let codigo = "#";
+
+            for (let i = 0; i < 6; i++) {
+                codigo += letras[Math.floor(Math.random() * 16)];
+            }
+
+            return codigo;
+        }
+
+
+        function crearNodo(tipo, inner, identificador){
+            var ele = document.createElement(tipo);
+            ele.innerHTML = inner;
+            ele.id = identificador;
+            document.body.appendChild(ele);
+            return ele;
+        }
+
+        window.onload = iniciar;
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -21,9 +21,24 @@
                     ele.style.border = '1px solid';
                     ele.style.backgroundColor = 'aqua';
                     ele.style.float = 'left';
-                    ele.addEventListener('click', function (){
-                        window.alert(identificador)
-                    });
+
+                    //validar ultimo cuadro
+                    if(identificador === `caja${filas-1}${cols-1}`){
+                        //evento para eliminar todo el contenido
+                        ele.addEventListener('click', function(){
+                        
+                        let cuadros = document.querySelectorAll('body div');
+                        for(let j = 0; j < cuadros.length; j++){
+                            cuadros[j].innerHTML = '';
+                        }})
+                    } else {
+                        ele.addEventListener('click', function (){
+                            ele.innerText='caja'+i+j;
+                
+                        });
+                        
+                    }
+
                 }
                 
                 //salto de linea con clear
