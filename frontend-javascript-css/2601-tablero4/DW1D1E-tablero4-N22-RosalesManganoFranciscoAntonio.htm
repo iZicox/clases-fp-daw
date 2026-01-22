@@ -19,7 +19,7 @@
                     ele.style.height = '100px';
                     ele.style.margin = '10px';
                     ele.style.border = '1px solid';
-                    ele.style.backgroundColor = 'aqua';
+                    ele.style.backgroundColor = hexAleatorio();
                     ele.style.float = 'left';
                     ele.addEventListener('click', function (){
                         window.alert(identificador)
@@ -33,6 +33,18 @@
                    
             }
         }
+
+        function hexAleatorio() {
+            let letras = "0123456789ABCDEF";
+            let codigo = "#";
+
+            for (let i = 0; i < 6; i++) {
+                codigo += letras[Math.floor(Math.random() * 16)];
+            }
+
+            return codigo;
+        }
+
 
         function crearNodo(tipo, inner, identificador){
             var ele = document.createElement(tipo);
