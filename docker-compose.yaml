@@ -1,0 +1,20 @@
+
+services:
+  node-ts:
+    image: node:20-alpine
+    container_name: node-ts-dev
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/app:delegated
+    command: sh -c "
+      apk add --no-cache git &&
+      corepack enable &&
+      npm install -g typescript @types/node &&
+      npm init -y &&
+      npm pkg set type=module &&
+      echo 'console.log(\"Node + TS ready on port 3000\"); import(\"http\").then(http => http.createServer((req,res)=>{res.end(\"OK\")}).listen(3000);' > server.js &&
+      node server.js
+    "
+

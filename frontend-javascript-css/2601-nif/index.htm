@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function iniciar(){
+            try{
+                let dni = prompt('Ingresa tu DNI sin la letra.');
+                let letra = prompt('Ingresa la letra.');
+
+
+                if(isNaN(dni) || isNaN(letra)){
+                    throw 'Numero o letra no es valido.';
+                }
+
+                if(dni < 0 || dni > 99999999){
+                    throw 'El numero esta fuera de rango.';
+                }
+
+                if(!letras.includes(letra)){
+                    throw 'Letra fuera de rango';
+                }
+                
+                let letraCalculada = calculoLetra(dni);
+
+                if(letraCalculada === null){
+                    throw 'El numero esta equivocado.';
+                }
+
+                if(letraCalculada !== letra.toUpperCase){
+                    throw 'La letra ingresada no coincide';
+                }
+                
+
+            }catch(err){
+                alert('Error: ' + err);
+                console.error(err);
+            }
+        }
+
+        const letras = 'TRWAGMYFPDXBNJZSQVHLCKE';
+
+        function calculoLetra(dni){
+            let id = dni % 23;
+            if(id < 0 || id > 23){
+                return null;
+            }
+            return letras[id];
+        }
+
+        window.onload = iniciar;
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
