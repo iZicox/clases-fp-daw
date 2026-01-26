@@ -130,9 +130,15 @@ JOIN JOBS j
 	ON e.JOB_ID = j.JOB_ID 
 WHERE e.SALARY < j.MIN_SALARY;
 /*
-16. Haz un listado con los empleados cuyo salario 
-es igual al mínimo del rango salarial que
-corresponde a su puesto de trabajo o es igual al 
-máximo del rango salarial que
-corresponde a su puesto de trabajo
+	16. Haz un listado con los empleados cuyo salario 
+	es igual al mínimo del rango salarial que
+	corresponde a su puesto de trabajo o es igual al 
+	máximo del rango salarial que
+	corresponde a su puesto de trabajo
 */
+SELECT E.FIRST_NAME, E.LAST_NAME, E.SALARY
+FROM EMPLOYEES E
+JOIN JOBS J ON J.JOB_ID = E.JOB_ID
+WHERE E.SALARY = J.MIN_SALARY
+	OR E.SALARY = J.MAX_SALARY
+ORDER BY E.SALARY DESC;
