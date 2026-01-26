@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  web:
+    image: php:8.3-apache
+    container_name: php_app
+    ports:
+      - "80:80"
+    volumes:
+      - ./php:/var/www/html  # Tu código PHP aquí
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_NAME: app_db
+      DB_USER: admin
+      DB_PASS: 123
+
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: app_db
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 123
+    ports:
+      - "3307:3307"
+    volumes:
+      - ./mysql:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: 123
+    depends_on:
+      - db
+
+volumes:
+  mysql_data:
