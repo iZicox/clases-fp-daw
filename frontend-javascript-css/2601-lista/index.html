@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function iniciar(){
+            let lista = [];
+            let titulo = crearNodo('h1','titulo','');
+            titulo.innerText = 'ejemplo metodos array';
+            
+            for(let i = 0; i < 10; i++){
+                lista.push(aleatorio(0,1000));
+            }
+             
+            let mostrar = mostrarArray(lista);
+            crearNodoVoid('p','',`lista (push): ${mostrar}`);
+
+            for(let i = 0; i < 10; i++){
+                lista[i] = aleatorio(0,1000);
+            }
+
+            mostrar = mostrarArray(lista);
+            crearNodoVoid('p','',`lista (indice): ${mostrar}`);
+
+            let ascendente = mostrarArray(lista.sort((a, b) => a - b));
+            crearNodoVoid('p','',`ascendente (sort): ${ascendente}`);
+
+            let descendente = mostrarArray(lista.reverse());
+            crearNodoVoid('p','',`descendente (reverse): ${descendente}`);
+
+            let descendenteSort = lista.sort((a, b) => b - a).join(' ');
+            crearNodoVoid('p','',`ascendente (sort con espacio): ${descendenteSort}`);
+
+            let media = lista.reduce((acum, valor) => acum + valor, 0) / lista.length;
+            crearNodoVoid('p','',`media (reduce): ${media}`);
+
+            let total = 0;
+            lista.forEach(ele => {
+                total += ele;
+            });
+            media = total / lista.length;
+            crearNodoVoid('p','',`media (for each): ${media}`);
+
+            let min = Math.min.apply(null, lista);
+            crearNodoVoid('p','',`min (apply): ${min}`);
+
+            min = 0;
+            min = 
+
+            
+            
+
+        }
+
+        function mostrarArray(lista){
+            let resultado = '';
+            lista.forEach((ele,i,arr) => {
+                resultado += ele;
+                if(i !== arr.length -1){
+                    resultado += '-';
+                }
+            })
+            return resultado;
+        }
+
+        
+
+        function crearNodo (tipo,id,inner){
+            let ele = document.createElement(tipo);
+            document.body.appendChild(ele);
+            ele.id = id;
+            ele.innerText = inner;
+            return ele;
+        }
+
+        function crearNodoVoid (tipo,id,inner){
+            let ele = document.createElement(tipo);
+            document.body.appendChild(ele);
+            ele.id = id;
+            ele.innerText = inner;
+        }
+
+        function aleatorio(minimo,maximo){
+            var x=Math.floor(Math.random()*((maximo+1)-minimo) + minimo);
+            console.log('prueba:',minimo,maximo,x);
+            return x;
+        }
+
+        window.onload = iniciar;
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

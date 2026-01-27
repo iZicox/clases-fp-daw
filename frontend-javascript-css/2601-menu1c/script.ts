@@ -10,7 +10,6 @@ function generarTexto(caracteres: number){
     let resultado: string = '';
 
     
-
 }
 
 function crearNodo(tipo: string){
