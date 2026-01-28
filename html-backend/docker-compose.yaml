@@ -5,7 +5,7 @@ services:
     image: php:8.3-apache
     container_name: php_app
     ports:
-      - "80:80"
+      - "8000:80"
     volumes:
       - ./php:/var/www/html  # Tu código PHP aquí
     depends_on:
@@ -25,7 +25,7 @@ services:
       MYSQL_USER: admin
       MYSQL_PASSWORD: 123
     ports:
-      - "3307:3307"
+      - "3308:3306"
     volumes:
       - ./mysql:/var/lib/mysql
 
