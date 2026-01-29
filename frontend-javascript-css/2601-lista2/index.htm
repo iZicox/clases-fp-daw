@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function iniciar(){
+
+            const arrayObj = Array.from({ length: 10 }, () => crearObjeto());
+
+            for(let clave in arrayObj[0]){
+                document.write(clave + ": " + arrayObj[0][clave] + "<br>");
+            }
+            
+        }
+
+        function crearObjeto () {
+            let nivel = ['A','B','C'];
+            return {color: hexAleatorio(), texto: generarPalabra(), nivel: nivel[aleatorio(0,2)], version: aleatorio(0,9)};
+        }
+
+        function aleatorio(minimo,maximo){
+            return Math.floor(Math.random()*((maximo+1)-minimo) + minimo);  
+        }
+
+        function hexAleatorio() {
+            let letras = "0123456789ABCDEF";
+            let codigo = "#";
+
+            for (let i = 0; i < 6; i++) {
+                codigo += letras[Math.floor(Math.random() * 16)];
+            }
+
+            return codigo;
+        }
+
+        function generarPalabra(){
+            let resultado = '';
+            let abecedario = 'abcdefghijklmnopqrstuvwxyz';
+            let numLetras = aleatorio(1,10);
+            for(let i = 0; i < numLetras; i++){
+                resultado += abecedario[aleatorio(0,abecedario.length-1)];
+            }
+
+            return resultado;
+        }
+
+        window.onload = iniciar;
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

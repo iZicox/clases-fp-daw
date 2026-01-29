@@ -46,10 +46,18 @@
             let min = Math.min.apply(null, lista);
             crearNodoVoid('p','',`min (apply): ${min}`);
 
-            min = 0;
-            min = 
-
             
+            min = lista.reduce((acum, valor) => valor < acum ? valor : acum, lista[0]);
+            crearNodoVoid('p','',`min (reduce): ${min}`);
+
+            let minimoSort = lista.sort((a, b) => a - b)[0];
+            crearNodoVoid('p','',`min (sort): ${minimoSort}`);
+
+            let suma = lista.reduce((acum, valor) => acum + valor, 0);
+            crearNodoVoid('p','',`suma (reduce): ${suma}`);
+            
+            let filtrados = lista.filter(num => num >= 0 && num <= 100);
+            crearNodoVoid('p','',`filtrados (0–100): ${mostrarArray(filtrados)}`);
             
 
         }
