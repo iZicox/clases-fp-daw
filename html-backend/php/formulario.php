@@ -1,3 +1,17 @@
+<?php 
+
+$nombre = isset($_POST['nombre']) ? $_POST['nombre'] : "";
+$fecha = isset($_POST['fecha']) ? $_POST['fecha'] : "";
+$intereses = isset($_POST['intereses']) ? $_POST['intereses'] : Array();
+
+echo $nombre . "<br>";
+echo $fecha . "<br>";
+
+foreach($intereses as $item){
+    echo $item . "<br>";
+}
+?>
+
 
 
 <!DOCTYPE html>
@@ -31,3 +45,4 @@
     </form>
 </body>
 </html>
+
