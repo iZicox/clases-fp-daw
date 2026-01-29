@@ -130,3 +130,9 @@ WHERE (IL.UNITPRICE * IL.QUANTITY) > 1;
 al que pertenece la canción está incluída en el nombre de alguna playlist en la que esté
 la canción.
 */
+select DISTINCT t.name, g.name as genero, pl.name as playlist 
+from track t  
+inner join genre g on t.GENREID = g.GENREID
+inner join playlisttrack plt on t.TRACKID = plt.TRACKID
+inner join playlist pl on plt.playlistid = pl.playlistid
+where pl.name like '%' || g.name || '%' ;

@@ -2,7 +2,7 @@
 -- create the HR schema user
 -- =======================================================
 
-CREATE USER hr IDENTIFIED BY oracle123
+CREATE USER hr2 IDENTIFIED BY oracle123
                QUOTA UNLIMITED ON USERS;
 
 GRANT CREATE MATERIALIZED VIEW,
@@ -14,4 +14,5 @@ GRANT CREATE MATERIALIZED VIEW,
       CREATE TRIGGER,
       CREATE TYPE,
       CREATE VIEW
-  TO hr_db;
+  TO hr2;
+
