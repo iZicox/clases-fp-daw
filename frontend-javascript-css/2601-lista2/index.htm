@@ -8,11 +8,25 @@
         function iniciar(){
 
             const arrayObj = Array.from({ length: 10 }, () => crearObjeto());
-
-            for(let clave in arrayObj[0]){
-                document.write(clave + ": " + arrayObj[0][clave] + "<br>");
-            }
             
+            document.write(imprimirObjeto(arrayObj[0]));
+
+            
+            
+        }
+
+        function imprimirObjeto(objeto){
+            const claves = Object.keys(objeto); //convierte las claves en un array
+            let result = '';
+            for(let i = 0; i < claves.length; i++){
+                result += claves[i] + ': ' + objeto[claves[i]];
+                if(i !== claves.length-1){
+                    result += ', ';
+                } else {
+                    result += '.';
+                }
+            }
+            return result;
         }
 
         function crearObjeto () {
