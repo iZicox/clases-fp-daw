@@ -95,16 +95,108 @@ INNER JOIN GENRE g
 GROUP BY g.NAME ;
 --8. Para el género de Rock dime los artistas que tienen 40 o más canciones. --Ordena la
 --consulta por el número de canciones
-
+SELECT 	a.NAME artistas_rock,
+		COUNT(t.TRACKID ) canciones
+FROM ARTIST a 
+INNER JOIN ALBUM al
+	ON a.ARTISTID = al.ARTISTID
+INNER JOIN TRACK t 
+	ON al.ALBUMID = t.ALBUMID
+INNER JOIN GENRE g 
+	ON t.GENREID = g.GENREID
+WHERE g.NAME = 'Rock'
+GROUP BY g.NAME, a.NAME  
+HAVING COUNT(t.TRACKID ) > 40
+ORDER BY canciones DESC ;
 --9. Saca las listas de música y su duración en minutos.
+SELECT 
+		t.NAME ,
+		ROUND(t.MILLISECONDS / 1000 / 60,2)
+FROM TRACK t ;
 --10. Saca un listado con los artistas cuyo nombre contenga la secuencia de --letras “AC” (en
 --mayúsculas y minúsculas) y aquellos discos de estos artistas cuyo precio --sea superior a
 --10€ (suponemos que el precio de un álbum es la suma del precio de todas sus --canciones)
+SELECT
+	a.NAME ,
+	a2.TITLE ,
+	SUM(i.UNITPRICE )
+FROM ARTIST a 
+INNER JOIN ALBUM a2 
+	ON a.ARTISTID = a2.ARTISTID
+INNER JOIN TRACK t 
+	ON a2.ALBUMID = t.ALBUMID
+INNER JOIN INVOICELINE i 
+	ON t.TRACKID = i.TRACKID
+WHERE upper(a.NAME) LIKE '%AC%'
+GROUP BY a2.TITLE, a.NAME 
+HAVING SUM(i.UNITPRICE ) > 10;
 --11. Devuelve el total de clientes que han comprado canciones de AC/DC.
+SELECT
+	count(DISTINCT i2.CUSTOMERID )
+FROM ARTIST a 
+INNER JOIN ALBUM a2 
+	ON a.ARTISTID = a2.ARTISTID
+INNER JOIN TRACK t 
+	ON a2.ALBUMID = t.ALBUMID
+INNER JOIN INVOICELINE i 
+	ON t.TRACKID = i.TRACKID
+INNER JOIN INVOICE i2 
+	ON i.INVOICEID = i2.INVOICEID
+GROUP BY a.NAME 
+HAVING a.NAME = 'AC/DC';
 --12. ¿Cual es el artista que más canciones ha vendido?
+SELECT
+	a.NAME,
+	sum(i.QUANTITY ) total
+FROM ARTIST a 
+INNER JOIN ALBUM a2 
+	ON a.ARTISTID = a2.ARTISTID
+INNER JOIN TRACK t 
+	ON a2.ALBUMID = t.ALBUMID
+INNER JOIN INVOICELINE i 
+	ON t.TRACKID = i.TRACKID
+INNER JOIN INVOICE i2 
+	ON i.INVOICEID = i2.INVOICEID
+GROUP BY a.NAME 
+ORDER BY total DESC 
+FETCH FIRST 1 ROW ONLY;
 --13. ¿Y el disco que más dinero ha recaudado?
+SELECT
+	a2.TITLE ,
+	sum(i.QUANTITY*i.UNITPRICE ) total
+FROM ARTIST a 
+INNER JOIN ALBUM a2 
+	ON a.ARTISTID = a2.ARTISTID
+INNER JOIN TRACK t 
+	ON a2.ALBUMID = t.ALBUMID
+INNER JOIN INVOICELINE i 
+	ON t.TRACKID = i.TRACKID
+INNER JOIN INVOICE i2 
+	ON i.INVOICEID = i2.INVOICEID
+GROUP BY a2.TITLE 
+ORDER BY total DESC 
+FETCH first 1 ROW ONLY;
 --14. Cuál es el principio (3 primeras letras) más repetido en el título de --las canciones y cuantas
 --veces se repite. ¿Y con 5 letras?
+SELECT
+    SUBSTR(t.name, 1, 5) AS prefijo_5,
+    COUNT(*) AS repeticiones
+FROM track t
+GROUP BY SUBSTR(t.name, 1, 5)
+ORDER BY repeticiones DESC
+FETCH FIRST 1 ROW ONLY;
+
 --15. Saca el nombre de las listas de música en las que todas las canciones --son del mismo
 --género.
---2
+SELECT 
+    p.name AS playlist
+FROM playlist p
+INNER JOIN playlisttrack pt
+    ON p.playlistid = pt.playlistid
+INNER JOIN track t
+    ON pt.trackid = t.trackid
+INNER JOIN genre g
+    ON t.genreid = g.genreid
+GROUP BY p.name
+HAVING COUNT(DISTINCT g.genreid) = 1;
+

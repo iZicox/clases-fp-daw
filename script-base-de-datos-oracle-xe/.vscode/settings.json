@@ -1,0 +1,7 @@
+{
+    "Prettier-SQL.SQLFlavourOverride": "plsql",
+    "Prettier-SQL.keywordCase": "upper",
+    "[oracle-sql]": {
+        "editor.fontSize": 18
+    }
+}
