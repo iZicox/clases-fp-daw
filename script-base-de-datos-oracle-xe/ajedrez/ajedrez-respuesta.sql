@@ -78,16 +78,34 @@ AND (TO_CHAR(AL.FECHAOUT,'DD-MM-YYYY') = '25-04-2007'
 --campeonatos ganados y número de partidas ganadas para todos los jugadores que
 --pertenezcan a países que tengan algún jugador que haya ganado algún
 --campeonato.
+SELECT
+    P.NOMBRE AS NOMBRE,
+    PA.NOMBRE AS PAIS,
+    P.CAMPEONATOS AS CAMPEONATOS,
+    COUNT(PT.COD_PARTIDA) AS PARTIDAS_GANADAS
+FROM PARTICIPANTES P
+JOIN PAISES PA ON PA.NUM_PAIS = P.PAIS
+LEFT JOIN PARTIDAS PT ON PT.GANADOR = P.NUM_ASOCIADO
+WHERE UPPER(P.TIPO) = 'JUGADOR'
+  AND PA.NUM_PAIS IN (
+      SELECT P2.PAIS
+      FROM PARTICIPANTES P2
+      WHERE UPPER(P2.TIPO) = 'JUGADOR'
+      GROUP BY P2.PAIS
+      HAVING SUM(P2.CAMPEONATOS) > 0
+  )
+GROUP BY P.NOMBRE, PA.NOMBRE, P.CAMPEONATOS;
 
-
+--
 SELECT 
         P.NOMBRE AS NOMBRE,
         PA.NOMBRE AS PAIS,
-        P.CAMPEONATOS AS CAMPEONATOS
+        P.CAMPEONATOS AS CAMPEONATOS,
+        COUNT(PT.COD_PARTIDA) AS PARTIDAS_GANADAS
 FROM PARTICIPANTES P
 INNER JOIN PAISES PA
     ON P.PAIS = PA.NUM_PAIS
-INNER JOIN PARTIDAS PT 
+LEFT JOIN PARTIDAS PT 
     ON PT.GANADOR = P.NUM_ASOCIADO
 WHERE UPPER(P.tipo) = 'JUGADOR'
 AND PA.NOMBRE IN (
@@ -95,9 +113,14 @@ AND PA.NOMBRE IN (
     FROM PARTICIPANTES P
     INNER JOIN PAISES PA
         ON P.PAIS = PA.NUM_PAIS
+    WHERE UPPER(P.tipo) = 'JUGADOR'
     GROUP BY PA.NUM_PAIS, PA.NOMBRE
     HAVING SUM(P.CAMPEONATOS) > 0
-);
+)
+GROUP BY 
+    P.NOMBRE,
+    PA.NOMBRE,
+    P.CAMPEONATOS;
 
 --LOS PAISES QUE TIENEN GANADORES DE CAMPEONATO
 SELECT PA.NOMBRE
@@ -126,11 +149,20 @@ WHERE EXISTS (
 --Por cada hotel muestra un informe que nos dé: el nombre del hotel, la media de
 --entradas vendidas en las partidas jugadas en salas de ese hotel y el total de
 --entradas que se quedaron sin vender.
+SELECT *
+FROM HOTELES H
+INNER JOIN SALAS S
+    ON H.NOMBRE = S.HOTEL
+INNER JOIN PARTIDAS PT 
+    ON PT.SALA = S.COD_SALA;
+
 --Ejercicio 5.
 --Haz una consulta que me de el nombre de los participantes, si son JUGADOR o
 --ÁRBITRO y un campo de totales que contará: si es jugador el número de partidas
 --ganadas y si es árbitro el número de partidas arbitradas. Sólo para jugadores de
 --países que tengan más de 3 participantes
+
+
 --Ejercicio 6.
 --Queremos saber el número de partidas que se han iniciado con el movimiento:
 --P3x4Q Ejercicio 7.
