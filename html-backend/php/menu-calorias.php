@@ -5,11 +5,10 @@ $htmlSalida = "";
 $paso;
 
 
-$menu = array(
-    array("Sopa de cocido", 250),
-    array("Crema de espinacas", 250),
-    array("Verduras a la plancha", 200)
-);
+$primer_plato = array(
+    "Sopa de cocido" => 250,
+    "Crema de espinacas" => 250,
+    "Verduras a la plancha" => 200);
 
 
 $segundo_plato = array(
@@ -18,21 +17,10 @@ $segundo_plato = array(
     "Pechuga de pollo" => 250
 );
 
-//crear tabla
-echo '<table border="1">';
-
-echo "<tr>";
-foreach($primer_plato as $clave => $valor){
-    echo "<td>";
-        echo $clave;
-    echo "</td>";
-}
-echo "/<tr>";
-
-echo "</table>";
-
 if(empty($min) && empty($max)){
     $paso = 1;
+} else {
+    $paso = 2;
 }
 
 if($paso == 1){
@@ -47,11 +35,30 @@ if($paso == 1){
         <label for=""> y </label>
         <input type="number" name="max">
 
+        <input type="submit">
+
     </form>
     EOT;
     
     echo $htmlSalida;
 }
 
+
+
+if($paso == 2){
+    echo '<table border="1"><tr><th>Primer plato</th><th>Segundo plato</th><th>Calorias</th></tr>';
+    foreach($primer_plato as $primer => $calorias_primer){
+        foreach($segundo_plato as $segundo => $calorias_segundo){
+            
+            $total_calorias = $calorias_primer + $calorias_segundo;
+
+            if($total_calorias >= $min && $total_calorias <= $max ){
+                echo "<tr><td>{$primer}</td><td>{$segundo}</td><td>{$total_calorias}</td></tr>";
+            }
+
+        }
+    }
+    echo "</table>";
+}
 ?>
 
