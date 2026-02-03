@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //x
+        function iniciar (){
+            const longitud = 21;
+            let valores = {
+                'x.00': new Array(longitud),
+                'cos(x).00': new Array(longitud),
+                'sen(x).00': new Array(longitud),
+                '14 decimales': new Array(longitud),
+                'todos decimales': new Array(longitud)
+            };
+
+            //llenado valores de x
+            let x = 0;
+            for(let i = 0; i < valores['x.00'].length; i++){
+                valores['x.00'][i] = x.toFixed(2);
+                valores['14 decimales'][i] = x.toFixed(14);
+                valores['todos decimales'][i] = x;
+                x += 0.6;
+            };
+            
+            //calculo de coseno con dos decimales
+            valores['cos(x).00'] = valores['x.00'].map(x => Math.cos(x).toFixed(2));
+
+            //calculo de seno con dos decimales
+            valores['sen(x).00'] = valores['x.00'].map(x => Math.sin(x).toFixed(2));
+            
+            //titulos
+           document.body.innerHTML += Object.keys(valores).join('#');
+           document.body.innerHTML += '<br>';
+            
+            //contenido de la tabla
+           for(let clave in valores){
+                document.body.innerHTML += valores[clave].join('#');
+                document.body.innerHTML += '<br>';
+            } 
+
+            let tabla = document.body.appendChild(document.createElement('table'));
+            
+            for(let clave in valores){
+                let fila = crearNodo('td','');
+                tabla.appendChild(fila);
+                valores[clave].forEach(element => {
+                    let col = crearNodo('tr',element);
+                    fila.appendChild(col);
+                });
+            }
+            tabla.border = '1';
+        }
+
+        function crearNodo(tipo, inner){
+            var ele = document.createElement(tipo);
+            ele.innerHTML = inner;
+            document.body.appendChild(ele);
+            return ele;
+        }
+
+        window.onload = iniciar;
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
