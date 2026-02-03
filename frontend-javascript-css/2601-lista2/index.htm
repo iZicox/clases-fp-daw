@@ -11,9 +11,47 @@
             
             document.write(imprimirObjeto(arrayObj[0]));
 
+            let lista = '';
+            arrayObj.forEach((element,i) => {
+                lista += element['version'];
+                if(i !== (arrayObj.length -1)){
+                    lista += ' ';
+                }
+            });
+            let ele = crearNodo('p',`Lista: ${lista}`,'');
+
+            let ascendente = arrayObj.map(obj => obj.version).sort((a,b) => a -b).join(', ');
+            ele = crearNodo('p',`Lista ascendente: ${ascendente}.`,'');
+
+            let descendente = arrayObj.map(obj => obj.version).sort((a,b) => b - a).join(', ');
+            ele = crearNodo('p',`Lista descendente: ${descendente}.`,'');
+
+            
+     
+            let media = (arrayObj.reduce((accu,actual) => accu + actual.version, 0)) / (arrayObj.length);
+            console.log(media);
+            ele = crearNodo('p',`Media: ${media.toFixed(2)}.`,'');
+
+            ele = crearNodo('p',`Max: ${ascendente[ascendente.length-1]}.`,'');
+
+            ele = crearNodo('p',`Min: ${ascendente[0]}.`,'');
+
+            let suma = arrayObj.map(obj => obj.version).reduce((acc,actual) => acc + actual, 0);
+            ele = crearNodo('p',`Suma: ${suma}.`,'');
+  
+            let filtro = arrayObj.map(obj => obj.version).filter((num) => num >= 0 && num <= 5).join(', ');
+            ele = crearNodo('p',`Filtro (0,5): ${filtro}.`,'');
             
             
             
+        }
+
+        function crearNodo(tipo, inner, id) {
+            let ele = document.createElement(tipo);
+            ele.innerText = inner;
+            ele.id = id;
+            document.body.append(ele);
+            return ele;
         }
 
         function imprimirObjeto(objeto){

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function iniciar(){
+
+            const arrayObj = Array.from({ length: 10 }, () => crearObjeto());
+            
+            let listadoInicial = crearNodo('div','Listado (Texto: nivel y version)','');
+            listadoInicial.style.border = '1px solid';
+            listadoInicial.style.padding = '0.5rem';
+
+            let contenedorListado = crearNodo('div','','');
+            contenedorListado.style.border = '1px solid';
+            contenedorListado.style.padding = '0.5rem';
+            contenedorListado.style.display = 'flex';
+            contenedorListado.style.gap = '1rem';
+
+            arrayObj.forEach((element,i) => {
+                    
+                    let ele = crearNodo('div','',`${i}`);
+                    let eleInner = crearNodo('div',inner,'');
+                    let eleVersion = crearNodo('div',element.version,'');
+                    ele.appendChild(eleInner);
+                    ele.appendChild(eleVersion);
+
+                    ele.style.width = `${element.ancho}px`;
+                    ele.style.height = `${element.alto}px`;
+                    ele.style.backgroundColor = `${element.color}`;
+                    ele.style.border = '1px solid';
+   
+
+                    contenedorListado.appendChild(ele);
+            });
+            
+            
+            
+        }
+
+        function generarContenido (arrayDeObjetos){
+            let resultado = arrayDeObjetos.forEach((element,i) => {
+                    let inner = element.letra + ':' + element.nivel;
+                    let ele = crearNodo('div','',`${i}`);
+                    let eleInner = crearNodo('div',inner,'');
+                    let eleVersion = crearNodo('div',element.version,'');
+                    ele.appendChild(eleInner);
+                    ele.appendChild(eleVersion);
+
+                    ele.style.width = `${element.ancho}px`;
+                    ele.style.height = `${element.alto}px`;
+                    ele.style.backgroundColor = `${element.color}`;
+                    ele.style.border = '1px solid';
+                    ele.style.display = 'flex';
+                    ele.style.flexDirection = 'column';
+                });
+           return resultado;
+        }
+        function alto(){
+            return [50, 70, 90][aleatorio(0,2)];
+        }
+
+        function ancho(){
+            return [40, 60][aleatorio(0,1)];
+        }
+
+        function hexAleatorio() {
+            let letras = "0123456789ABCDEF";
+            let codigo = "#";
+
+            for (let i = 0; i < 6; i++) {
+                codigo += letras[Math.floor(Math.random() * 16)];
+            }
+
+            return codigo;
+        }
+
+        function letra(){
+            let letras = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J","K","L"];
+            return letras[aleatorio(0,letras.length-1)];
+        }
+
+        function nivel (){
+            return ['A','B','C'][aleatorio(0,2)];
+        }
+
+        function crearObjeto () {
+            
+            return {    
+                        color: hexAleatorio(), 
+                        alto: alto(),
+                        ancho: ancho(),
+                        letra: letra(), 
+                        nivel: nivel(), 
+                        version: aleatorio(0,9)
+                    };
+        }
+
+        function crearNodo(tipo, inner, id) {
+            let ele = document.createElement(tipo);
+            ele.innerHTML = inner;
+            ele.id = id;
+            document.body.append(ele);
+            return ele;
+        }
+
+        function imprimirObjeto(objeto){
+            const claves = Object.keys(objeto); //convierte las claves en un array
+            let result = '';
+            for(let i = 0; i < claves.length; i++){
+                result += claves[i] + ': ' + objeto[claves[i]];
+                if(i !== claves.length-1){
+                    result += ', ';
+                } else {
+                    result += '.';
+                }
+            }
+            return result;
+        }
+
+        function aleatorio(minimo,maximo){
+            return Math.floor(Math.random()*((maximo+1)-minimo) + minimo);  
+        }
+
+        
+
+
+        window.onload = iniciar;
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
