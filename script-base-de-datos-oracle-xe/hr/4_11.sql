@@ -4,7 +4,8 @@ FROM EMPLOYEES
 WHERE SALARY = (
     SELECT MAX(SALARY) FROM EMPLOYEES
 );
---2. Devuelve el nombre del empleado que más gana de cada departamento. Añade al listado el
+--2. Devuelve el nombre del empleado que más gana de cada departamento. 
+--Añade al listado el
 --nombre del departamento.
 WITH MAX_SALARY AS (
     SELECT
@@ -338,7 +339,51 @@ INNER JOIN EMPLOYEES e
 GROUP BY j.JOB_ID
 HAVING SUM(e.SALARY ) > (SELECT SUMA_SALARIO  
 						FROM SUMA_SALARIO_IT_PROG );
---12 (difícil) Haz un listado que me de el nombre y salario de un empleado y la diferencia salarial
---que tiene con la media del salario de los empleados que son jefes, pero sin considerar a su
+--12 (difícil) Haz un listado que me de el nombre y salario 
+--de un empleado y la diferencia salarial
+--que tiene con la media del salario de los empleados que son jefes, 
+--pero sin considerar a su
 --propio jefe.
---1
+
+SELECT 
+		e.FIRST_NAME ,
+		e.SALARY ,
+		e.SALARY - 
+		round((
+			SELECT	AVG(e2.SALARY )
+			FROM EMPLOYEES e2 
+			INNER JOIN DEPARTMENTS d2
+				ON e2.EMPLOYEE_ID  = d2.MANAGER_ID 
+			WHERE e2.EMPLOYEE_ID != e.EMPLOYEE_ID 
+		),2)
+FROM EMPLOYEES e ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
