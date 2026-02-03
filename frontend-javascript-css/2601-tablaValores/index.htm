@@ -43,15 +43,32 @@
 
             let tabla = document.body.appendChild(document.createElement('table'));
             
+            let titulos = crearNodo('tr','');
+            titulos.style.backgroundColor = 'chartreuse';
+            tabla.appendChild(titulos);
             for(let clave in valores){
-                let fila = crearNodo('td','');
-                tabla.appendChild(fila);
-                valores[clave].forEach(element => {
-                    let col = crearNodo('tr',element);
-                    fila.appendChild(col);
-                });
+                let fila = crearNodo('td',clave);
+                titulos.appendChild(fila);
             }
-            tabla.border = '1';
+            tabla.style.border = '1px solid';
+            
+            
+            valores['x.00'].forEach((element,i) => {
+
+                let fila = crearNodo('tr','');
+                tabla.appendChild(fila);
+
+                for(let clave in valores){
+                    let col = crearNodo('td',valores[clave][i]);
+                    fila.appendChild(col);
+
+                    if(i % 2 != 0){
+                        fila.style.backgroundColor = '#F5F5F5';
+                    }
+                }
+                
+            });
+             
         }
 
         function crearNodo(tipo, inner){
