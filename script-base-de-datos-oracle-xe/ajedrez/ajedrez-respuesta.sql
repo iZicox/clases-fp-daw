@@ -149,23 +149,53 @@ WHERE EXISTS (
 --Por cada hotel muestra un informe que nos dé: el nombre del hotel, la media de
 --entradas vendidas en las partidas jugadas en salas de ese hotel y el total de
 --entradas que se quedaron sin vender.
-SELECT *
-FROM HOTELES H
-INNER JOIN SALAS S
-    ON H.NOMBRE = S.HOTEL
-INNER JOIN PARTIDAS PT 
-    ON PT.SALA = S.COD_SALA;
-
+SELECT 
+        H.NOMBRE,
+        AVG(PA.ENTRADAS),
+        SUM(S.CAPACIDAD) - SUM(PA.ENTRADAS)
+FROM HOTELES H 
+INNER JOIN SALAS S 
+    ON S.HOTEL = H.NOMBRE
+LEFT JOIN PARTIDAS PA 
+    ON PA.SALA = S.COD_SALA
+GROUP BY H.NOMBRE;
 --Ejercicio 5.
 --Haz una consulta que me de el nombre de los participantes, si son JUGADOR o
 --ÁRBITRO y un campo de totales que contará: si es jugador el número de partidas
 --ganadas y si es árbitro el número de partidas arbitradas. Sólo para jugadores de
 --países que tengan más de 3 participantes
-
+SELECT 
+        PA.NOMBRE PARTICIPANTE,
+        PA.TIPO,
+        CASE    
+            WHEN PA.TIPO = 'JUGADOR' 
+                THEN (
+                    SELECT COUNT(DISTINCT PT1.COD_PARTIDA)
+                    FROM PARTIDAS PT1
+                    WHERE PT1.GANADOR = PA.NUM_ASOCIADO
+                )
+                ELSE (
+                    SELECT COUNT(DISTINCT PT2.COD_PARTIDA)
+                    FROM PARTIDAS PT2 
+                    WHERE PT2.ARBITRO = PA.NUM_ASOCIADO
+                )
+            END AS CONTADOR
+            FROM PARTICIPANTES PA 
+            WHERE PA.PAIS IN (
+                SELECT DISTINCT(PAIS)
+                FROM PARTICIPANTES 
+                GROUP BY PAIS 
+                HAVING COUNT(*) > 3
+            );
 
 --Ejercicio 6.
 --Queremos saber el número de partidas que se han iniciado con el movimiento:
---P3x4Q Ejercicio 7.
+--P3x4Q 
+SELECT COUNT(*)
+FROM MOVIMIENTOS 
+WHERE NUM_ORDEN = 1 
+AND JUGADA = 'P3x4Q';
+--Ejercicio 7.
 --Necesitamos un informe que indique
 --● Código de partida
 --● Nombre del jugador que jugaba con blancas
@@ -173,6 +203,37 @@ INNER JOIN PARTIDAS PT
 --● Árbitro
 --● Nombre del ganador (si no lo hay se indicará como ‘TABLAS’)
 --● Número de movimientos de la partida
+SELECT
+        PT.COD_PARTIDA,
+        PA_B.NOMBRE BLANCAS,
+        PA_N.NOMBRE NEGRAS,
+        PA_A.NOMBRE ARBITRO,
+        COALESCE(PA_G.NOMBRE, 'TABLAS') GANADOR,
+        COUNT(MV.NUM_ORDEN) MOVIMIENTOS 
+FROM PARTIDAS PT
+LEFT JOIN PARTICIPANTES PA_A 
+    ON PT.ARBITRO = PA_A.NUM_ASOCIADO
+LEFT JOIN PARTICIPANTES PA_G 
+    ON PT.GANADOR = PA_G.NUM_ASOCIADO
+INNER JOIN CONTRINCANTES CO_B
+    ON CO_B.PARTIDA = PT.COD_PARTIDA 
+INNER JOIN CONTRINCANTES CO_N 
+    ON CO_N.PARTIDA = PT.COD_PARTIDA 
+INNER JOIN PARTICIPANTES PA_B 
+    ON PA_B.NUM_ASOCIADO = CO_B.JUGADOR 
+INNER JOIN PARTICIPANTES PA_N 
+    ON PA_N.NUM_ASOCIADO = CO_N.JUGADOR 
+LEFT JOIN MOVIMIENTOS MV 
+    ON MV.PARTIDA = PT.COD_PARTIDA
+WHERE CO_B.COLOR = 'BLANCAS'
+    AND CO_N.COLOR = 'NEGRAS'
+GROUP BY 
+        PT.COD_PARTIDA,
+        PA_B.NOMBRE,
+        PA_N.NOMBRE,
+        PA_A.NOMBRE,
+        COALESCE(PA_G.NOMBRE, 'TABLAS')
+ORDER BY PT.COD_PARTIDA;
 --Ejercicio 8.
 --Haz un listado de las salas en las que no se hayan vendido 50 entradas contando
 --todas las partidas jugadas en esa sala.

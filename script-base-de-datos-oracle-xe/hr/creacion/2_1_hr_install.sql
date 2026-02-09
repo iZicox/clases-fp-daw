@@ -2,7 +2,7 @@
 -- create the HR schema user
 -- =======================================================
 
-CREATE USER AJEDREZ IDENTIFIED BY oracle123
+CREATE USER dulces IDENTIFIED BY 123
                QUOTA UNLIMITED ON USERS;
 
 GRANT CREATE MATERIALIZED VIEW,
@@ -14,5 +14,5 @@ GRANT CREATE MATERIALIZED VIEW,
       CREATE TRIGGER,
       CREATE TYPE,
       CREATE VIEW
-  TO AJEDREZ;
+  TO dulces;
 
