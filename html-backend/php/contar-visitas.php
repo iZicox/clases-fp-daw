@@ -2,24 +2,31 @@
 
     $reseteo = $_POST['reset'] ?? "";
     $valor = $_COOKIE['visitas'] ?? "";
+    $contador;
 
-    if(!empty($_POST['visitas'])){
-        $valor = $_POST['visitas'] + 1;
-        setcookie("visitas",$valor,time()+60*60*24*30);
+    if(isset($_COOKIE['contador']) == false){
+        $contador = 1;
     } else {
-        $valor = 1;
+        $contador = $_COOKIE['contador'];
+        $contador++;
     }
 
     if($reseteo == "reseteo"){
-        $valor = 1;
-        setcookie("visitas",$valor,time()+60*60*24*30);
+        $contador = 0;
+        setcookie("visitas","",time()+60*60*24*30);
         header("Location: contar-visitas.php");
     }
-    
+
+    setcookie('contador',$contador,time()+60*60*24*60);
+    $mensaje = "<p>Numero de visitas: <b>$contador</b></p>";
+    echo $mensaje;
 ?>
-<p>Numero de visitar <?php echo $valor ?></p>
-<form method="post">
-    <input type="hidden" name="visitas" value="<?php echo $valor ?>">
-    <input type="submit">
-    <input type="submit" name="reset" value="reseteo">
-</form>
+
+
+    <form method="post">
+        
+        
+        <input type="submit" name="reset" value="reseteo">
+    </form>
+    
+
