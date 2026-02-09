@@ -97,6 +97,16 @@ WHERE TO_CHAR(PE.FECHA_PEDIDO, 'MM') IN ('07','08')
 --El coste de la caja se calcula sumando por cada bombón de la caja, la cantidad que hay de 
 --ese bombon * por el coste de ese bombón. 
 -- 
+SELECT  
+        CA.NOMBRE,
+        SUM(DC.CANTIDAD * BO.COSTE)
+FROM BOMBONES BO 
+INNER JOIN DETALLE_CAJAS DC 
+        ON BO.IDBOMBON = DC.IDBOMBON 
+INNER JOIN CAJAS CA 
+        ON DC.IDCAJA = CA.IDCAJA
+WHERE SUM(DC.CANTIDAD * BO.COSTE) < 400 
+GROUP BY CA.NOMBRE;
 WITH COSTES AS (
 SELECT 
         DC.IDCAJA IDCAJA,
@@ -119,12 +129,9 @@ WHERE CO.COSTECAJA < 400;
 -- 
 --Haz un listado con las cajas, nombre de la caja, el nombre del bombón más caro de cada 
 --caja y el número de cajas que se han pedido de esa caja. 
-SELECT 
-        DC.IDCAJA AS IDCAJA,
-        MAX(BO.COSTE) AS COSTE_MAX
-FROM BOMBONES BO 
-INNER JOIN DETALLE_CAJAS DC ON DC.IDBOMBON = BO.IDBOMBON
-GROUP BY DC.IDCAJA;
+
+
+
 --Ejercicio 7.   
 -- 
 --Queremos un informe con el nombre de cliente y nombre del bombón para clientes que han 
