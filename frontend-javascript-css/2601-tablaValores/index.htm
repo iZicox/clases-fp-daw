@@ -7,7 +7,7 @@
     <script>
         //x
         function iniciar (){
-            const longitud = 21;
+            const longitud = 1000;
             let valores = {
                 'x.00': new Array(longitud),
                 'cos(x).00': new Array(longitud),
@@ -22,7 +22,7 @@
                 valores['x.00'][i] = x.toFixed(2);
                 valores['14 decimales'][i] = x.toFixed(14);
                 valores['todos decimales'][i] = x;
-                x += 0.6;
+                x += 0.05;
             };
             
             //calculo de coseno con dos decimales
@@ -42,7 +42,7 @@
             } 
 
             let tabla = document.body.appendChild(document.createElement('table'));
-            
+            tabla.style.display = 'none';
             let titulos = crearNodo('tr','');
             titulos.style.backgroundColor = 'chartreuse';
             tabla.appendChild(titulos);
@@ -68,7 +68,153 @@
                 }
                 
             });
-             
+
+
+            crearNodo('p','Crear grafico coseno:');
+
+            let canvas = crearNodo('canvas','');
+            canvas.width = 700;
+            canvas.height = 400;
+            canvas.id = 'grafico';
+            canvas.style.border = '1px solid';
+
+            let canvasLienzo = document.getElementById('grafico');
+            let ctx = canvasLienzo.getContext('2d');
+
+
+            // Estilo de la línea
+            ctx.strokeStyle = 'blue';
+            ctx.lineWidth = 3;
+
+            //valores x y y
+            let valoresX = valores['x.00'].map(Number);
+            let valoresY = valores['cos(x).00'].map(Number);
+            
+            //variables
+            let desplazamiento = 200;
+            let escalaY = 90;
+            let escalaX = 30;
+            let offSet = 0;
+
+
+
+            
+            // Dibujar grafico
+            ctx.beginPath();
+            for(let i = 0; i < valoresX.length; i++){
+                let xCanvas = valoresX[i] * escalaX - offSet;
+                let yCanvas = desplazamiento - valoresY[i] * escalaY;
+                if(i == 0){
+                    ctx.moveTo(xCanvas,yCanvas);
+                } else {
+                    ctx.lineTo(xCanvas,yCanvas);
+
+                }
+            } 
+
+            // linea del 0
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(0,desplazamiento);
+            ctx.lineTo(700,desplazamiento)
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 1;
+            ctx.stroke()
+            
+
+            crearNodo('p','Grafico con desplazamiento:');
+
+            let canvasDes = crearNodo('canvas','');
+            canvasDes.height = 500;
+            canvasDes.width = 700;
+            canvasDes.id = 'graficoCosDes';
+            canvasDes.style.border = '1px solid';
+            let canvasLienzoDes = document.getElementById('graficoCosDes');
+            let ctxDes = canvasLienzoDes.getContext('2d');
+            
+            ctxDes.strokeStyle = 'blue';
+            ctxDes.lineWidth = 3;
+
+            let desEscalaX = 50;
+            let desEscalaY = 50;
+            let desOffSet = 0;
+            let desDesplazamiento = 100;
+            let repeticiones = 5;
+            for(let i = 0; i < repeticiones; i++){
+                ctxDes.beginPath();
+                for(let j = 0; j < valoresX.length; j++){
+                    let xCanvas = valoresX[j] * desEscalaX - desOffSet;
+                    let yCanvas = desDesplazamiento - valoresY[j] * desEscalaY;
+                    if(i === 0){
+                        ctxDes.moveTo(xCanvas,yCanvas);
+                    } else {
+                        ctxDes.lineTo(xCanvas,yCanvas);
+                    }
+                }
+                ctxDes.stroke();
+                desDesplazamiento += 50;
+            }
+            ctxDes.beginPath();
+            ctxDes.strokeStyle = 'red';
+            ctxDes.lineWidth = 1;
+            ctxDes.moveTo(0,200);
+            ctxDes.lineTo(700,200);
+            ctxDes.stroke();
+
+            crearNodo('p','Grafico amortiguado:');
+            valoresX = valores['x.00'].map(Number);
+            let valoresYAm = valoresX.map(x => ondaAmortiguada(x));
+            valoresYAm.forEach(ele => {console.log(ele)});
+
+            let graficoSenAm = crearGrafico('grafAm',700,500,valoresX,valoresYAm,200,15,150,0,700);
+
+        }
+
+        function crearGrafico(idGrafico, anchoGrafico, altoGrafico,valoresX,valoresY, desplazamiento, escalaX, escalaY, offSet, final ){
+
+            let canvas = crearNodo('canvas','');
+            canvas.width = anchoGrafico;
+            canvas.height = altoGrafico;
+            canvas.id = idGrafico;
+            canvas.style.border = '1px solid';
+            document.body.appendChild(canvas);
+
+            let canvasLienzo = document.getElementById(idGrafico);
+            let ctx = canvasLienzo.getContext('2d');
+
+            // Estilo de la línea
+            ctx.strokeStyle = 'blue';
+            ctx.lineWidth = 3;
+
+            // Dibujar grafico
+            ctx.beginPath();
+            for(let i = 0; i < valoresX.length; i++){
+                let xCanvas = valoresX[i] * escalaX - offSet;
+                let yCanvas = desplazamiento - valoresY[i] * escalaY;
+                if(i == 0){
+                    ctx.moveTo(xCanvas,yCanvas);
+                } else {
+                    ctx.lineTo(xCanvas,yCanvas);
+
+                }
+            } 
+
+            // linea del 0
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(0,desplazamiento);
+            ctx.lineTo(final,desplazamiento)
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 1;
+            ctx.stroke()     
+
+            return canvas;
+        }
+
+        function ondaAmortiguada(t, A = 1, lambda = 0.1, omega = 1, phi = 0) {
+            return A * Math.exp(-lambda * t) * Math.cos(omega * t + phi);
         }
 
         function crearNodo(tipo, inner){

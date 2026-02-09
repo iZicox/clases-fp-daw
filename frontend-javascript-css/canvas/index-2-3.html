@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function iniciar(){
+            let canvas = createNode('canvas','','canvas');
+            canvas.style.border = '1px solid';
+            canvas.width = 1000;
+            canvas.height = 1000;
+            canvas.style.background = '#ff8';
+
+            let context = canvas.getContext('2d');
+
+            class Circle {
+                constructor(xpos,ypos,radius,color,text){
+                    this.xpos = xpos;
+                    this.ypos = ypos;
+                    this.radius = radius;
+                    this.color = color;
+                    this.text = text;
+                }
+    
+                draw(context){
+                    context.beginPath();
+
+                    context.strokeStyle = this.color;
+                    context.fillText(this.text, this.xpos,this.ypos);
+                    context.textAlign = 'center';
+                    context.textBaseline = 'middle';
+                    context.font = "20px Arial";
+
+                    context.lineWidth = 5;
+                    context.arc(this.xpos,this.ypos,this.radius,0,Math.PI*2,false);
+                    context.stroke();
+                    context.closePath();
+                }
+            }
+
+            let circle = new Circle(100,100,50,'black','hola');
+            circle.draw(context);
+
+            let arrayCircle = [];
+
+            let width = 500;
+
+            for(let i = 0; i < 5; i++){
+                let xRand = Math.random() * width;
+                let yRand = Math.random() * width;
+
+                let circle = new Circle(xRand,yRand,50,'black',(i+1));
+
+                arrayCircle.push(circle);
+
+                createCircles(arrayCircle[i],context);
+            } 
+
+        }
+
+        function createCircles(circle,context){
+            circle.draw(context);
+        }
+
+        function createNode(type,inner,id){
+            let ele = document.createElement(type);
+            ele.innerHTML = inner;
+            ele.id = id;
+            document.body.appendChild(ele);
+            return ele;
+        }
+
+        window.onload = iniciar;
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        .main-container {
+            background-color: rgb(113, 128, 212);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        canvas {
+            background-color: #fff;
+        }
+    </style>
+    <script>
+        function iniciar(){
+            const mainCanvas = document.getElementById("mainCanvas");
+            const context = mainCanvas.getContext("2d");
+
+            let initialX;
+            let initialY;
+
+            const dibujar = (cursorX, cursorY) => {
+
+            }
+        }
+
+        window.onload = iniciar;
+    </script>
+</head>
+<body>
+    <main class="mian-container">
+        <canvas id="main_canvas" width="900" height="900"></canvas>
+    </main>
+</body>
+</html>

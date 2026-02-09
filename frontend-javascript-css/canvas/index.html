@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function iniciar(){
+            let canvas = createNode('canvas','','canvas');
+            canvas.style.border = '1px solid';
+            canvas.width = 1000;
+            canvas.height = 1000;
+            canvas.style.background = '#ff8';
+
+            let context = canvas.getContext('2d');
+
+            context.fillRect(300,0,100,200);
+
+            context.fillStyle = 'red';
+            context.fillRect(100,500,100,100);
+
+            context.beginPath();
+            context.strokeStyle = 'blue';
+            context.lineWidth = 20;
+            context.arc(100,100,50,Math.PI*2,false);
+            context.stroke();
+            context.closePath();
+        }
+
+        function createNode(type,inner,id){
+            let ele = document.createElement(type);
+            ele.innerHTML = inner;
+            ele.id = id;
+            document.body.appendChild(ele);
+            return ele;
+        }
+
+        window.onload = iniciar;
+    </script>
+</head>
+<body>
+</body>
+</html>

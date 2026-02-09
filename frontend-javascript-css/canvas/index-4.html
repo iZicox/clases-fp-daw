@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script>
+        function iniciar(){
+            let windowHeight = window.innerHeight;
+            let windowWidth = window.innerWidth;
+            let canvas = createNode('canvas','','canvas');
+            canvas.style.border = '1px solid';
+            canvas.width = windowWidth;
+            canvas.height = windowHeight;
+            canvas.style.background = '#ff8';
+
+            let ctx = canvas.getContext('2d');
+
+            class Circle {
+                constructor(xpos,ypos,radius,color,text,speed){
+                    this.xpos = xpos;
+                    this.ypos = ypos;
+                    this.radius = radius;
+                    this.color = color;
+                    this.text = text;
+                    this.speed = speed;
+
+                    this.dx = 1 * this.speed;
+                    this.dy = 1 * this.speed;
+                }
+    
+                draw(context){
+                    context.beginPath();
+
+                    context.strokeStyle = this.color;
+                    context.fillText(this.text, this.xpos,this.ypos);
+                    context.textAlign = 'center';
+                    context.textBaseline = 'middle';
+                    context.font = "20px Arial";
+
+                    context.lineWidth = 5;
+                    context.arc(this.xpos,this.ypos,this.radius,0,Math.PI*2,false);
+                    context.stroke();
+                    context.closePath();
+                }
+
+                update(context){
+                    context.clearRect(0,0,windowWidth,windowHeight);
+                    this.draw(context);
+
+                    //rebote pared derecha
+                    if((this.xpos + this.radius) > windowWidth){
+                        this.dx = -this.dx;
+                    }
+
+                    //rebote pared izquierda
+                    if((this.xpos - this.radius) < 0){
+                        this.dx = -this.dx;
+                    }
+
+                    if((this.ypos + this.radius) > windowWidth){
+                        this.dy = -this.dy;
+                    }
+
+                    if((this.ypos - this.radius) < 0){
+                        this.dy = -this.dy;
+                    }
+
+                    this.xpos += this.dx;
+                    this.ypos += this.dy;
+                }
+            }
+
+
+            let width = 650;
+
+          
+            let xRand = Math.random() * windowWidth;
+            let yRand = Math.random() * windowWidth;
+        
+            let circle = new Circle(xRand,yRand,50,'black','',10);
+
+            circle.draw(ctx);
+
+            //animacion 
+            let updateCircle = function() {
+                requestAnimationFrame(updateCircle);
+                circle.update(ctx);
+            }
+
+            updateCircle();
+
+        }
+
+        function createCircles(circle,context){
+            circle.draw(context);
+        }
+
+        function createNode(type,inner,id){
+            let ele = document.createElement(type);
+            ele.innerHTML = inner;
+            ele.id = id;
+            document.body.appendChild(ele);
+            return ele;
+        }
+
+        window.onload = iniciar;
+    </script>
+</head>
+<body>
+</body>
+</html>
