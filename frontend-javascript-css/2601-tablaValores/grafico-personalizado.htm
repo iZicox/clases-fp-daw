@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function iniciar(){
+            let longitud = 100;
+            let valor = (longitud/2)*-1;
+            let valoresX = [];
+            for(let i = 0; i < longitud; i++){
+                valoresX[i] = valor;
+                valor+=1;
+            }
+
+            let input = prompt("Ingresa una funcion matematica:");
+            let escala = prompt("Escala:");
+            let exp = x => eval(input);
+
+            let valoresY = valoresX.map(x => exp(x));
+
+            console.log(valoresY);
+
+            crearGrafico(1,700,400,valoresX,valoresY,200,escala,escala,0,700);
+
+
+        }
+
+       
+
+        function crearNodo(tipo, inner){
+            var ele = document.createElement(tipo);
+            ele.innerHTML = inner;
+            document.body.appendChild(ele);
+            return ele;
+        }
+
+        function ondaAmortiguada(t, A = 1, lambda = 0.1, omega = 1, phi = 0) {
+            return A * Math.exp(-lambda * t) * Math.cos(omega * t + phi);
+        }
+
+        function crearGrafico(idGrafico, anchoGrafico, altoGrafico,valoresX,valoresY, desplazamiento, escalaX, escalaY, offSet, final ){
+
+            let centroX = anchoGrafico / 2;
+            let centroY = altoGrafico / 2;
+
+            let canvas = crearNodo('canvas','');
+            canvas.width = anchoGrafico;
+            canvas.height = altoGrafico;
+            canvas.id = idGrafico;
+            canvas.style.border = '1px solid';
+            document.body.appendChild(canvas);
+
+            let canvasLienzo = document.getElementById(idGrafico);
+            let ctx = canvasLienzo.getContext('2d');
+
+            // Estilo de la línea
+            ctx.strokeStyle = 'blue';
+            ctx.lineWidth = 3;
+
+            // Dibujar grafico
+            ctx.beginPath();
+            for(let i = 0; i < valoresX.length; i++){
+                let xCanvas = centroX + valoresX[i] * escalaX;
+                let yCanvas = centroY - valoresY[i] * escalaY;
+                if(i == 0){
+                    ctx.moveTo(xCanvas,yCanvas);
+                } else {
+                    ctx.lineTo(xCanvas,yCanvas);
+
+                }
+
+            } 
+
+            // linea del 0
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(0,centroY);
+            ctx.lineTo(anchoGrafico,centroY)
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 1;
+            ctx.stroke()    
+            
+            
+            ctx.beginPath();
+            ctx.moveTo(centroX, 0);
+            ctx.lineTo(centroX, altoGrafico);
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            ctx.strokeStyle = "#ccc";
+            ctx.lineWidth = 1;
+
+            for (let x = escala; centroX + x <= anchoGrafico; x += escala) {
+                ctx.beginPath();
+                ctx.moveTo(centroX + x, 0);
+                ctx.lineTo(centroX + x, altoGrafico);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(centroX - x, 0);
+                ctx.lineTo(centroX - x, altoGrafico);
+                ctx.stroke();
+            }
+
+
+            return canvas;
+        }
+
+
+        window.onload = iniciar;
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
