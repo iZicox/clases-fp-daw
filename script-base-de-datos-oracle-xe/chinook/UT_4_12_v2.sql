@@ -178,29 +178,64 @@ MUY DIFICILES
 álbum
 1
 */
-SELECT 
-        AL.ALBUMID,
-        SUM(T.MILLISECONDS) TOTAL
-FROM ALBUM AL 
-INNER JOIN TRACK T ON AL.ALBUMID = T.ALBUMID
-GROUP BY AL.ALBUMID;
-
-SELECT 
-        AR.NAME,
-        (
-            SELECT AL2.TITLE 
-            FROM ALBUM AL2 
-            WHERE AL2.ALBUMID = (
-                
-            )
-        ) ALBUM_MAS_LARGO
-FROM ARTIST AR 
-INNER JOIN ALBUM AL ON AR.ARTISTID = AL.ARTISTID
-INNER JOIN TRACK T ON T.ALBUMID = AL.ALBUMID;
+SELECT
+    ar.name AS artista,
+    al.title AS album_mas_largo,
+    stats.total_ms AS duracion_total_ms,
+    CASE
+        WHEN EXISTS (
+            SELECT 1
+            FROM track t2
+            JOIN invoiceline il2 ON il2.trackid = t2.trackid
+            WHERE t2.albumid = al.albumid
+        ) THEN 'SI'
+        ELSE 'NO'
+    END AS tiene_cancion_vendida
+FROM artist ar
+JOIN album al
+    ON al.artistid = ar.artistid
+JOIN (
+    -- Duración total por álbum
+    SELECT
+        al2.albumid,
+        SUM(t.milliseconds) AS total_ms
+    FROM album al2
+    JOIN track t ON t.albumid = al2.albumid
+    GROUP BY al2.albumid
+) stats
+    ON stats.albumid = al.albumid
+WHERE stats.total_ms = (
+    -- Subconsulta correlacionada: máximo por artista
+    SELECT MAX(SUM(t3.milliseconds))
+    FROM album al3
+    JOIN track t3 ON t3.albumid = al3.albumid
+    WHERE al3.artistid = ar.artistid
+    GROUP BY al3.albumid
+)
+ORDER BY ar.name;
 /*
 9. Sacar las listas y los álbumes que están completos dentro de una lista (sólo para álbumes de
 más de 10 canciones). Sacar nombre de la lista, nombre del álbum, número de canciones del
 álbum y número de canciones totales que tiene la lista.
+*/
+
+/*
 10. Artista, álbum que más ingresos le ha generado e ingresos que le ha generado.
 2
 */
+SELECT 
+        AR.NAME,
+        AL.TITLE
+FROM ARTIST AR 
+INNER JOIN ALBUM AL ON AR.ARTISTID = AL.ARTISTID 
+INNER JOIN TRACK T ON AL.ALBUMID = T.ALBUMID 
+INNER JOIN INVOICELINE IL ON T.TRACKID = IL.TRACKID
+INNER JOIN (
+    SELECT 
+            AL2.ALBUMID AS COD,
+            SUM(IL2.UNITPRICE)
+    WHERE ALBUM AL2  
+    INNER JOIN TRACK T2 ON AL2.ALBUMID = T2.ALBUMID 
+    INNER JOIN INVOICELINE IL2 ON T2.TRACKID = IL2.TRACKID
+)
+ ;
