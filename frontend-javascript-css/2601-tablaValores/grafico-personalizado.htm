@@ -91,18 +91,12 @@
             ctx.lineWidth = 1;
             ctx.stroke();
 
-            ctx.strokeStyle = "#ccc";
-            ctx.lineWidth = 1;
-
-            for (let x = escala; centroX + x <= anchoGrafico; x += escala) {
+            for(let i = o; i < anchoGrafico; i++){
                 ctx.beginPath();
-                ctx.moveTo(centroX + x, 0);
-                ctx.lineTo(centroX + x, altoGrafico);
-                ctx.stroke();
-
-                ctx.beginPath();
-                ctx.moveTo(centroX - x, 0);
-                ctx.lineTo(centroX - x, altoGrafico);
+                ctx.moveTo(centroX, i);
+                ctx.lineTo(centroX, i++);
+                ctx.strokeStyle = 'red';
+                ctx.lineWidth = 1;
                 ctx.stroke();
             }
 
