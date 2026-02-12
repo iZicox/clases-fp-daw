@@ -33,6 +33,7 @@ if($paso == 2){
         <label for="">Ingresa un numero: </label>
         <input type="hidden" name="secreto" value="$secreto">
         <input type="number" name="num_jugador">
+        <input type="submit">
         <input type="reset">
     </form>
     EOT;
@@ -41,9 +42,9 @@ if($paso == 2){
     if(!empty($num_jugador)){
         if($secreto < $num_jugador){
             echo "El numero es menor";
+
         }
     
-        
         if($secreto > $num_jugador){
             echo "El numero es mayor";
         }
@@ -51,8 +52,16 @@ if($paso == 2){
         if($secreto == $num_jugador) {
         echo "adivinado";
 
+        } else {
+            $proximidad = abs($secreto - $num_jugador);
+            echo "<br>";
+            if($proximidad < 10){
+                echo str_repeat("*", $proximidad) . "<br>";
+            }else{
+                echo str_repeat("*", 10) . "<br>";
+            }
+        }
     }
-}
 }
 
 
