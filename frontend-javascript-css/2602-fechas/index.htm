@@ -6,17 +6,28 @@
     <title>Document</title>
     <script>
         function iniciar(){
+
             const n = 24;
 
-            const fechaAleatoria = (anio) => {
-                return new Date(anio);
-            };
+            for(let i = 0; i < n ; i++){
+                console.log(fechaAleatoria(2019));
+            }
 
             let ejemplo = crearNodo("p","Ejemplo de control input type=\"date\" impreso en ISO date.")
             let input = crearNodo("input","");
             input.setAttribute("type", "date");
 
             crearNodo("p", "Crear 24 fechas en 6 columnas.");
+        }
+
+        function fechaAleatoria (anio) {
+                const inicio = new Date(anio, 0, 1).getTime();
+                const final = new Date(anio, 11, 31).getTime();
+                return new Date(aleatorio(inicio,final));
+            };
+
+        function aleatorio(minimo,maximo){
+            return Math.floor(Math.random()*((maximo+1)-minimo) + minimo);  
         }
 
 
