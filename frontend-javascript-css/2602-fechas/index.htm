@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function iniciar(){
+            const n = 24;
+
+            const fechaAleatoria = (anio) => {
+                return new Date(anio);
+            };
+
+            let ejemplo = crearNodo("p","Ejemplo de control input type=\"date\" impreso en ISO date.")
+            let input = crearNodo("input","");
+            input.setAttribute("type", "date");
+
+            crearNodo("p", "Crear 24 fechas en 6 columnas.");
+        }
+
+
+        function crearNodo(tipo, inner){
+            var ele = document.createElement(tipo);
+            ele.innerHTML = inner;
+            document.body.appendChild(ele);
+            return ele;
+        }
+
+        window.onload = iniciar;
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
