@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script>
+            function iniciar() {
+
+                const width = 800;
+                const height = 300;
+                
+                let longitud = 1000;
+                let valor = 0;
+                let valoresX = [];
+                for (let i = 0; i < longitud; i++) {
+                    valoresX[i] = valor;
+                    valor += 1;
+                }
+                
+                let valoresY = valoresX.map((x) => Math.sin(x * 0.05));
+                
+                //el marco del dibujo
+                let svgNS = "http://www.w3.org/2000/svg";
+                const svg = document.createElementNS(svgNS, "svg");
+                svg.setAttribute("width", width);
+                svg.setAttribute("height", height);
+                svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+
+                //variables de escala
+                let escalaX = width / longitud;
+                let escalaY = 50; //amplitud
+                let offSet = height / 2;
+
+                //recorrer los valores
+                for(let i = 0; i < valoresX.length; i++){
+
+                    if(i % 5 === 0) {
+                        
+                        let circle = document.createElementNS(svgNS, "circle");
+                        
+                        //establecer los atributos del circulo
+                        circle.setAttribute("cx", valoresX[i] * escalaX);
+                        circle.setAttribute("cy", offSet - valoresY[i] * escalaY);
+                        circle.setAttribute("r", 4);
+                        circle.setAttribute("fill", "#07f");
+    
+                        //colocar el circulo dentro del marco svg
+                        svg.appendChild(circle);
+
+                    }
+                }
+                
+                //insertar todo en el dom
+                crearNodo("p", "Onda con svg: ");
+                document.body.appendChild(svg);
+                
+            }
+
+            function crearNodo(tipo, inner) {
+                var ele = document.createElement(tipo);
+                ele.innerHTML = inner;
+                document.body.appendChild(ele);
+                return ele;
+            }
+
+            function ondaAmortiguada(
+                t,
+                A = 1,
+                lambda = 0.1,
+                omega = 1,
+                phi = 0,
+            ) {
+                return A * Math.exp(-lambda * t) * Math.cos(omega * t + phi);
+            }
+
+            function crearGrafico( idGrafico, anchoGrafico, altoGrafico, valoresX, valoresY, desplazamiento, escalaX, escalaY, offSet, final ) {
+                let canvas = crearNodo("canvas", "");
+                canvas.width = anchoGrafico;
+                canvas.height = altoGrafico;
+                canvas.id = idGrafico;
+                canvas.style.border = "1px solid";
+                document.body.appendChild(canvas);
+
+                let canvasLienzo = document.getElementById(idGrafico);
+                let ctx = canvasLienzo.getContext("2d");
+
+                // Estilo de la línea
+                ctx.strokeStyle = "blue";
+                ctx.lineWidth = 3;
+
+                // Dibujar grafico
+                ctx.beginPath();
+                for (let i = 0; i < valoresX.length; i++) {
+                    let xCanvas = valoresX[i] * escalaX - offSet;
+                    let yCanvas = desplazamiento - valoresY[i] * escalaY;
+                    if (i == 0) {
+                        ctx.moveTo(xCanvas, yCanvas);
+                    } else {
+                        ctx.lineTo(xCanvas, yCanvas);
+                    }
+                }
+
+                // linea del 0
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(0, desplazamiento);
+                ctx.lineTo(final, desplazamiento);
+                ctx.strokeStyle = "red";
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                return canvas;
+            }
+
+            window.onload = iniciar;
+        </script>
+    </head>
+    <body></body>
+</html>
