@@ -3,6 +3,7 @@
 
     $operacion;
     $valor;
+    $anterior = $_SESSION['anterior'] ?? 0;
 
     if(!isset($_POST['valor'])){
         //si post no existe se revisa la session
@@ -23,19 +24,18 @@
     }
     
     if($operacion == "+"){
-        $valor++;
+        $valor += $anterior;
     }
 
     if($operacion == "-"){
-        $valor--;
+        $valor -= $anterior;
     }
 
-     // 🔥 CAMBIO AÑADIDO: evitar reenvío del formulario
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $_SESSION['valor'] = $valor; // guardamos el valor actualizado
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit;
-    }
+
+    $_SESSION['anterior'] = $valor;
+
+
+
 
 ?>
 <!DOCTYPE html>
@@ -44,6 +44,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!--
     <style>
         * {
             margin: 0;
@@ -72,11 +73,13 @@
             text-align: center;
         }
     </style>
+-->
 </head>
 <body>
     <main>
+        <h1><?php echo $valor ?></h1>
         <form action="" method="post">
-            <input type="number" name="valor" value="<?php echo $valor ?>">
+            <input type="number" name="valor">
             <div>
                 <input type="submit" name="operacion" value="+">
                 <input type="submit" name="operacion" value="-">
