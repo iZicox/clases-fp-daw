@@ -1,0 +1,77 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script>
+            function iniciar() {
+
+                //mensaje
+                let msj = document.createElement('p');
+                msj.id = 'msj';
+
+                //espacios
+                const n = 4;
+                const textareas = [];
+
+                //crear los cuadros
+                for (let i = 0; i < n; i++) {
+                    let digito = crearNodo("textarea", "");
+                    digito.id = i;
+                    digito.style.resize = "none";
+                    digito.style.fontSize = "18px";
+                    digito.setAttribute("maxlength", 4); //maximo de caracteres
+                    digito.setAttribute("cols", 10);
+                    digito.setAttribute("autocomplete", "off");
+
+                    textareas.push(digito);
+
+                    digito.addEventListener("blur", validarCampo);
+                }
+
+                document.body.appendChild(msj);
+
+
+                function validarCampo(){
+                    // 1. Verificar si hay vacíos
+                    let faltanVacios = textareas.some(t => t.value.trim() === '');
+
+                    // 2. Verificar si todos son números válidos
+                    let noEsNumero = textareas.some(t => isNaN(t.value.trim()));
+
+                    // 3. Verificar si todos son enteros
+                    let noEsEntero = textareas.some(t => Number.isInteger(Number(t.value.trim())) === false);
+
+                    if (faltanVacios) {
+                        msj.innerText = 'Faltan datos';
+                        return;
+                    }
+
+                    if (noEsNumero) {
+                        msj.innerText = 'Alguno no es un número';
+                        return;
+                    }
+
+                    if (noEsEntero) {
+                        msj.innerText = 'Alguno no es un número entero';
+                        return;
+                    }
+
+                    msj.innerText = 'Todos los espacios están llenos y son enteros válidos';
+                }
+            }
+
+            function crearNodo(tipo, inner) {
+                var ele = document.createElement(tipo);
+                ele.innerHTML = inner;
+                document.body.appendChild(ele);
+                return ele;
+            }
+
+            window.onload = iniciar;
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>
