@@ -12,10 +12,13 @@
             const arrayFehcas = Array.from({length: n }, () => fechaAleatoria(2019));
 
             let ejemplo = crearNodo("p","Ejemplo de control input type=\"date\" impreso en ISO date.")
+            ejemplo.style.fontWeight = 'bold';
             let input = crearNodo("input","");
             input.setAttribute("type", "date");
 
-            crearNodo("p", "Crear 24 fechas en 6 columnas.");
+            let titulo = crearNodo("p", "Crear 24 fechas en 6 columnas.");
+            titulo.style.marginBottom = '0';
+            titulo.style.fontWeight = 'bold';
             const contenedorPrincipal = crearNodo('div','');
             contenedorPrincipal.style.display = 'flex';
             contenedorPrincipal.style.flexWrap = 'wrap';
@@ -37,7 +40,9 @@
 
             //**********       MENOR A MAYOR       **********
 
-            crearNodo("p", "De menor a mayor.");
+            titulo = crearNodo("p", "De menor a mayor.");
+            titulo.style.marginBottom = '0';
+            titulo.style.fontWeight = 'bold';
 
             const menorAMayor = arrayFehcas.sort((a,b) => a-b);
 
@@ -62,7 +67,9 @@
 
             //**********       MAYOR A MENOR       **********
 
-            crearNodo("p", "De mayor a menor.");
+            titulo = crearNodo("p", "De mayor a menor.");
+            titulo.style.marginBottom = '0';
+            titulo.style.fontWeight = 'bold';
 
             const mayorAMenor = arrayFehcas.sort((a,b) => b-a);
 
@@ -85,6 +92,91 @@
                 contenedorMayorAMenor.appendChild(contenedor);
             })
 
+
+             //**********       DIFERENCIA       **********
+
+            const diferencias = menorAMayor
+                .slice(0,-1) //quitar el ultimo elemento
+                .map((date, i) => {
+                    const siguiente = menorAMayor[i+1]; 
+                    const diff = date - siguiente; //diferencia en tipo Date
+                    return (diff / (1000*60*60*24)).toFixed(0); //convertis ms a dias y enteros
+                });
+
+        
+            titulo = crearNodo("p", "Diferencia dias");
+            titulo.style.marginBottom = '0';
+            titulo.style.fontWeight = 'bold';
+
+            const contenedorDiff = crearNodo('div','');
+            contenedorDiff.style.display = 'flex';
+            contenedorDiff.style.flexWrap = 'wrap';
+            contenedorDiff.style.alignItems = 'center';
+            contenedorDiff.style.justifyContent = 'start';
+            contenedorDiff.style.width = '800px';
+            contenedorDiff.style.border = '1px solid';
+
+            menorAMayor.slice(0,-1).forEach((ele, i) => {
+                let temp = new Date(ele.getTime());
+                let inner = 
+                            temp.getDate() + "-" 
+                            + (temp.getMonth() + 1) + "-" 
+                            + temp.getFullYear() + " ; " 
+                            + diferencias[i];
+
+                let contenedor = crearContenedor('div', inner);
+                contenedor.style.width = '120px';
+                contenedor.style.display = 'flex';
+                contenedor.style.alignItems = 'center';
+                contenedor.style.justifyContent = 'center';
+                contenedorDiff.appendChild(contenedor);
+            })
+
+            //**********       MAYOR Y MENOR ENTRE DIAS       **********
+            titulo = crearNodo('p','Mayor y menor entre dias');
+            titulo.style.marginBottom = '0';
+            titulo.style.fontWeight = 'bold';
+
+            const diffOrdenada = diferencias.sort((a,b) => b - a);
+            let text = crearNodo('p', 'Mayor: ' + diffOrdenada[0] + '. Menor: ' + diffOrdenada[diffOrdenada.length -1]);
+            text.style.marginTop = '0';
+
+            //**********       FECHA MAS ALTA Y MAS BAJA       **********
+            titulo = crearNodo('p','Fecha mas alta y mas baja');
+            titulo.style.marginBottom = '0';
+            titulo.style.fontWeight = 'bold';
+
+            const mayorFecha =  arrayFehcas.sort((a,b) => b - a).slice(0,1)[0];
+            const menorFecha =  arrayFehcas.sort((a,b) => a - b).slice(0,1)[0];
+            
+            
+            text = crearNodo('p', 
+                `Mayor: 
+                    ${mayorFecha.getDate()} -
+                    ${mayorFecha.getMonth()+1} -
+                    ${mayorFecha.getFullYear()}.
+                Menor: 
+                    ${menorFecha.getDate()} -
+                    ${menorFecha.getMonth()+1} -
+                    ${menorFecha.getFullYear()}.`
+            );
+            text.style.marginTop = '0';
+
+
+            //**********       DIFERENCIA ENTRE LA FECHA MAS ALTA Y MAS BAJA       **********
+
+            titulo = crearNodo('span','Dias entre la fecha mas alta y mas baja');
+            titulo.style.marginBottom = '0';
+            titulo.style.fontWeight = 'bold';
+
+            text = crearNodo('p',`
+                Dias de diferencia
+                ${((mayorAMenor[mayorAMenor.length-1] - mayorAMenor[0])/(1000*60*60*24)).toFixed(0)}.
+            `);
+            text.style.marginTop = '0';
+
+            
+            
         }
 
         function fechaAleatoria (anio) {
