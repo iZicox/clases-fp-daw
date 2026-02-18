@@ -9,15 +9,33 @@
 
             const n = 24;
 
-            for(let i = 0; i < n ; i++){
-                console.log(fechaAleatoria(2019));
-            }
+            const arrayFehcas = Array.from({length: n }, () => fechaAleatoria(2019));
 
             let ejemplo = crearNodo("p","Ejemplo de control input type=\"date\" impreso en ISO date.")
             let input = crearNodo("input","");
             input.setAttribute("type", "date");
 
             crearNodo("p", "Crear 24 fechas en 6 columnas.");
+            const contenedorPrincipal = crearNodo('div','');
+            contenedorPrincipal.style.display = 'flex';
+            contenedorPrincipal.style.flexWrap = 'wrap';
+            contenedorPrincipal.style.alignItems = 'center';
+    
+            contenedorPrincipal.style.justifyContent = 'center';
+            
+            contenedorPrincipal.style.width = '400px';
+            contenedorPrincipal.style.border = '1px solid';
+
+            arrayFehcas.forEach((ele) => {
+                let temp = new Date(ele.getTime());
+                let inner = temp.getDate() + "-" + (temp.getMonth() + 1) + "-" + temp.getFullYear();
+                let contenedor = crearContenedor('div', inner);
+                contenedor.style.width = '100px';
+                contenedor.style.display = 'flex';
+                contenedor.style.alignItems = 'center';
+                contenedor.style.justifyContent = 'center';
+                contenedorPrincipal.appendChild(contenedor);
+            })
         }
 
         function fechaAleatoria (anio) {
@@ -30,6 +48,11 @@
             return Math.floor(Math.random()*((maximo+1)-minimo) + minimo);  
         }
 
+        function crearContenedor(tipo, inner){
+            var ele = document.createElement(tipo);
+            ele.innerHTML = inner;
+            return ele;
+        }
 
         function crearNodo(tipo, inner){
             var ele = document.createElement(tipo);
