@@ -20,9 +20,7 @@
             contenedorPrincipal.style.display = 'flex';
             contenedorPrincipal.style.flexWrap = 'wrap';
             contenedorPrincipal.style.alignItems = 'center';
-    
             contenedorPrincipal.style.justifyContent = 'center';
-            
             contenedorPrincipal.style.width = '400px';
             contenedorPrincipal.style.border = '1px solid';
 
@@ -36,6 +34,57 @@
                 contenedor.style.justifyContent = 'center';
                 contenedorPrincipal.appendChild(contenedor);
             })
+
+            //**********       MENOR A MAYOR       **********
+
+            crearNodo("p", "De menor a mayor.");
+
+            const menorAMayor = arrayFehcas.sort((a,b) => a-b);
+
+            const contenedorMenorAMayor = crearNodo('div','');
+            contenedorMenorAMayor.style.display = 'flex';
+            contenedorMenorAMayor.style.flexWrap = 'wrap';
+            contenedorMenorAMayor.style.alignItems = 'center';
+            contenedorMenorAMayor.style.justifyContent = 'center';
+            contenedorMenorAMayor.style.width = '400px';
+            contenedorMenorAMayor.style.border = '1px solid';
+
+            menorAMayor.forEach((ele) => {
+                let temp = new Date(ele.getTime());
+                let inner = temp.getDate() + "-" + (temp.getMonth() + 1) + "-" + temp.getFullYear();
+                let contenedor = crearContenedor('div', inner);
+                contenedor.style.width = '100px';
+                contenedor.style.display = 'flex';
+                contenedor.style.alignItems = 'center';
+                contenedor.style.justifyContent = 'center';
+                contenedorMenorAMayor.appendChild(contenedor);
+            })
+
+            //**********       MAYOR A MENOR       **********
+
+            crearNodo("p", "De mayor a menor.");
+
+            const mayorAMenor = arrayFehcas.sort((a,b) => b-a);
+
+            const contenedorMayorAMenor = crearNodo('div','');
+            contenedorMayorAMenor.style.display = 'flex';
+            contenedorMayorAMenor.style.flexWrap = 'wrap';
+            contenedorMayorAMenor.style.alignItems = 'center';
+            contenedorMayorAMenor.style.justifyContent = 'center';
+            contenedorMayorAMenor.style.width = '400px';
+            contenedorMayorAMenor.style.border = '1px solid';
+
+            mayorAMenor.forEach((ele) => {
+                let temp = new Date(ele.getTime());
+                let inner = temp.getDate() + "-" + (temp.getMonth() + 1) + "-" + temp.getFullYear();
+                let contenedor = crearContenedor('div', inner);
+                contenedor.style.width = '100px';
+                contenedor.style.display = 'flex';
+                contenedor.style.alignItems = 'center';
+                contenedor.style.justifyContent = 'center';
+                contenedorMayorAMenor.appendChild(contenedor);
+            })
+
         }
 
         function fechaAleatoria (anio) {
