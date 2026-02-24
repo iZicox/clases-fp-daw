@@ -15,6 +15,18 @@
             ejemplo.style.fontWeight = 'bold';
             let input = crearNodo("input","");
             input.setAttribute("type", "date");
+            input.id = "fecha";
+
+            input.addEventListener("change", () => {
+                inputISO.value = new Date(input.value).toISOString();
+            });
+
+            let inputISO = crearNodo("input","");
+            inputISO.style.marginLeft = '20px';
+            inputISO.style.width = '200px';
+            inputISO.setAttribute("type", "text");
+            inputISO.id = "iso";
+
 
             let titulo = crearNodo("p", "Crear 24 fechas en 6 columnas.");
             titulo.style.marginBottom = '0';
@@ -24,7 +36,7 @@
             contenedorPrincipal.style.flexWrap = 'wrap';
             contenedorPrincipal.style.alignItems = 'center';
             contenedorPrincipal.style.justifyContent = 'center';
-            contenedorPrincipal.style.width = '400px';
+            contenedorPrincipal.style.width = '600px';
             contenedorPrincipal.style.border = '1px solid';
 
             arrayFehcas.forEach((ele) => {
@@ -51,7 +63,7 @@
             contenedorMenorAMayor.style.flexWrap = 'wrap';
             contenedorMenorAMayor.style.alignItems = 'center';
             contenedorMenorAMayor.style.justifyContent = 'center';
-            contenedorMenorAMayor.style.width = '400px';
+            contenedorMenorAMayor.style.width = '600px';
             contenedorMenorAMayor.style.border = '1px solid';
 
             menorAMayor.forEach((ele) => {
@@ -78,7 +90,7 @@
             contenedorMayorAMenor.style.flexWrap = 'wrap';
             contenedorMayorAMenor.style.alignItems = 'center';
             contenedorMayorAMenor.style.justifyContent = 'center';
-            contenedorMayorAMenor.style.width = '400px';
+            contenedorMayorAMenor.style.width = '600px';
             contenedorMayorAMenor.style.border = '1px solid';
 
             mayorAMenor.forEach((ele) => {
@@ -98,12 +110,12 @@
             const diferencias = menorAMayor
                 .slice(0,-1) //quitar el ultimo elemento
                 .map((date, i) => {
-                    const siguiente = menorAMayor[i+1]; 
+                    const siguiente = menorAMayor[i+1];
                     const diff = date - siguiente; //diferencia en tipo Date
                     return (diff / (1000*60*60*24)).toFixed(0); //convertis ms a dias y enteros
                 });
 
-        
+
             titulo = crearNodo("p", "Diferencia dias");
             titulo.style.marginBottom = '0';
             titulo.style.fontWeight = 'bold';
@@ -118,10 +130,10 @@
 
             menorAMayor.slice(0,-1).forEach((ele, i) => {
                 let temp = new Date(ele.getTime());
-                let inner = 
-                            temp.getDate() + "-" 
-                            + (temp.getMonth() + 1) + "-" 
-                            + temp.getFullYear() + " ; " 
+                let inner =
+                            temp.getDate() + "-"
+                            + (temp.getMonth() + 1) + "-"
+                            + temp.getFullYear() + " ; "
                             + diferencias[i];
 
                 let contenedor = crearContenedor('div', inner);
@@ -148,14 +160,14 @@
 
             const mayorFecha =  arrayFehcas.sort((a,b) => b - a).slice(0,1)[0];
             const menorFecha =  arrayFehcas.sort((a,b) => a - b).slice(0,1)[0];
-            
-            
-            text = crearNodo('p', 
-                `Mayor: 
+
+
+            text = crearNodo('p',
+                `Mayor:
                     ${mayorFecha.getDate()} -
                     ${mayorFecha.getMonth()+1} -
                     ${mayorFecha.getFullYear()}.
-                Menor: 
+                Menor:
                     ${menorFecha.getDate()} -
                     ${menorFecha.getMonth()+1} -
                     ${menorFecha.getFullYear()}.`
@@ -175,8 +187,8 @@
             `);
             text.style.marginTop = '0';
 
-            
-            
+
+
         }
 
         function fechaAleatoria (anio) {
@@ -186,7 +198,7 @@
             };
 
         function aleatorio(minimo,maximo){
-            return Math.floor(Math.random()*((maximo+1)-minimo) + minimo);  
+            return Math.floor(Math.random()*((maximo+1)-minimo) + minimo);
         }
 
         function crearContenedor(tipo, inner){
@@ -206,6 +218,6 @@
     </script>
 </head>
 <body>
-    
+
 </body>
 </html>
