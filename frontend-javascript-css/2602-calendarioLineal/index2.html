@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Calendario 2019</title>
+<script>
+  window.onload = () => {
+    const ANIO = 2019;
+    const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+                   'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    const DIAS_SEM = ['L','M','X','J','V','S','D'];
+
+    const hueco = (mes) => {
+      const d = new Date(ANIO, mes, 1).getDay();
+      return d === 0 ? 6 : d - 1;
+    };
+
+    const estilar = (ele, estilos) => Object.assign(ele.style, estilos);
+
+    document.body.appendChild(Object.assign(document.createElement('h1'), { textContent: ANIO }));
+    const cal = document.body.appendChild(document.createElement('div'));
+
+    for (let mes = 0; mes < 12; mes++) {
+
+      const label = cal.appendChild(document.createElement('div'));
+      label.textContent = MESES[mes];
+      estilar(label, {
+        width: '100px', height: '40px', fontSize: '1.2rem',
+        textAlign: 'right', lineHeight: '2.25rem',
+        float: 'left', clear: 'both'
+      });
+
+      // 1 semana de margen a la izquierda + hueco del mes
+      const cursor = new Date(ANIO, mes, 1 - hueco(mes) - 7);
+
+      // 7 semanas = 49 dias
+      for (let d = 0; d < 49; d++) {
+        const diaSem = d % 7;
+        const ele = cal.appendChild(document.createElement('div'));
+        ele.innerHTML = `<div>${cursor.getDate()}</div><div>${DIAS_SEM[diaSem]}</div>`;
+        estilar(ele, {
+          width: '20px', height: '40px', border: '1px solid',
+          float: 'left', display: 'flex', flexDirection: 'column',
+          justifyContent: 'center', alignItems: 'center',
+          background: cursor.getMonth() === mes ? 'green' : '',
+          color: diaSem >= 5 ? 'red' : ''
+        });
+        cursor.setDate(cursor.getDate() + 1);
+      }
+    }
+  };
+</script>
+</head>
+<body></body>
+</html>
