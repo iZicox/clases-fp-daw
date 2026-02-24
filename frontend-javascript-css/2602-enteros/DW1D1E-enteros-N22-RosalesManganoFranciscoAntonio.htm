@@ -1,82 +1,102 @@
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-        <script>
-            function iniciar() {
 
-                //mensaje
-                let msj = document.createElement('p');
-                msj.id = 'msj';
-                msj.innerText = 'rellenar enteros';
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+        function iniciar() {
 
-                //espacios
-                const n = 4;
-                const textareas = [];
+            //mensaje
+            let msj = document.createElement('p');
+            msj.id = 'msj';
+            msj.innerText = 'rellenar enteros';
 
-                //crear los cuadros
-                for (let i = 0; i < n; i++) {
-                    let digito = crearNodo("textarea", "");
-                    digito.id = i;
-                    digito.style.resize = "none";
-                    digito.style.fontSize = "18px";
-                    digito.setAttribute("maxlength", 4); //maximo de caracteres
-                    digito.setAttribute("cols", 10);
-                    digito.setAttribute("autocomplete", "off");
+            let msj2 = document.createElement('p');
+            msj2.id = 'msj2';
 
-                    textareas.push(digito);
+            //espacios
+            const n = 4;
+            const textareas = [];
 
-                    digito.addEventListener("change", validarCampo);
-                }
+            //crear los cuadros
+            for (let i = 0; i < n; i++) {
+                let digito = crearNodo("textarea", "");
+                digito.id = i;
+                digito.style.resize = "none";
+                digito.style.fontSize = "18px";
+                digito.setAttribute("maxlength", 4); //maximo de caracteres
+                digito.setAttribute("cols", 10);
+                digito.setAttribute("autocomplete", "off");
 
-                document.body.appendChild(msj);
+                textareas.push(digito);
 
-
-                function validarCampo(){
-                    
-
-                    // 1. Verificar si hay vacíos
-                    let faltanVacios = textareas.some(t => t.value.trim() === '');
-
-                    // 2. Verificar si todos son números válidos
-                    let noEsNumero = textareas.some(t => isNaN(t.value.trim()));
-
-                    // 3. Verificar si todos son enteros
-                    let noEsEntero = textareas.some(t => Number.isInteger(Number(t.value.trim())) === false);
-
-                    
-
-                    if (faltanVacios) {
-                        document.getElementById('msj').innerText = 'Faltan datos';
-                        return;
-                    }
-
-                    if (noEsNumero) {
-                        document.getElementById('msj').innerText = 'Alguno no es un número';
-                        return;
-                    }
-
-                    if (noEsEntero) {
-                        document.getElementById('msj').innerText = 'Alguno no es un número entero';
-                        return;
-                    }
-
-                    document.getElementById('msj').innerText = 'Todos los espacios están llenos y son enteros válidos';
-                }
+                digito.addEventListener("change", validarCampo);
             }
 
-            function crearNodo(tipo, inner) {
-                var ele = document.createElement(tipo);
-                ele.innerHTML = inner;
-                document.body.appendChild(ele);
-                return ele;
+            document.body.appendChild(msj);
+            document.body.appendChild(msj2);
+
+            function validarCampo() {
+                //borrando los mensajes anteriores
+                document.getElementById('msj').innerText = "";
+                document.getElementById('msj2').innerText = "";
+
+                let vacios = 0;
+                let noEnteros = 0;
+
+                //contar vacios y no enteros
+                for (let i = 0; i < textareas.length; i++) {
+                    let valor = textareas[i].value.trim();
+
+                    if (valor === "") {
+                        vacios++; // Si está vacío, sumamos al contador de vacíos
+                    } else if (Number.isInteger(Number(valor)) === false) {
+                        noEnteros++; // Si tiene texto pero no es entero, sumamos aquí
+                    }
+                }
+
+                //mensajes
+                if (vacios > 0) {
+                    document.getElementById("msj").innerText = "Hay " + vacios + " campos vacíos.";
+                }
+
+                if (noEnteros > 0) {
+                    document.getElementById("msj2").innerText = "Hay campos que no son enteros";
+                }
+
+                //ordenar cuando todos son enteros
+                let todosEnteros = textareas.every(t => {
+                    let valor = t.value.trim();
+                    return valor !== "" && Number.isInteger(Number(valor));
+                });
+
+                if (todosEnteros) {
+
+                    let numeros = textareas.map(t => Number(t.value));
+
+                    let asc = [...numeros].sort((a, b) => a - b);
+                    let desc = [...numeros].sort((a, b) => b - a);
+
+                    document.getElementById('msj2').innerText = 'Ascendente: ' + asc.join(" - ");
+                    document.getElementById('msj').innerText = 'Descendente: ' + desc.join(" - ");
+                }
             }
+        }
 
-            window.onload = iniciar;
-        </script>
-    </head>
-    <body>
+        function crearNodo(tipo, inner) {
+            var ele = document.createElement(tipo);
+            ele.innerHTML = inner;
+            document.body.appendChild(ele);
+            return ele;
+        }
 
-    </body>
+        window.onload = iniciar;
+    </script>
+</head>
+
+<body>
+
+</body>
+
 </html>
