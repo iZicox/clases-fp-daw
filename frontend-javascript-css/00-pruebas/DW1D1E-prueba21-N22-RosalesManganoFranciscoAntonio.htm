@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba</title>
+    <script>
+        //crear 3 nodos en el DOM, un div padre y 2 hijos
+        function iniciar() {
+            let letras = 'qwertyuiopasdfghjklñzxcvbnm';
+            let padre = crearNodo('div',letras[aleatorio(0,letras.length-1)]+letras[aleatorio(0,letras.length-1)],'padre');
+            let hijo = crearNodo('div',letras[aleatorio(0,letras.length-1)]+letras[aleatorio(0,letras.length-1)],'hijo');
+            let nieto = crearNodo('div',letras[aleatorio(0,letras.length-1)]+letras[aleatorio(0,letras.length-1)],'nieto');
+            document.body.appendChild(padre);
+            padre.appendChild(hijo);
+            hijo.appendChild(nieto);
+
+            padre.style.border = '2px solid red';
+            hijo.style.border = '2px solid red';
+            nieto.style.border = '2px solid red';
+
+
+        }
+
+        function crearNodo(tipo, inner, id) {
+            let ele = document.createElement(tipo);
+            ele.innerHTML = inner;
+            ele.id = id;
+            
+            return ele;
+        }
+
+        function imprimirObjeto(objeto) {
+            const claves = Object.keys(objeto); //convierte las claves en un array
+            let result = '';
+            for (let i = 0; i < claves.length; i++) {
+                result += claves[i] + ': ' + objeto[claves[i]];
+                if (i !== claves.length - 1) {
+                    result += ', ';
+                } else {
+                    result += '.';
+                }
+            }
+            return result;
+        }
+
+        function aleatorio(minimo, maximo) {
+            return Math.floor(Math.random() * ((maximo + 1) - minimo) + minimo);
+        }
+
+        window.onload = iniciar;
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

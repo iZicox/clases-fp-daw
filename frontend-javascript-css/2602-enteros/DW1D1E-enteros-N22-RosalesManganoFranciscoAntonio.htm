@@ -9,6 +9,7 @@
                 //mensaje
                 let msj = document.createElement('p');
                 msj.id = 'msj';
+                msj.innerText = 'rellenar enteros';
 
                 //espacios
                 const n = 4;
@@ -26,13 +27,15 @@
 
                     textareas.push(digito);
 
-                    digito.addEventListener("blur", validarCampo);
+                    digito.addEventListener("change", validarCampo);
                 }
 
                 document.body.appendChild(msj);
 
 
                 function validarCampo(){
+                    
+
                     // 1. Verificar si hay vacíos
                     let faltanVacios = textareas.some(t => t.value.trim() === '');
 
@@ -42,22 +45,24 @@
                     // 3. Verificar si todos son enteros
                     let noEsEntero = textareas.some(t => Number.isInteger(Number(t.value.trim())) === false);
 
+                    
+
                     if (faltanVacios) {
-                        msj.innerText = 'Faltan datos';
+                        document.getElementById('msj').innerText = 'Faltan datos';
                         return;
                     }
 
                     if (noEsNumero) {
-                        msj.innerText = 'Alguno no es un número';
+                        document.getElementById('msj').innerText = 'Alguno no es un número';
                         return;
                     }
 
                     if (noEsEntero) {
-                        msj.innerText = 'Alguno no es un número entero';
+                        document.getElementById('msj').innerText = 'Alguno no es un número entero';
                         return;
                     }
 
-                    msj.innerText = 'Todos los espacios están llenos y son enteros válidos';
+                    document.getElementById('msj').innerText = 'Todos los espacios están llenos y son enteros válidos';
                 }
             }
 

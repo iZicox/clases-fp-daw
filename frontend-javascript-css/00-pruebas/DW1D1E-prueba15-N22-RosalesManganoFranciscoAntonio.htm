@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba</title>
+    <script>
+    function iniciar() {
+
+        let cont = 2;
+        let nombres = ['padre','hijo1','hijo2'];
+
+        const padre = document.createElement("div");
+        padre.id = "padre";
+        padre.innerText = nombres[0];
+        document.body.appendChild(padre);
+
+        const hijo1 = document.createElement("div");
+        hijo1.id = "hijo1";
+        hijo1.innerText = nombres[1];
+        padre.appendChild(hijo1);
+
+        const hijo2 = document.createElement("div");
+        hijo2.id = "hijo2";
+        hijo2.innerText = nombres[2];
+        padre.appendChild(hijo2);
+
+        // El padre elimina hijo2
+        padre.addEventListener('click', () => {
+            const h2 = document.getElementById('hijo2');
+            if (h2) h2.remove();
+        });
+
+        // Hijo1 crea hijo2 y evita que el padre borre
+        hijo1.addEventListener('click', (e) => {
+            e.stopPropagation(); // <- evita que el padre reciba el clic
+
+            const nuevo = document.createElement("div");
+            nuevo.id = "hijo" + cont;
+            nuevo.innerText = "hijo" + cont;
+            padre.appendChild(nuevo);
+            cont++;
+        });
+    }
+
+    window.onload = iniciar;
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba</title>
+    <script>
+    //crear 3 nodos en el DOM, un div padre y 2 hijos
+    function iniciar(){
+
+        let nombres = ['padre','hijo1','hijo2'];
+
+        const padre = document.createElement("div");
+        padre.id = "padre";
+        document.body.appendChild(padre);
+        padre.innerText = nombres[0];
+
+        const hijo1 = document.createElement("div");
+        hijo1.id = "hijo1";
+        padre.appendChild(hijo1);
+        hijo1.innerText = nombres[1];
+        const hijo2 = document.createElement("div");
+        hijo2.id = "hijo2";
+        hijo2.innerText = nombres[2];
+        padre.appendChild(hijo2);
+
+        
+        padre.addEventListener('click', () =>{
+            hijo2.remove();
+        });
+    }
+        window.onload = iniciar;
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

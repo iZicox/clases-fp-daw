@@ -1,0 +1,13 @@
+Preguntas y Respuestas
+
+- Las preguntas seran por escrito en el proyector.
+- El nombre de la actividad es ejemplo: prueba11
+- Las respuestas se subiran en el fichero en entregas en el formato de siempre
+* Fichero con el nombre mal no se admite
+- La respuesta debe tener todo el código acumulado
+- El profesor copiar el código completo enviado
+* Ficheros con el nombre bien:
+-- Primero entregado con la respuesta correcta es un punto
+-- Todos los ficheros entregados con la respuesta fallada cero puntos
+-- No se puede volver a responder hasta la siguiente ronda
+-- La ronda termina cuando todos los alumnos tienen nota: cero o uno
