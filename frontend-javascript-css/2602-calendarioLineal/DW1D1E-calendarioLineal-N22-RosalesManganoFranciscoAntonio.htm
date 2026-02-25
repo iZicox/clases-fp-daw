@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function iniciar() {
+
+            //definimos el año a usar
+            const anio = 2019;
+            //definicmos las constantes de los meses en español
+            const meses = [
+                'Enero', 'Febrero', 'Marzo',
+                'Abril', 'Mayo', 'Junio',
+                'Julio', 'Agosto', 'Septiembre',
+                'Octubre', 'Noviembre', 'Diciembre'
+            ];
+
+            //definimos los dias en español
+            const diaSemana = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+            //definimos cuantas semanas tendra cada mes lineal
+            const semanasPorMes = 7;
+
+
+            //calcular el dia que cae el primer dia de un mes en el formato L-D
+            //Convierte el formato D-S a L-D
+            let hueco = (anio, idMes) => {
+                let d = new Date(anio, idMes, 1).getDay();
+                d = (d === 0 ? 6 : d - 1);
+                return d;
+            };
+
+
+            crearNodo('h1', anio);
+
+            const contenedorCal = crearNodo('div', '');
+
+
+            //empieza un bucle por la cantidad de meses
+            for (let i = 0; i < meses.length; i++) {
+
+                //definimos el primer dia del mes
+                let primerDiaDelMes = new Date(anio, i, 1);
+                let fechaInicial = new Date(primerDiaDelMes);
+                //Le restamos el valor del hueco de 7 dias al empezar el mes
+                fechaInicial.setDate(fechaInicial.getDate() - hueco(anio, i) - 7);
+
+                //crear nodo del mes con div
+                let mes = crearNodo('div', meses[i]);
+                mes.style.width = '100px';
+                mes.style.height = '40px';
+                mes.style.fontSize = '24px';
+                mes.style.textAlign = 'right';
+                mes.style.lineHeight = '2.25rem';
+                mes.style.float = 'left';
+
+                //salto de float
+                if (i !== 0) {
+                    mes.style.clear = 'both';
+                }
+
+                //insercion del mes al contendor principal
+                contenedorCal.appendChild(mes);
+
+                //inicio del bucle de 7 semanas que hemos definido como constante
+                for (let j = 0; j < semanasPorMes; j++) {
+                    //hacemos una copia del dia inicial
+                    let dia = new Date(fechaInicial);
+
+                    //inicio del bucle a nivel de semana 7 dias cada semana
+                    for (let k = 0; k < 7; k++) {
+                        //definimos el inner de cada dia con el formato fecha y dia 
+                        let inner = `<div>
+                                        ${dia.getDate()}
+                                    </div>
+                                    <div>
+                                        ${diaSemana[k]}
+                                    </div>`;
+
+                        //creamos el nodo del dia con el valor innerHTML
+                        let ele = crearNodo('div', '');
+                        ele.innerHTML = inner;
+
+                        //si el dia pertenece al mismo mes de la iteracion le damos un color diferente para distinguirlo
+                        if (dia.getMonth() === i) {
+                            ele.style.background = '#e6e600';
+                        } else {
+                            ele.style.background = '#F4F9B4';
+                        }
+
+                        //aplicar resto de estilos al nodo del dia
+                        ele.style.width = '20px';
+                        ele.style.height = '40px';
+                        ele.style.margin = '2px 1px';
+                        ele.style.float = 'left';
+                        ele.style.display = 'flex';
+                        ele.style.flexDirection = 'column';
+                        ele.style.justifyContent = 'center';
+                        ele.style.alignItems = 'center';
+                        ele.style.fontSize = '14px';
+
+                        //si es S o D le damos color rojo para distinguirlo
+                        if (diaSemana[k] === 'S' || diaSemana[k] === 'D') {
+                            ele.style.color = 'red';
+                        }
+
+
+                        //insertamos el nodo al contenedor principal
+                        contenedorCal.appendChild(ele);
+
+                        //hacemos un incremento del dia por 1 para pasar al siguiente en la proxima iteracion
+                        dia.setDate(dia.getDate() + 1);
+
+
+                    }
+                    //incrementamos 7 dias la fecha al terminar la semana para continuar con la proxima 
+                    fechaInicial.setDate(fechaInicial.getDate() + 7);
+                }
+            }
+
+
+
+
+        }
+
+        const crearNodo = (tipo, inner) => {
+            var ele = document.createElement(tipo);
+            ele.innerText = inner;
+            document.body.appendChild(ele);
+            return ele;
+        }
+
+        window.onload = iniciar;
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
