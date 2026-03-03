@@ -9,7 +9,7 @@
         function iniciar() {
 
             //definimos el año a usar
-            const anio = 2019;
+            const anio = 2026;
             //definicmos las constantes de los meses en español
             const meses = [
                 'Enero', 'Febrero', 'Marzo',
@@ -20,9 +20,6 @@
 
             //definimos los dias en español
             const diaSemana = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
-            //definimos cuantas semanas tendra cada mes lineal
-            const semanasPorMes = 7;
-
 
             //calcular el dia que cae el primer dia de un mes en el formato L-D
             //Convierte el formato D-S a L-D
@@ -40,29 +37,42 @@
 
             //empieza un bucle por la cantidad de meses
             for (let i = 0; i < meses.length; i++) {
+                
+                
+                let contenedor = crearNodo('div','');
+                contenedor.style.float = 'left';
+                contenedor.style.margin = '10px';
+                contenedor.style.width = '155px';
 
+
+                contenedorCal.appendChild(contenedor);
                 //definimos el primer dia del mes
                 let primerDiaDelMes = new Date(anio, i, 1);
                 let fechaInicial = new Date(primerDiaDelMes);
                 //Le restamos el valor del hueco de 7 dias al empezar el mes
-                fechaInicial.setDate(fechaInicial.getDate() - hueco(anio, i) - 7);
+                fechaInicial.setDate(fechaInicial.getDate() - hueco(anio, i));
+                
 
                 //crear nodo del mes con div
-                let mes = crearNodo('div', meses[i]);
-                mes.style.width = '100px';
-                mes.style.height = '40px';
-                mes.style.fontSize = '24px';
-                mes.style.textAlign = 'right';
-                mes.style.lineHeight = '2.25rem';
-                mes.style.float = 'left';
+                let mes = crearNodo2('div', meses[i]);
+                mes.style.width = '100%';
+                mes.style.height = 'auto';
+                mes.style.fontSize = '16px';
+                mes.style.textAlign = 'left';
+                mes.style.backgroundColor = '#dcdcdc';
+                //mes.style.float = 'left';
+
+                contenedor.appendChild(mes);
 
                 //salto de float
                 if (i !== 0) {
                     mes.style.clear = 'both';
                 }
 
-                //insercion del mes al contendor principal
-                contenedorCal.appendChild(mes);
+                // calcular cuántas semanas necesita el mes
+                let diasEnMes = new Date(anio, i + 1, 0).getDate();
+                let totalCeldas = hueco(anio, i) + diasEnMes;
+                let semanasPorMes = Math.ceil(totalCeldas / 7);
 
                 //inicio del bucle de 7 semanas que hemos definido como constante
                 for (let j = 0; j < semanasPorMes; j++) {
@@ -74,67 +84,17 @@
                         //definimos el inner de cada dia con el formato fecha y dia 
                         let inner = `<div>
                                         ${dia.getDate()}
-                                    </div>
-                                    <div>
-                                        ${diaSemana[k]}
                                     </div>`;
 
                         //creamos el nodo del dia con el valor innerHTML
                         let ele = crearNodo('div', '');
                         ele.innerHTML = inner;
 
-                        //si el dia pertenece al mismo mes de la iteracion le damos un color diferente para distinguirlo
-                        if (dia.getMonth() === i) {
-                            ele.style.background = '#e6e600';
-                            ele.style.cursor = 'pointer';
+                        ele.style.background = '#f0f8ff';
 
-                            ele.addEventListener('mouseover', () => {
-                                ele.style.background = 'red';
-                                ele.style.color = 'white';
-                            })
-
-                            ele.addEventListener('mouseleave', () => {
-                                ele.style.background = '#e6e600';
-                                ele.style.color = 'black';
-                                if (diaSemana[k] === 'S' || diaSemana[k] === 'D') {
-                                    ele.style.color = 'red';
-                                }
-                            })
-
-                            //espacio para agregas notas 
-                            ele.addEventListener('click', () => {
-
-
-                                if (ele.prompt === undefined) {
-                                    ele.prompt = '';
-                                }
-
-                                ele.prompt = prompt('Introduce una nota', ele.prompt);
-
-                                //eliminar si esta vacio
-                                if(ele.prompt === null || ele.prompt === ''){
-                                    const existe = ele.querySelector('span');
-                                    if(existe){
-                                        existe.remove();
-                                    }
-                                    return;
-                                }
-
-                                //agregar y editar contenido
-                                if (ele.prompt !== null && ele.prompt !== '') {
-                                    let nota = crearNodo2('span', '*');
-                                    nota.style.position = 'absolute';
-                                    nota.style.top = '0px';
-                                    nota.style.right = '1px';
-                                    ele.appendChild(nota);
-
-                                }
-                            })
-
-
-
-                        } else {
-                            ele.style.background = '#F4F9B4';
+                        //si el dia no pertenece al mismo mes de la iteracion le damos un color diferente para distinguirlo
+                        if (dia.getMonth() !== i) {
+                            ele.style.color = '#bababa';
                         }
 
                         //aplicar resto de estilos al nodo del dia
@@ -151,14 +111,14 @@
 
 
 
-                        //si es S o D le damos color rojo para distinguirlo
-                        if (diaSemana[k] === 'S' || diaSemana[k] === 'D') {
+                        //si es D le damos color rojo para distinguirlo
+                        if (diaSemana[k] === 'D' && dia.getMonth() === i) {
                             ele.style.color = 'red';
                         }
 
 
                         //insertamos el nodo al contenedor principal
-                        contenedorCal.appendChild(ele);
+                        contenedor.appendChild(ele);
 
                         //hacemos un incremento del dia por 1 para pasar al siguiente en la proxima iteracion
                         dia.setDate(dia.getDate() + 1);
@@ -166,7 +126,7 @@
 
                     }
                     //incrementamos 7 dias la fecha al terminar la semana para continuar con la proxima 
-                    fechaInicial.setDate(fechaInicial.getDate() + 7);
+                    fechaInicial.setDate(fechaInicial.getDate() + 7 );
                 }
             }
 
