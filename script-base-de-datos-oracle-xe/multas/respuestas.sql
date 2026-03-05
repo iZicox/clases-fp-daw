@@ -6,7 +6,7 @@ insert into personas (dni,nombre) values('123456789D','Alumno Aprendiendo');
 --2. Inserta 2 coches asociados a esta persona con matrículas '3344-PPP' y '2221-JJJ',
 select * from MATRICULAS where dni in ('123456789D','123456789D');
 insert into MATRICULAS (MATRICULA,DNI) 
-        values('3344-PPP','123456789D'),
+        values  ('3344-PPP','123456789D'),
                 ('2221-JJJ','123456789D');
 commit;
 --3. Crea una multa en la CALLE PADRE CLARET de 150€ para el coche con matrícula
@@ -54,14 +54,55 @@ commit;
 DELETE
 FROM PERSONAS
 WHERE dni = '222549765B';
+
+SELECT * FROM PERSONAS p
+left join MATRICULAS m on m.dni = p.DNI
+left join multas mu on mu.MATRICULA = m.MATRICULA
+WHERE p.dni = '222549765B';
+
+--eliminamos primero la multa que tiene la persona
+delete from multas where matricula in (
+    SELECT MATRICULA FROM MATRICULAS WHERE DNI = '222549765B'
+);
+
+--luego borramos las matriculas de ese dni
+delete from MATRICULAS where dni = '222549765B';
+
+-- ahora eliminamos a la persona
+delete from PERSONAS where dni = '222549765B';
+commit;
 --7. Elimina la persona 147956320S ¿Es posible eliminarlo?¿Por qué?Si no pudiste, ¿qué
 --cambios deberías realizar para que se pudiera borrar?
+select * from PERSONAS where dni = '147956320S';
+DELETE
+FROM PERSONAS
+WHERE dni = '147956320S';
 --8. Actualiza el DNI de la persona con DNI 452103687F y asígnale el valor 452103687D. ¿Es
 --posible actualizarlo? Si no es posible, ¿qué cambios deberías realizar para que se
 --pudiera actualizar?
+select * from PERSONAS where dni = '452103687F';
+UPDATE PERSONAS
+SET dni = '452103687D'
+WHERE dni = '452103687F';
+
+commit;
+
 --9. Actualiza el DNI de la persona 203254778N y asígnale el valor 203254778H. ¿Es posible
 --actualizarlo? Si no es posible, ¿qué cambios deberías realizar para que fuese posible
 --actualizarlo?
+commit;
+
+select * from PERSONAS p 
+inner join MATRICULAS m on m.dni = p.DNI
+inner join multas mu on mu.MATRICULA = m.MATRICULA 
+where p.dni = '203254778N';
+
+ALTER TABLE MATRICULAS
+drop CONSTRAINT PKMATRICULAS;
+
+UPDATE PERSONAS
+SET DNI = '203254778H'
+WHERE DNI = '203254778N';
 --10. Crea una nueva columna en la tabla de multas que indique si la multa está pagado. El
 --nombre de la columna será “PAGADO”, será de 1 sólo carácter y el valor para todos los
 --campos debe ser N
