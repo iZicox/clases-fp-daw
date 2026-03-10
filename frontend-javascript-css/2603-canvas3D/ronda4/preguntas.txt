@@ -1,0 +1,20 @@
+El alumno en el tiempo indicado debe añadir las nuevas caracteristicas posibles.
+Si el programa no funcionan o no lo hace como originalmente no puntua.
+Puntuacion maxima son 4 puntos, 1 puntos por caracteristica.
+El alumno debe seleccionar 4 de ellas como máximo.
+El alumno subira su version del código en el formato de entregas.
+Indicar delante del nombre entre parentesis cuantas caracteristicas implemento:
+***(N)ApellidosNombre.htm
+titulo de la actividad (ronda4)
+
+
+01) cambiar el color amarillo por gris  
+02) las coordenadas ponlas en color negro   //si
+03) haz un poco mas largo solo el eje Z
+04) modifica las coordenadas de la pieza de 604 600 660 a 704 700 770   //si
+05) sube la cara roja a 007 que se mantenga paralela    //si
+06) haz mas grandes las letras X Y Z
+07) intercambia los paneles perfil y planta //si
+08) añade un cubo de lado 1 en 222 223 322
+09) añade un cubo de lado 2 en 662 642 462
+10) cambiar los colores de todas las caras al azar en la recarga de la pagina //si

@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>.+.</title>
+</head>
+<script>
+function proyeccion1(p3,v){
+// p3:pto3D , v:vista
+	let x=p3[0];
+	let y=p3[1];
+	let z=p3[2];
+	let xp,yp;
+	// proyeccion con tres ejes
+	if (v=='xyz'){
+		
+		xp=0.707106781*(x-y);
+		yp=-(0.816496581*z-0.40824829*(x+y)); // para canvas -y es arriba 
+	}
+	// simplificaciones a dos ejes
+	if (v=='yz'){ // alzado
+		xp=-y;
+		yp=-z;					
+	}				
+	if (v=='xz'){ // planta
+		xp=x;
+		yp=-z;				
+	}
+	if (v=='xy'){ // perfil
+		xp=x;
+		yp=y;
+	}
+	return [cReal(xp),cReal(yp)];
+}
+
+function cReal(x){
+	return Number(x.toFixed(2));
+}
+function ajustarEscalaCentro(cx,cy,pnts,v){
+	let xmax=-Infinity;
+	let xmin=Infinity;
+	let ymax=-Infinity;
+	let ymin=Infinity;
+	for (let item of pnts){ // [[p1],[p2]]
+		if (!Array.isArray(item[0])){continue}// saltar comandos
+		for (let p of item){
+			p=proyeccion1(p,v);
+			if (p[0]>xmax){xmax=p[0]}
+			if (p[0]<xmin){xmin=p[0]}
+			if (p[1]>ymax){ymax=p[1]}
+			if (p[1]<ymin){ymin=p[1]}	
+		}
+	}
+	let dx=xmax-xmin;
+	let dy=ymax-ymin;
+	let zx=cReal(cx/dx);
+	let zy=cReal(cy/dy);
+	let zoom=zy;
+	if (zx<zy){zoom=zx}
+	let margen=1.4; // padding
+	zoom=cReal(zoom/margen); // recorte 20%
+	// calculo del centro
+	let xi=cReal((cx/2)-zoom*(xmin+dx/2));
+	let yi=cReal((cy/2)-zoom*(ymin+dy/2));
+	return [zoom,xi,yi];
+}
+
+function dibuja(pnts,v,id,flags,titulo){
+	let textos=[];
+	var c=document.getElementById(id);
+	let r=ajustarEscalaCentro(c.width,c.height,pnts,v);
+	let zoom=r[0];
+	let xi=r[1];
+	let yi=r[2];
+	var x2=0,y2=0; // ultimo punto dibujado
+	var ctx=c.getContext("2d");
+	let f1=20;
+	ctx.font=f1+'px Courier';	
+	ctx.beginPath();
+	if (titulo!=''){
+		let lon=f1*titulo.length/2; // ancho letra mitad
+		let pad=6;
+		ctx.fillText(titulo,(c.width/2)-(lon/2),c.height-pad);
+	}
+	ctx.font=24+'px Courier';
+	for (k of pnts){
+		if (k[0]=='relleno'){
+			if (k[1]!=undefined){
+				ctx.fillStyle=k[1];
+			}
+			continue;
+		}
+		if (k[0]=='texto'){
+			let f=flags[0]; // pintar o no
+			if (f==1){
+				ctx.fillText(k[1],x2,y2);
+			}		
+			continue;
+		}
+		if (k[0]=='color'){
+			ctx.stroke();
+  			ctx.strokeStyle=k[1];			
+			ctx.beginPath();		
+			continue;
+		}
+		if (k[0]=='ancho'){
+			ctx.stroke();
+  			ctx.lineWidth=parseInt(k[1]);			
+			ctx.beginPath();		
+			continue;
+		}
+		if (k.length==2){ // dos puntos es una linea
+			let p1=k[0];		
+			let	p2=k[1];
+			p1=proyeccion1(p1,v);
+			p2=proyeccion1(p2,v);
+
+			let x1=(xi+zoom*p1[0]);
+			let y1=(yi+zoom*p1[1]);
+			x2=(xi+zoom*p2[0]);
+			y2=(yi+zoom*p2[1]);
+			ctx.moveTo(x1,y1);
+			ctx.lineTo(x2,y2);
+			continue;
+		}
+		if (k.length>2){ // mas de dos puntos es poligono
+			const rg=new Path2D(); // region
+			for (let j=0;j<k.length;j++){
+				let p=k[j];
+				p=proyeccion1(p,v);
+				let x=(xi+zoom*p[0]);
+				let y=(yi+zoom*p[1]);
+				if (j==0){
+					rg.moveTo(x,y);
+				}else{
+					rg.lineTo(x,y);
+				}
+			}
+			rg.closePath();
+			ctx.fill(rg);		
+			continue;
+		}
+	}
+	ctx.stroke();
+}
+function plantilla(color,id){
+	var c=document.getElementById(id);
+	let cx=c.width;
+	let cy=c.height;	
+	var ctx=c.getContext("2d");
+    ctx.beginPath(); 
+  	ctx.strokeStyle=color;	   
+  	// recuadro	
+	ctx.moveTo(0,0);
+	ctx.lineTo(cx,0);		
+	ctx.lineTo(cx,cy);	
+	ctx.lineTo(0,cy);	
+	ctx.lineTo(0,0);
+ 	ctx.stroke();
+}
+function crearContendor(a,b,id){
+	let cx=a;
+	let cy=b;
+	var p1,p2;
+	var ele=document.createElement('canvas');
+	ele.id=id;
+	ele.width=cx;
+	ele.height=cy;
+	document.body.appendChild(ele);
+	return ele;
+}
+function runVista(cx,cy,id,puntos3D,vista,flags,titulo){
+	crearContendor(cx,cy,id);
+	plantilla('grey',id);	
+	dibuja(puntos3D,vista,id,flags,titulo);
+}
+function pss(a){
+// paso de array de cadenas a array de datos
+	let b=[];
+	for (v of a){ //v='color #DDD'  v='1,2,3 1,2,3'
+		let c=[];
+		let i=v.split(' '); // i[0]='color' i[0]='1,2,3'
+		for (w of i){ // w='color' w='1,2,3'
+			let j=w.split(','); // j[0]='color' j[0]='1'
+			if (j.length==1){// no hay comas => string
+				c.push(j[0]);
+			}else{// hay comas => array de enteros
+				let d=[];
+				for (r of j){
+					d.push(parseInt(r));
+				}
+				c.push(d);
+			}		
+		}
+		b.push(c);
+	}
+	console.log(b);
+	return b;
+}
+function iniciar(){
+
+	// 10) colores aleatorios
+	const color1 = hexAleatorio();
+	const color2 = hexAleatorio();
+	const color3 = hexAleatorio();
+	const color4 = hexAleatorio();
+	const color5 = hexAleatorio();
+
+	h1=[ // ejes
+	'color #DDD','relleno green',
+	'0,0,0 8,0,0','texto X',
+	'0,0,0 0,8,0','texto Y',				
+	'0,0,0 0,0,8','texto Z',
+	];
+	h2=[ // pieza 3D con poligonos
+	`relleno ${color1}`,				// 10) colores aleatorios
+	'0,0,6 2,0,6 2,6,6 0,6,6',
+	`relleno ${color1}`,				
+	'0,0,7 2,0,7 2,6,7 0,6,7',			// 5) subiendo la capa del color rojo un poco
+	`relleno ${color2}`,				// 10) colores aleatorios
+	'2,2,2 6,2,2 6,6,2 2,6,2',
+	`relleno ${color3}`,				// 10) colores aleatorios
+	'2,0,4 6,0,4 6,2,4 2,2,4',
+	`relleno ${color4}`,				// 10) colores aleatorios
+	'6,0,4 6,0,0 6,6,0 6,6,2 6,2,2 6,2,4',
+	`relleno ${color5}`,				// 10) colores aleatorios	
+	'0,6,6 2,6,6 2,6,2 6,6,2 6,6,0 0,6,0',
+	];	
+	h3=[ // pieza 3D con lineas
+	'color red','ancho 2','relleno black',			// 2) cambio de color de coordenadas
+	'0,0,6 0,6,6','texto 066',
+	'0,6,6 2,6,6','texto 266',
+	'2,6,6 2,0,6','texto 206',
+	'2,0,6 0,0,6','texto 006',
+	'2,0,6 2,0,4','texto 204',
+	'2,0,4 2,2,4','texto 224',
+	'2,2,4 6,2,4','texto 624',
+	'6,2,4 6,0,4','texto 704',				// 4) cambiando los valores de 604 600 660 a 704 700 770
+	'6,0,4 2,0,4',
+	'6,0,4 6,0,0','texto 700',				// 4) cambiando los valores de 604 600 660 a 704 700 770
+	'6,0,0 6,6,0','texto 770',				// 4) cambiando los valores de 604 600 660 a 704 700 770
+	'6,6,0 0,6,0','texto 060',
+	'0,6,0 0,6,6',
+	'2,6,6 2,6,2','texto 262',
+	'2,6,2 6,6,2','texto 662',
+	'6,6,2 6,2,2',
+	'6,6,2 6,6,0',
+	'6,2,2 6,2,4',
+	'2,2,4 2,2,2','texto 222',	
+	'2,2,2 2,6,2',
+	'2,2,2 6,2,2','texto 622',
+	];
+	let a=226;
+	runVista(a*3,a*3,'cnt0',pss([].concat(h1,h2,h3)),'xyz',[1],'isométrica');
+	runVista(a,a,'cnt2',pss([].concat(h2,h3)),'xz',[0],'perfil');	// 7) Cambio de plana por perfil
+	runVista(a,a,'cnt1',pss([].concat(h2,h3)),'yz',[0],'planta');	// 7) Cambio de plana por perfil
+	runVista(a,a,'cnt3',pss([].concat(h2,h3)),'xy',[0],'alzado');
+}
+
+function hexAleatorio() {
+	let letras = "0123456789ABCDEF";
+	let codigo = "#";
+
+	for (let i = 0; i < 6; i++) {
+		codigo += letras[Math.floor(Math.random() * 16)];
+	}
+
+	return codigo;
+}
+
+window.onload=iniciar;
+</script>
+<style>
+canvas{
+	float:left;
+}
+</style>
+<body>
+</body>
+</html> 
