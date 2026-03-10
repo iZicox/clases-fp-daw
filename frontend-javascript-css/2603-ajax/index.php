@@ -4,7 +4,7 @@
 
 	if ($_REQUEST){
 		// tengo parametros
-		if (isset($_REQUEST['q'])){
+		if (isset($_REQUEST["q"])){
 			// analizo q=valor
 			main();
 		}else{

@@ -1,15 +1,26 @@
 <?php
     if ($_REQUEST){
 		// tengo parametros
-		if (isset($_REQUEST['q'])){
+        
+		if (
+            isset($_REQUEST["r"]) && 
+            isset($_REQUEST["g"]) && 
+            isset($_REQUEST["b"])){
 			// analizo q=valor
-			main();
+            main();
+			
 		}else{
 			// no entramos aqui
 			echo "falta parametro q";
 		}
 		exit;	
 	}
+
+    function main(){
+        print_r($_REQUEST["r"]);
+        print_r($_REQUEST["g"]);
+        print_r($_REQUEST["b"]);
+    }
 ?>
 
 
@@ -31,7 +42,7 @@
 					}
 				}
 				// envio de la peticion al servidor
-				xmlhttp.open("GET","hola.php?q="+str,true);
+				xmlhttp.open("GET","hola.php?"+str,true);
 				/*
 					method: the type of request: GET or POST
 					url: the server (file) location
@@ -40,12 +51,18 @@
 				xmlhttp.send();
 			}	
 			function varios(){
-				console.log(this.value);
-				ajax1(this.value);
+                let cadena =    "r=" + document.getElementById('color1').value + "&" +
+                                "g=" + document.getElementById('color2').value + "&" +
+                                "b=" + document.getElementById('color3').value;
+    
+                console.log(this.value);     // Valor del slider actual
+                ajax1(cadena);              // Enviar cadena completa
 				//showHint(pulsado,true);
 			}
 			function iniciar(){
-				document.getElementById('color1').onmouseup=varios;
+                document.getElementById('color1').onmouseup = varios;
+                document.getElementById('color2').onmouseup = varios;
+                document.getElementById('color3').onmouseup = varios;
 			}
 
 			window.onload=iniciar;
