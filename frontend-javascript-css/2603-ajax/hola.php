@@ -7,20 +7,12 @@
             isset($_REQUEST["g"]) && 
             isset($_REQUEST["b"])){
 			// analizo q=valor
-            main();
+            echo sprintf("#%02x%02x%02x", $_REQUEST["r"], $_REQUEST["g"], $_REQUEST["b"]);
+
 			
-		}else{
-			// no entramos aqui
-			echo "falta parametro q";
 		}
 		exit;	
 	}
-
-    function main(){
-        print_r($_REQUEST["r"]);
-        print_r($_REQUEST["g"]);
-        print_r($_REQUEST["b"]);
-    }
 ?>
 
 
@@ -63,16 +55,76 @@
                 document.getElementById('color1').onmouseup = varios;
                 document.getElementById('color2').onmouseup = varios;
                 document.getElementById('color3').onmouseup = varios;
+
+				document.getElementById('color1').onchange = () => {
+					let valor = document.getElementById('color1').value;
+					document.querySelector('body .container.rojo').style.background = `rgb(${valor},0,0)`;
+					colorResultado();
+				}
+
+				document.getElementById('color2').onchange = () => {
+					let valor = document.getElementById('color2').value;
+					document.querySelector('body .container.verde').style.background = `rgb(0,${valor},0)`;
+					colorResultado();
+				}
+
+				document.getElementById('color3').onchange = () => {
+					let valor = document.getElementById('color3').value;
+					document.querySelector('body .container.azul').style.background = `rgb(0,0,${valor})`;
+					colorResultado();
+				}
+
+				function colorResultado (){
+					let color = document.getElementById('colorHint').innerText;
+					document.getElementById('resultado').style.background = color;
+				}
+
 			}
 
 			window.onload=iniciar;
 		</script>
+		<style>
+			.container {
+				width: 10rem;
+				height: 10rem;
+				border: 1px solid;
+			}
+
+			body > div {
+				float: left;
+			}
+
+			p, #resultado {
+				clear: both;
+
+			}
+			#resultado {
+				width: 40rem;
+				height: 3rem;
+				border: 1px solid;
+			}
+		</style>
 	</head>
 	<body>
+		<div>
 
-		<input type="range" min="0" max="255" id="color1"  />
-        <input type="range" min="0" max="255" id="color2"  />
-        <input type="range" min="0" max="255" id="color3"  />
+			<div class="container rojo"></div>
+			<input type="range" min="0" max="255" id="color1"  />
+		</div>
+
+		<div>
+
+			<div class="container verde"></div>
+			<input type="range" min="0" max="255" id="color2"  />
+		</div>
+
+		<div>
+
+			<div class="container azul"></div>
+			<input type="range" min="0" max="255" id="color3"  />
+		</div>
+
+		<div id="resultado"></div>
 
 		<p>Color seleccionado: <span id="colorHint"></span></p> 
 
