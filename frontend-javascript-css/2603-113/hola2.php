@@ -1,17 +1,14 @@
 <?php
+
     if ($_REQUEST){
 		// tengo parametros
         
 		if (
-            isset($_REQUEST["r"]) && 
-            isset($_REQUEST["g"]) && 
-            isset($_REQUEST["b"])){
-			// analizo q=valor
-            echo sprintf("#%02x%02x%02x", $_REQUEST["r"], $_REQUEST["g"], $_REQUEST["b"]);
-
+            isset($_REQUEST["r"]) ){
+				echo $_REQUEST;
 			
 		}
-		exit;	
+		//exit;	
 	}
 ?>
 
@@ -21,12 +18,8 @@
 	<head>
 		<script>
 			function ajax1(str){
-				var xmlhttp; // objeto de comunicaciones
-				if (str.length==0){ 
-					document.getElementById("colorHint").innerHTML=""; // vaciamos la caja
-					return;
-				}	
-				xmlhttp=new XMLHttpRequest();
+				var xmlhttp=new XMLHttpRequest();
+
 				xmlhttp.onreadystatechange=function(){ // declaracion callback
 					if (xmlhttp.readyState==4 && xmlhttp.status==200){
 							// respuesta de php no es la pagina completa, solo texto
@@ -35,21 +28,23 @@
 				}
 				// envio de la peticion al servidor
 				xmlhttp.open("GET","hola.php?"+str,true);
-				/*
-					method: the type of request: GET or POST
-					url: the server (file) location
-					async: true (asynchronous) or false (synchronous)
-				*/
+				
 				xmlhttp.send();
 			}	
 			function varios(){
-                let cadena =    "r=" + document.getElementById('color1').value + "&" +
-                                "g=" + document.getElementById('color2').value + "&" +
-                                "b=" + document.getElementById('color3').value;
+				let r = parseInt(document.getElementById('color1').value);
+				let g = parseInt(document.getElementById('color2').value);
+				let b = parseInt(document.getElementById('color3').value);
+
+				
+
+				console.log("dec: " + r.toString(16) + ' ' + g + ' ' + b);
+                let cadena =    "r=" + r.toString(16) + "&" +
+                                "g=" + g.toString(16) + "&" +
+                                "b=" + b.toString(16);
     
                 console.log(this.value);     // Valor del slider actual
                 ajax1(cadena);              // Enviar cadena completa
-				//showHint(pulsado,true);
 			}
 			function iniciar(){
                 document.getElementById('color1').onmouseup = varios;
@@ -88,6 +83,7 @@
 				width: 10rem;
 				height: 10rem;
 				border: 1px solid;
+				background-color: blue;
 			}
 
 			body > div {
@@ -109,7 +105,7 @@
 		<div>
 
 			<div class="container rojo"></div>
-			<input type="range" min="0" max="255" id="color1"  />
+			<input type="range" min="0" max="255" id="color1" />
 		</div>
 
 		<div>
@@ -127,6 +123,8 @@
 		<div id="resultado"></div>
 
 		<p>Color seleccionado: <span id="colorHint"></span></p> 
+
+		hola
 
 	</body>
 </html>
