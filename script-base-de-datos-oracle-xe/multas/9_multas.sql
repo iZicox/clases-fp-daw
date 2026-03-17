@@ -1,4 +1,10 @@
 REM*****************  TABLAS DE MULTAS  **************
+/*
+drop table multas;
+drop table matriculas;
+drop table personas;
+drop table personas_total_multas;
+*/
 
 CREATE  TABLE  PERSONAS(
   DNI		  VARCHAR2(10)	CONSTRAINT PKPERSONAS PRIMARY KEY,

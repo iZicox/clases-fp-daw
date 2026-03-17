@@ -3,16 +3,21 @@
 --Aprendiendo”
 
 insert into personas (dni,nombre) values('123456789D','Alumno Aprendiendo');
+select * from PERSONAS p order by p.NOMBRE;
+commit;
 --2. Inserta 2 coches asociados a esta persona con matrículas '3344-PPP' y '2221-JJJ',
-select * from MATRICULAS where dni in ('123456789D','123456789D');
+select * from MATRICULAS where DNI = '123456789D';
+
 insert into MATRICULAS (MATRICULA,DNI) 
-        values  ('3344-PPP','123456789D'),
-                ('2221-JJJ','123456789D');
+            values  ('3344-PPP','123456789D');
+
+insert into MATRICULAS (MATRICULA,DNI) 
+            values ('2221-JJJ','123456789D');
 commit;
 --3. Crea una multa en la CALLE PADRE CLARET de 150€ para el coche con matrícula
 --'2221-JJJ' y otra de 100€ en CALLE CORAZON DE MARIA para el coche con matrícula
 --'3344-PPP'.
---select * from MULTAS where MATRICULA in ('2221-JJJ','3344-PPP');
+select * from MULTAS where MATRICULA in ('2221-JJJ','3344-PPP');
 
 insert into MULTAS(REF,MATRICULA,IMPORTE,LUGAR)
     VALUES ('9999900','2221-JJJ','150','CALLE PADRE CLARET');
@@ -74,12 +79,18 @@ commit;
 --7. Elimina la persona 147956320S ¿Es posible eliminarlo?¿Por qué?Si no pudiste, ¿qué
 --cambios deberías realizar para que se pudiera borrar?
 select * from PERSONAS where dni = '147956320S';
+
 DELETE
 FROM PERSONAS
 WHERE dni = '147956320S';
+commit;
 --8. Actualiza el DNI de la persona con DNI 452103687F y asígnale el valor 452103687D. ¿Es
 --posible actualizarlo? Si no es posible, ¿qué cambios deberías realizar para que se
 --pudiera actualizar?
+SELECT * FROM PERSONAS p
+left join MATRICULAS m on m.dni = p.DNI
+left join multas mu on mu.MATRICULA = m.MATRICULA
+WHERE p.dni = '452103687F';
 select * from PERSONAS where dni = '452103687F';
 UPDATE PERSONAS
 SET dni = '452103687D'
@@ -90,24 +101,77 @@ commit;
 --9. Actualiza el DNI de la persona 203254778N y asígnale el valor 203254778H. ¿Es posible
 --actualizarlo? Si no es posible, ¿qué cambios deberías realizar para que fuese posible
 --actualizarlo?
-commit;
 
+SELECT * FROM PERSONAS p
+left join MATRICULAS m on m.dni = p.DNI
+left join multas mu on mu.MATRICULA = m.MATRICULA
+WHERE p.dni = '203254778N';
+
+select * from PERSONAS where dni='203254778N';
+
+----------------------------------------------------------------
 select * from PERSONAS p 
 inner join MATRICULAS m on m.dni = p.DNI
 inner join multas mu on mu.MATRICULA = m.MATRICULA 
 where p.dni = '203254778N';
 
+--- 1) ELIMINAMOS LA FOREING KEY DEL DNI
+--- EN LA TABLA MATRICULAS
 ALTER TABLE MATRICULAS
-drop CONSTRAINT PKMATRICULAS;
+drop CONSTRAINT FKMATRICULAS;
 
+--- 2) ACTUALIZAMOS EL DNI EN LA TABLA MATRICULAS
+UPDATE MATRICULAS
+SET DNI = '203254778H'
+WHERE DNI = '203254778N';
+
+--- 3) ACTUALIZAMOS EL DNI EN LA TABLA PERSONAS
 UPDATE PERSONAS
 SET DNI = '203254778H'
 WHERE DNI = '203254778N';
+
+--- 4) VOLVEMOS A CREAR LA FOREING KEY QUE ELIMINAMOS
+-- NOT NULL CONSTRAINT FKMATRICULAS REFERENCES PERSONAS
+alter table matriculas 
+    add constraint FKMATRICULAS 
+    foreign key (dni) 
+    references personas(dni);
+
+SELECT * FROM PERSONAS WHERE DNI = '203254778H';
+commit;
 --10. Crea una nueva columna en la tabla de multas que indique si la multa está pagado. El
 --nombre de la columna será “PAGADO”, será de 1 sólo carácter y el valor para todos los
 --campos debe ser N
+alter table multas add pagado char(1);
+
+alter table multas drop column pagado;
+
+update multas
+set pagado = 'N'; 
+
+select pagado from multas;
+
+
 --11. Crea una nueva columna en la tabla de multas que sea “DESC_PUNTOS”. También es
 --un carácter de una única posición y se debe rellenar con la siguiente lógica.
 --1. Para las multas de 200€ o menos => Se rellena con N
 --2. Para las multas de más de 200€ => Se rellena con S
+alter table multas add desc_puntos char(1);
+alter table multas drop column multas.MULTA_PAGADA;
+select * from multas;
+
+update multas
+set desc_puntos = 'N'
+where importe <= 200;
+
+update multas
+set desc_puntos = 'S'
+where importe > 200;
+
+commit;
 --12. Elimina todas las multas de importe menor a 10€
+
+delete from MULTAS
+where importe < 10;
+
+
