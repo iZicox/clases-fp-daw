@@ -1,7 +1,18 @@
 <?php
 if($_REQUEST){
-    print_r($_REQUEST);
-    echo "hola";
+    $result = "[";
+    $i = 0;
+    foreach($_REQUEST as $color){
+        if($i !== (count($_REQUEST)-1)){
+            $result .= hexdec($color) . ",";
+        } else {
+            $result .= hexdec($color);
+        }
+        $i++;
+    }
+    $result .= "]";
+    print_r($result);
+    
     exit;
 
 }
@@ -18,30 +29,42 @@ if($_REQUEST){
 
             peticion.onreadystatechange = () => {
                 if (peticion.readyState === 4 && peticion.status === 200) {
-                    document.getElementById('codColor').innerHTML = peticion.responseText;
+                   document.getElementById('codColor').innerHTML = peticion.responseText;
                 }
             }
 
-            peticion.open('GET','113.php?'+'r='+datos[0]+'&g='+datos[1]+'&b='+datos[2],true);
+            peticion.open('GET','113.php?'+
+                                            'r='+ parseInt(datos[0]).toString(16) +
+                                            '&g='+ parseInt(datos[1]).toString(16) +
+                                            '&b='+ parseInt(datos[2]).toString(16)
+                            ,true);
             peticion.send();
         }
         function colores(){
+            
             let valores = document.querySelectorAll('body div input[type="range"]');
             let copia = [...valores].map((ele) => ele.value);
-            console.log(copia);
+            console.log("array:", copia);
             ajax(copia);
+
+            document.getElementById('color').style.background = `rgb(${copia[0]},${copia[1]},${copia[2]})`;
         }
 
         function iniciar() {
             document.querySelectorAll('body div input[type="range"]').forEach((ele) => {
-                ele.onchange = colores;    
+                ele.onchange = colores;
             }); 
-                
-            /*
-            document.getElementById('r').onchange = colores;
-            document.getElementById('g').onchange = colores;
-            document.getElementById('b').onchange = colores;    
-            */
+
+            let color = document.getElementById('r').value;
+            document.querySelector('.container.red').style.backgroundColor = `rgb(${color},0,0)`;
+
+            color = document.getElementById('g').value;
+            document.querySelector('.container.green').style.backgroundColor = `rgb(0,${color},0)`;
+
+            color = document.getElementById('b').value;
+            document.querySelector('.container.blue').style.backgroundColor = `rgb(0,0,${color})`;
+            
+          
         }
 
         window.onload = iniciar;
