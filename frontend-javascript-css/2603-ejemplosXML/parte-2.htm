@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function iniciar(){
+            let peticion = new XMLHttpRequest();
+            peticion.open('GET','note.xml',true);
+            peticion.onreadystatechange = () => {
+                if(peticion.readyState === 4 && peticion.status === 200){
+                    console.log(peticion.responseXML);
+
+                    let xmlDoc = peticion.responseXML;
+
+                    document.getElementById('to').innerText =
+                    xmlDoc.getElementsByTagName("to")[0].childNodes[0].nodeValue;
+
+                    document.getElementById('from').innerText =
+                    xmlDoc.getElementsByTagName("from")[0].childNodes[0].nodeValue;
+
+                    document.getElementById('body').innerText =
+                    xmlDoc.getElementsByTagName("body")[0].childNodes[0].nodeValue;
+                }
+            }
+            peticion.send();
+        }
+
+        window.onload = iniciar;
+    </script>
+</head>
+<body>
+    <p><b>to: </b><span id="to"></span></p>
+    <p><b>From: </b><span id="from"></span></p>
+    <p><b>Body: </b><span id="body"></span></p>
+</body>
+</html>

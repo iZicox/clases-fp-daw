@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function iniciar(){
+            let peticion =  new XMLHttpRequest();
+            peticion.open('GET','html.xml',true);
+            peticion.onreadystatechange = () => {
+                if(peticion.readyState === 4 && peticion.status === 200){
+                    let respuesta = peticion.responseXML;
+                    let div = document.createElement('div');
+                    document.body.appendChild(div);
+                    div.textContent = respuesta;
+
+                }
+            };
+
+            peticion.send();
+        }
+
+        window.onload = iniciar;
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

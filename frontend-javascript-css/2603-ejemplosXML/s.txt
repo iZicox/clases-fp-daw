@@ -1,0 +1,7 @@
+// un xml en una cadena
+
+txt="<note>";
+txt+="<to>Everyday Italian</to>";
+txt+="<from>Giada De Laurentiis</from>";
+txt+="<body>2005</body>";
+txt+="</note>";
