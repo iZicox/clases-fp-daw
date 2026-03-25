@@ -17,7 +17,7 @@ EXCEPTION
     END IF;
 END;
 -- Descomentar siguiente línea para SQL Developer
---/
+/
 
 -- 2. CREACIÓN DE TABLAS
 
