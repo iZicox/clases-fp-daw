@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // https://thesimpsonsapi.com/api/characters
+
+
+
+        async function ajaxPromesa(){
+            return new Promise(resolve =>{
+                let peticion = new XMLHttpRequest();
+                peticion.open('GET','https://thesimpsonsapi.com/api/characters',true);
+                peticion.onreadystatechange = () => {
+                    if(peticion.readyState === 4 && peticion.status === 200){
+                        //console.log(JSON.parse(peticion.responseText));
+                        //console.log('hola');
+                        resolve(JSON.parse(peticion.responseText));
+                    }
+                }
+                peticion.send();
+
+            })
+        }
+        var datos2;
+        function ajax(){
+            let peticion = new XMLHttpRequest();
+            peticion.open('GET','https://thesimpsonsapi.com/api/locations',true);
+            peticion.onreadystatechange = () => {
+                if(peticion.readyState === 4 && peticion.status === 200){
+                    //console.log(JSON.parse(peticion.responseText));
+                    datos2 = JSON.parse(peticion.responseText);
+                }
+            }
+            peticion.send();
+        }
+
+        async function iniciar() {
+
+            let datos = await ajaxPromesa();
+
+            console.log('Ajax con return de promesa');
+            console.log(typeof datos);
+            console.log(datos);
+
+
+            datos = '';
+            console.log('Fetch')
+            datos = await fetch('https://thesimpsonsapi.com/api/episodes').then(res => res.json());
+            console.log(typeof datos)
+            console.log(datos);
+
+            console.log('Ajax');
+            console.log(datos2);
+            
+        }
+
+        window.onload = iniciar;
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
