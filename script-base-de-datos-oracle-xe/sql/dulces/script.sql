@@ -4,13 +4,7 @@ GRANT CONNECT, resource, CREATE VIEW TO dulces_vscode_1;
 
 --EJERCICIO DULCES– CONSULTA CON VARIAS TABLAS
 --Utiliza la BBDD DULCES--
---1. Devuelve los pedidos de clientes de USA hechos en 1997--
-select p.* from pedidos p 
-JOIN clientes c on p.idcliente = c.idcliente
-where c.pais = 'USA' 
-and EXTRACT(year from p.fecha_pedido) = 1997;
-select nombre from bombones;
-commit;
+--1. Devuelve los pedidos de clientes de USA hechos en 1997
 --2. Devuelve las cajas de bombones que corresponden a colecciones y que con--tienen
 --anacardos.--
 --3. Devuelve las cajas con bombones de chocolate puro--
