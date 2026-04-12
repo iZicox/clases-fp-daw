@@ -106,13 +106,92 @@ select CODTIENDA from tienda;
 --6. Para un producto introducido por teclado calcula y muestra si su margen de beneficio
 --es alto (mayor o igual que el 30%), normal (entre el 30% y el 20%)  o bajo (menor o
 --igual que el 20%).
---1.
---7.
---El margen se calculará como ( (precio de venta - precio proveedor)/precio
+--1. El margen se calculará como ( (precio de venta - precio proveedor)/precio
 --proveedor) *100 siempre el que precio proveedor sea distinto de 0. Si es 0
 --pondremos SIN DATOS.
+DECLARE
+    cod_prod producto.CODPRODUCTO%TYPE;
+    margen NUMBER(5,2);
+    precio_prov producto.PRECIOPROVEEDOR%TYPE;
+BEGIN
+    cod_prod := '&ingresa_codigo_del_producto';
+
+    select PRECIOPROVEEDOR
+    into precio_prov
+    from producto 
+    where codproducto = cod_prod;
+
+    IF precio_prov = 0 THEN
+      DBMS_OUTPUT.PUT_LINE('No hay datos');
+    ELSE
+        select round(((precioventa-precioproveedor)/precioproveedor)*100,2)
+        into margen 
+        from producto 
+        where codproducto = cod_prod;
+
+        IF margen > 29 THEN
+        DBMS_OUTPUT.PUT_LINE('El producto ' || cod_prod || ' tiene un alto margen.');
+        ELSIF margen < 21 THEN
+        DBMS_OUTPUT.PUT_LINE('El producto ' || cod_prod || ' tiene un bajo margen.');
+        ELSE
+        DBMS_OUTPUT.PUT_LINE('El producto ' || cod_prod || ' tiene un margen normal.');
+        END IF;   
+    END IF;
+
+
+END;
+/
+--1. El margen se calculará como ( (precio de venta - precio proveedor)/precio
+--proveedor) *100 siempre el que precio proveedor sea distinto de 0. Si es 0
+--pondremos SIN DATOS.
+select round(((precioventa-precioproveedor)/precioproveedor)*100,2) 
+from producto 
+where codproducto = '11679';
+
+select * from producto;
+--7.
 --Para un cliente que se pase por teclado indica si su ciudad coincide con la de la tienda
 --en la que trabaja el empleado que tiene asignado o no.
+
+DECLARE
+    V_CIUDAD_CLIENTE CLIENTE.CIUDAD%TYPE;
+    V_CIUDAD_TIENDA TIENDA.CIUDAD%TYPE;
+    V_COD_EMPLEADO_ASIGNADO CLIENTE.CODEMPLEADOVENTAS%TYPE;
+    V_COD_CLIENTE CLIENTE.CODCLIENTE%TYPE;
+BEGIN
+    V_COD_CLIENTE := UPPER('&COD_CLIENTE');
+
+    -- EMPLEADO ASIGNADO
+    SELECT CODEMPLEADOVENTAS 
+    INTO V_COD_EMPLEADO_ASIGNADO
+    FROM CLIENTE
+    WHERE CODCLIENTE = V_COD_CLIENTE;
+
+    -- CIUDAD CLIENTE
+    SELECT CIUDAD
+    INTO V_CIUDAD_CLIENTE
+    FROM CLIENTE
+    WHERE CODCLIENTE = V_COD_CLIENTE;
+
+    -- CIUDAD DE LA TIENDA DEL EMPLEADO ASIGNADO
+    SELECT T.CIUDAD
+    INTO V_CIUDAD_TIENDA
+    FROM TIENDA T
+    INNER JOIN EMPLEADO E ON E.CODTIENDA = T.CODTIENDA
+    WHERE E.CODEMPLEADO = V_COD_EMPLEADO_ASIGNADO;
+
+    IF V_CIUDAD_TIENDA = V_CIUDAD_CLIENTE THEN
+        DBMS_OUTPUT.PUT_LINE('La ciudad del cliente es la misma que la ciudad de la tienda de su vendedor asignado.');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('La ciudad del cliente no es la misma que la ciudad de la tienda de su vendedor asignado');
+    END IF;
+
+END;
+/
+SELECT C.CODCLIENTE, C.CIUDAD, T.CIUDAD FROM CLIENTE C 
+INNER JOIN EMPLEADO E ON E.CODEMPLEADO = C.CODEMPLEADOVENTAS 
+INNER JOIN TIENDA T ON T.CODTIENDA = E.CODTIENDA;
+
 --8. Renombra el tipo de producto Utensilios y llamalo Herramientas. Para ello tendrás que
 --hacer los siguientes pasos
 --    1.
