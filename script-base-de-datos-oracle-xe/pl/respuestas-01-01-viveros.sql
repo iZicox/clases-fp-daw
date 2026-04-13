@@ -201,3 +201,30 @@ INNER JOIN TIENDA T ON T.CODTIENDA = E.CODTIENDA;
 --    nuevo tipo de Herramientas
 --    3. Borra el tipo de producto Utensilios.
 --    4. Al final de todo, haz commit.FOR x IN 1..n LOOP
+select * from TIPOPRODUCTO;
+DELETE FROM TIPOPRODUCTO WHERE TIPO = 'Herramientas';
+SELECT * FROM PRODUCTO WHERE TIPOproducto = 'Utensilios';
+commit;
+ROLLBACK;
+
+DECLARE
+BEGIN
+    --paso 1
+    INSERT INTO TIPOPRODUCTO(tipo,DESCRIPCION_TEXTO) 
+    VALUES('Herramientas','Herramientas pasa plantas');
+    DBMS_OUTPUT.PUT_LINE('✅ Paso 1');
+
+    --paso 2
+    UPDATE PRODUCTO P2 
+    SET P2.TIPOPRODUCTO = 'Herramientas'
+    WHERE P2.TIPOPRODUCTO = 'Utensilios';
+    DBMS_OUTPUT.PUT_LINE('✅ Paso 2');
+    
+    --paso 3
+    DELETE FROM TIPOPRODUCTO
+    WHERE TIPO = 'Utensilios';
+
+    DBMS_OUTPUT.PUT_LINE('✅ Cambio realizado correctamente');
+END;
+/
+
