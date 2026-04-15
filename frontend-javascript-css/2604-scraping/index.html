@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Scraping Demo</title>
+</head>
+<script>
+    // Variable global para guardar los datos que extractmos
+    // Tiene 3 listas: libros, citas, noticias
+    let datos_guardados = { libros: [], citas: [], noticias: [] };
+
+    // Esta funcion se ejecuta cuando la pagina termina de cargar
+    function iniciar() {
+        // Obtenemos el elemento body del HTML
+        let body = document.body;
+
+        // Creamos el titulo principal
+        let titulo = document.createElement("h1");
+        titulo.innerText = "Scraping - Archivos Locales";
+        body.appendChild(titulo);
+
+        // --- SECCION 1: LIBROS ---
+        // Creamos una seccion con titulo "1. Books to Scrape"
+        let seccion1 = crearSeccion("1. Books to Scrape");
+        // Creamos un input para seleccionar archivo
+        let inputLibros = crearInputArchivo("Seleccionar livros.html");
+        // Creamos un contenedor vazio para mostrar resultados depois
+        let resultadoLibros = crearContenedorResultados();
+        // Añadimos el input y el contenedor a la seccion
+        seccion1.appendChild(inputLibros);
+        seccion1.appendChild(resultadoLibros);
+        // Añadimos la seccion al body
+        body.appendChild(seccion1);
+
+        // --- SECCION 2: CITAS ---
+        let seccion2 = crearSeccion("2. Quotes to Scrape");
+        let inputCitas = crearInputArchivo("Seleccionar citas.html");
+        let resultadoCitas = crearContenedorResultados();
+        seccion2.appendChild(inputCitas);
+        seccion2.appendChild(resultadoCitas);
+        body.appendChild(seccion2);
+
+        // --- SECCION 3: NOTICIAS ---
+        let seccion3 = crearSeccion("3. Hacker News");
+        let inputNoticias = crearInputArchivo("Seleccionar noticias.html");
+        let resultadoNoticias = crearContenedorResultados();
+        seccion3.appendChild(inputNoticias);
+        seccion3.appendChild(resultadoNoticias);
+        body.appendChild(seccion3);
+
+        // --- SECCION 4: EXPORTAR JSON ---
+        let seccionExportar = crearSeccion("Exportar JSON");
+        let botonExportar = document.createElement("button");
+        botonExportar.innerText = "Descargar datos.json";
+        
+        // Cuando hacen click en el boton
+        botonExportar.onclick = () => {
+            // Convertimos el objeto a texto JSON
+            let json = JSON.stringify(datos_guardados, null, 2);
+            // Creamos un archivo virtual (Blob)
+            let blob = new Blob([json], { type: "application/json" });
+            // Creamos una URL para el archivo virtual
+            let url = URL.createObjectURL(blob);
+            // Creamos un enlace invisible
+            let a = document.createElement("a");
+            a.href = url;
+            a.download = "scraped_data.json"; // Nombre del archivo a baixar
+            a.click(); // Simulamos click para descargar
+            URL.revokeObjectURL(url); // Limpiamos la memoria
+        };
+        seccionExportar.appendChild(botonExportar);
+        body.appendChild(seccionExportar);
+
+        // =============================================
+        // EVENTO: LEER ARCHIVO DE LIBROS
+        // =============================================
+        // Se ejecuta cuando el usuario selecciona un archivo
+        inputLibros.onchange = (evento) => {
+            // Obtenemos el primer archivo seleccionado
+            let archivo = evento.target.files[0];
+            if (!archivo) return; // Si no hay archivo, salir
+            
+            // FileReader sirve para leer archivos desde el navegador
+            let lector = new FileReader();
+            
+            // Esta funcion se ejecuta cuando termina de leer el archivo
+            lector.onload = (e) => {
+                // DOMParser convierte el texto HTML en un documento que podemos buscar
+                let parser = new DOMParser();
+                let documento = parser.parseFromString(e.target.result, "text/html");
+                
+                // Buscamos todos los elementos que tienen class="product_pod"
+                let libros = documento.querySelectorAll("article.product_pod");
+                
+                // Limpiamos la lista anterior de libros
+                datos_guardados.libros = [];
+                resultadoLibros.innerHTML = "";
+
+                // Recorremos los primeros 10 libros
+                for (let i = 0; i < Math.min(libros.length, 10); i++) {
+                    let libro = libros[i];
+                    
+                    // querySelector busca un elemento dentro de otro
+                    // .h3 a busca un elemento con tag h3 y dentro un tag a
+                    let enlace = libro.querySelector("h3 a"); // Titulo del libro
+                    let imagen = libro.querySelector(".image_container img"); // Imagen
+                    let ratingEl = libro.querySelector(".star-rating"); // Rating
+                    
+                    // Obtenemos el texto del titulo, quitamos espacios al principio y final
+                    let rating = ratingEl ? ratingEl.className.match(/(\w+)$/)?.[1] : "N/A";
+
+                    // Creamos un objeto con los datos del libro
+                    let dato = {
+                        titulo: enlace?.textContent?.trim() || "Sin titulo",
+                        url: enlace?.href || "",
+                        imagen: imagen?.src || "",
+                        rating: rating
+                    };
+                    // Guardamos el dato en la lista
+                    datos_guardados.libros.push(dato);
+
+                    // Creamos un div para mostrar en pantalla
+                    let item = crearItem();
+                    item.innerText = dato.titulo + " - " + dato.rating;
+                    resultadoLibros.appendChild(item);
+                }
+            };
+            
+            // Iniciamos la lectura del archivo como texto
+            lector.readAsText(archivo);
+        };
+
+        // =============================================
+        // EVENTO: LEER ARCHIVO DE CITAS
+        // =============================================
+        inputCitas.onchange = (evento) => {
+            let archivo = evento.target.files[0];
+            if (!archivo) return;
+            
+            let lector = new FileReader();
+            lector.onload = (e) => {
+                let parser = new DOMParser();
+                let documento = parser.parseFromString(e.target.result, "text/html");
+                
+                // Buscamos todos los elementos con class="quote"
+                let citas = documento.querySelectorAll("div.quote");
+                
+                datos_guardados.citas = [];
+                resultadoCitas.innerHTML = "";
+
+                // Recorremos todas las citas
+                for (let cita of citas) {
+                    let texto = cita.querySelector(".text")?.textContent?.trim() || "";
+                    let autor = cita.querySelector(".author")?.textContent?.trim() || "";
+                    
+                    // querySelectorAll devuelve varios elementos
+                    let tagsElements = cita.querySelectorAll(".tag");
+                    let tags = [];
+                    for (let t of tagsElements) {
+                        tags.push(t.textContent.trim());
+                    }
+
+                    let dato = { texto: texto, autor: autor, tags: tags };
+                    datos_guardados.citas.push(dato);
+
+                    let item = crearItem();
+                    item.innerText = dato.texto + " - " + dato.autor;
+                    resultadoCitas.appendChild(item);
+                }
+            };
+            lector.readAsText(archivo);
+        };
+
+        // =============================================
+        // EVENTO: LEER ARCHIVO DE NOTICIAS
+        // =============================================
+        inputNoticias.onchange = (evento) => {
+            let archivo = evento.target.files[0];
+            if (!archivo) return;
+            
+            let lector = new FileReader();
+            lector.onload = (e) => {
+                let parser = new DOMParser();
+                let documento = parser.parseFromString(e.target.result, "text/html");
+                
+                // Buscamos todas las filas de noticias
+                let filas = documento.querySelectorAll("tr.athing");
+                
+                datos_guardados.noticias = [];
+                resultadoNoticias.innerHTML = "";
+
+                let ranking = 1;
+                // Solo las primeras 15 noticias
+                for (let fila of filas) {
+                    if (ranking > 15) break;
+                    
+                    let enlace = fila.querySelector("td.title a");
+                    let sitebit = fila.querySelector(".sitebit a")?.textContent?.trim() || "";
+                    
+                    // Las noticias tienen informacion extra en la siguiente fila (subtext)
+                    let subtext = fila.nextElementSibling?.querySelector("td.subtext");
+                    let score = subtext?.querySelector(".score")?.textContent?.trim() || "0 points";
+                    let usuario = subtext?.querySelector("a.hnuser")?.textContent?.trim() || "";
+                    let fecha = subtext?.querySelector("span.age")?.textContent?.trim() || "";
+
+                    let dato = {
+                        rank: ranking,
+                        titulo: enlace?.textContent?.trim() || "Sin titulo",
+                        enlace: enlace?.href || "",
+                        dominio: sitebit,
+                        puntos: score,
+                        autor: usuario,
+                        fecha: fecha
+                    };
+                    datos_guardados.noticias.push(dato);
+
+                    let item = crearItem();
+                    item.innerText = dato.rank + ". " + dato.titulo + " (" + dato.puntos + ")";
+                    resultadoNoticias.appendChild(item);
+                    ranking++;
+                }
+            };
+            lector.readAsText(archivo);
+        };
+    }
+
+    // =============================================
+    // FUNCIONES AUXILIARES
+    // =============================================
+
+    // Crea una seccion con un titulo
+    function crearSeccion(titulo) {
+        let seccion = document.createElement("div");
+        seccion.style.marginTop = "20px";
+
+        let h2 = document.createElement("h2");
+        h2.innerText = titulo;
+        seccion.appendChild(h2);
+
+        return seccion;
+    }
+
+    // Crea un input para seleccionar archivo
+    function crearInputArchivo(texto) {
+        let input = document.createElement("input");
+        input.type = "file";
+        input.accept = ".html"; // Solo acepta archivos .html
+        
+        let label = document.createElement("label");
+        label.innerText = texto + ": ";
+        label.appendChild(input);
+
+        return input;
+    }
+
+    // Crea un contenedor vazio para resultados
+    function crearContenedorResultados() {
+        let contenedor = document.createElement("div");
+        contenedor.style.marginTop = "10px";
+        return contenedor;
+    }
+
+    // Crea un div simple para cada resultado
+    function crearItem() {
+        let item = document.createElement("div");
+        item.style.marginBottom = "5px";
+        return item;
+    }
+
+    // Arrancar la funcion iniciar cuando cargue la pagina
+    window.onload = iniciar;
+</script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function iniciar(){
+            let body = document.body;
+
+            const letras = "ABCDEFGHIJKLMNOPQRSTVWXYZ";
+            let usadas = new Set();
+            
+            let titulo = document.createElement("h1");
+            body.appendChild(titulo);
+            titulo.innerText = "MANEJA UNA LISTA DE NODOS";
+
+            let container = document.createElement("div");
+            body.appendChild(container);
+            //container.style.border = "1px solid";
+            container.style.display = "flex";
+            container.style.justifyContent = "start";
+            container.style.alignItems = "center";
+            container.style.width = "auto"
+
+            let controles = document.createElement("div");
+            container.appendChild(controles);
+            controles.style.display = "flex";
+            controles.style.flexDirection = "column";
+            controles.style.margin = "10px";
+
+
+            let logs = document.createElement("div");
+            container.appendChild(logs);
+            logs.style.border = "1px solid";
+            logs.style.width = "400px";
+            logs.style.height = "200px";
+            logs.style.margin = "10px";
+
+            let visualizador = document.createElement("div");
+            visualizador.style.border = "1px solid";
+            visualizador.style.width = "400px";
+            visualizador.style.height = "100px";
+            visualizador.style.display = "flex";
+            visualizador.style.justifyContent = "center";
+            visualizador.style.alignItems = "center";
+            visualizador.style.gap = "10px";
+            controles.appendChild(visualizador);
+            
+            
+            
+            let btnAgregarFinal = document.createElement("button");
+            btnAgregarFinal.innerText = "Agregar al final";
+            btnAgregarFinal.style.margin = "5px";
+            controles.appendChild(btnAgregarFinal);
+            btnAgregarFinal.onclick = () => {
+                let ele = agregarNodo();
+                console.log(usadas);
+
+                for (let i = 0; i < letras.length; i++) {
+                    console.log(letras[i]);
+                    if(!usadas.has(letras[i])){
+                        ele.innerText = letras[i];
+                        usadas.add(letras[i]);
+                    }
+                }
+                
+                console.log(usadas);
+                visualizador.appendChild(ele);
+            };
+
+            let btnAgregarInicio = document.createElement("button");
+            btnAgregarInicio.innerText = "Agregar al Inicio";
+            btnAgregarInicio.style.margin = "5px";
+            controles.appendChild(btnAgregarInicio);
+
+
+            let btnEliminarFinal = document.createElement("button");
+            btnEliminarFinal.innerText = "Eliminar final";
+            btnEliminarFinal.style.margin = "5px";
+            controles.appendChild(btnEliminarFinal);
+            btnEliminarFinal.onclick = () => {
+                let ele = visualizador.lastChild;
+                if(ele != null){
+                    ele.remove();
+                }
+                
+            };
+
+
+
+        }
+
+        function agregarNodo(){
+            let ele = document.createElement("div");
+            ele.style.border = "1px solid";
+            ele.style.width = "40px";
+            ele.style.height = "40px";
+
+            return ele;
+        }
+        
+        window.onload=iniciar;
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
