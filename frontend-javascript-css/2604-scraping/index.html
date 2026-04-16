@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Scraping Demo</title>
+    <title>Scraping</title>
 </head>
 <script>
     // Variable global para guardar los datos que extractmos
@@ -22,29 +22,33 @@
         // --- SECCION 1: LIBROS ---
         // Creamos una seccion con titulo "1. Books to Scrape"
         let seccion1 = crearSeccion("1. Books to Scrape");
-        // Creamos un input para seleccionar archivo
-        let inputLibros = crearInputArchivo("Seleccionar livros.html");
+        // Creamos label con input para seleccionar archivo
+        let labelLibros = crearInputArchivo("Seleccionar livros.html");
+        // Obtenemos el input dentro del label
+        let inputLibros = labelLibros.querySelector("input");
         // Creamos un contenedor vazio para mostrar resultados depois
         let resultadoLibros = crearContenedorResultados();
-        // Añadimos el input y el contenedor a la seccion
-        seccion1.appendChild(inputLibros);
+        // Añadimos el label y el contenedor a la seccion
+        seccion1.appendChild(labelLibros);
         seccion1.appendChild(resultadoLibros);
         // Añadimos la seccion al body
         body.appendChild(seccion1);
 
         // --- SECCION 2: CITAS ---
         let seccion2 = crearSeccion("2. Quotes to Scrape");
-        let inputCitas = crearInputArchivo("Seleccionar citas.html");
+        let labelCitas = crearInputArchivo("Seleccionar citas.html");
+        let inputCitas = labelCitas.querySelector("input");
         let resultadoCitas = crearContenedorResultados();
-        seccion2.appendChild(inputCitas);
+        seccion2.appendChild(labelCitas);
         seccion2.appendChild(resultadoCitas);
         body.appendChild(seccion2);
 
         // --- SECCION 3: NOTICIAS ---
         let seccion3 = crearSeccion("3. Hacker News");
-        let inputNoticias = crearInputArchivo("Seleccionar noticias.html");
+        let labelNoticias = crearInputArchivo("Seleccionar noticias.html");
+        let inputNoticias = labelNoticias.querySelector("input");
         let resultadoNoticias = crearContenedorResultados();
-        seccion3.appendChild(inputNoticias);
+        seccion3.appendChild(labelNoticias);
         seccion3.appendChild(resultadoNoticias);
         body.appendChild(seccion3);
 
@@ -55,18 +59,11 @@
         
         // Cuando hacen click en el boton
         botonExportar.onclick = () => {
-            // Convertimos el objeto a texto JSON
             let json = JSON.stringify(datos_guardados, null, 2);
-            // Creamos un archivo virtual (Blob)
-            let blob = new Blob([json], { type: "application/json" });
-            // Creamos una URL para el archivo virtual
-            let url = URL.createObjectURL(blob);
-            // Creamos un enlace invisible
             let a = document.createElement("a");
-            a.href = url;
-            a.download = "scraped_data.json"; // Nombre del archivo a baixar
-            a.click(); // Simulamos click para descargar
-            URL.revokeObjectURL(url); // Limpiamos la memoria
+            a.href = "data:application/json," + encodeURIComponent(json);
+            a.download = "scraped_data.json";
+            a.click();
         };
         seccionExportar.appendChild(botonExportar);
         body.appendChild(seccionExportar);
@@ -107,7 +104,7 @@
                     let ratingEl = libro.querySelector(".star-rating"); // Rating
                     
                     // Obtenemos el texto del titulo, quitamos espacios al principio y final
-                    let rating = ratingEl ? ratingEl.className.match(/(\w+)$/)?.[1] : "N/A";
+                    let rating = ratingEl ? ratingEl.className.split(" ").pop() : "N/A";
 
                     // Creamos un objeto con los datos del libro
                     let dato = {
@@ -250,7 +247,7 @@
         label.innerText = texto + ": ";
         label.appendChild(input);
 
-        return input;
+        return label; // Devuelve el label (que contiene el input)
     }
 
     // Crea un contenedor vazio para resultados
