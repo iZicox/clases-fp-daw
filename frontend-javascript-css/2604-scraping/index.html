@@ -8,6 +8,7 @@
     // Variable global para guardar los datos que extractmos
     // Tiene 3 listas: libros, citas, noticias
     let datos_guardados = { libros: [], citas: [], noticias: [] };
+    let seccion_actual = null; // Tracks which section is currently active
 
     // Esta funcion se ejecuta cuando la pagina termina de cargar
     function iniciar() {
@@ -28,9 +29,21 @@
         let inputLibros = labelLibros.querySelector("input");
         // Creamos un contenedor vazio para mostrar resultados depois
         let resultadoLibros = crearContenedorResultados();
-        // Añadimos el label y el contenedor a la seccion
+        
+        // Contenedor para el iframe
+        let iframeLibros = crearContenedorIframe();
+        
+        // Botón para exportar JSON individual de libros
+        let botonExportarLibros = document.createElement("button");
+        botonExportarLibros.innerText = "Exportar JSON";
+        botonExportarLibros.style.marginLeft = "10px";
+        botonExportarLibros.onclick = () => exportarJsonIndividual("libros", iframeLibros);
+        
+        // Añadimos el label, el botón y el contenedor a la seccion
         seccion1.appendChild(labelLibros);
+        seccion1.appendChild(botonExportarLibros);
         seccion1.appendChild(resultadoLibros);
+        seccion1.appendChild(iframeLibros);
         // Añadimos la seccion al body
         body.appendChild(seccion1);
 
@@ -39,8 +52,17 @@
         let labelCitas = crearInputArchivo("Seleccionar citas.html");
         let inputCitas = labelCitas.querySelector("input");
         let resultadoCitas = crearContenedorResultados();
+        let iframeCitas = crearContenedorIframe();
+        
+        let botonExportarCitas = document.createElement("button");
+        botonExportarCitas.innerText = "Exportar JSON";
+        botonExportarCitas.style.marginLeft = "10px";
+        botonExportarCitas.onclick = () => exportarJsonIndividual("citas", iframeCitas);
+        
         seccion2.appendChild(labelCitas);
+        seccion2.appendChild(botonExportarCitas);
         seccion2.appendChild(resultadoCitas);
+        seccion2.appendChild(iframeCitas);
         body.appendChild(seccion2);
 
         // --- SECCION 3: NOTICIAS ---
@@ -48,31 +70,27 @@
         let labelNoticias = crearInputArchivo("Seleccionar noticias.html");
         let inputNoticias = labelNoticias.querySelector("input");
         let resultadoNoticias = crearContenedorResultados();
+        let iframeNoticias = crearContenedorIframe();
+        
+        let botonExportarNoticias = document.createElement("button");
+        botonExportarNoticias.innerText = "Exportar JSON";
+        botonExportarNoticias.style.marginLeft = "10px";
+        botonExportarNoticias.onclick = () => exportarJsonIndividual("noticias", iframeNoticias);
+        
         seccion3.appendChild(labelNoticias);
+        seccion3.appendChild(botonExportarNoticias);
         seccion3.appendChild(resultadoNoticias);
+        seccion3.appendChild(iframeNoticias);
         body.appendChild(seccion3);
 
-        // --- SECCION 4: EXPORTAR JSON ---
-        let seccionExportar = crearSeccion("Exportar JSON");
-        let botonExportar = document.createElement("button");
-        botonExportar.innerText = "Descargar datos.json";
         
-        // Cuando hacen click en el boton
-        botonExportar.onclick = () => {
-            let json = JSON.stringify(datos_guardados, null, 2);
-            let a = document.createElement("a");
-            a.href = "data:application/json," + encodeURIComponent(json);
-            a.download = "scraped_data.json";
-            a.click();
-        };
-        seccionExportar.appendChild(botonExportar);
-        body.appendChild(seccionExportar);
 
         // =============================================
         // EVENTO: LEER ARCHIVO DE LIBROS
         // =============================================
         // Se ejecuta cuando el usuario selecciona un archivo
         inputLibros.onchange = (evento) => {
+            seccion_actual = "libros";
             // Obtenemos el primer archivo seleccionado
             let archivo = evento.target.files[0];
             if (!archivo) return; // Si no hay archivo, salir
@@ -131,6 +149,7 @@
         // EVENTO: LEER ARCHIVO DE CITAS
         // =============================================
         inputCitas.onchange = (evento) => {
+            seccion_actual = "citas";
             let archivo = evento.target.files[0];
             if (!archivo) return;
             
@@ -172,6 +191,7 @@
         // EVENTO: LEER ARCHIVO DE NOTICIAS
         // =============================================
         inputNoticias.onchange = (evento) => {
+            seccion_actual = "noticias";
             let archivo = evento.target.files[0];
             if (!archivo) return;
             
@@ -262,6 +282,46 @@
         let item = document.createElement("div");
         item.style.marginBottom = "5px";
         return item;
+    }
+
+    // Crea un contenedor vacío para el iframe
+    function crearContenedorIframe() {
+        let contenedor = document.createElement("div");
+        contenedor.style.marginTop = "10px";
+        return contenedor;
+    }
+
+    // Exporta JSON individual de la sección, lo muestra en iframe y descarga automáticamente
+    function exportarJsonIndividual(tipo, contenedorIframe) {
+        let datos = datos_guardados[tipo];
+        
+        if (!datos || datos.length === 0) {
+            alert("No hay datos para exportar. Selecciona un archivo primero.");
+            return;
+        }
+        
+        let json = JSON.stringify(datos, null, 2);
+        
+        // Crear blob y URL
+        let blob = new Blob([json], { type: "application/json" });
+        let url = URL.createObjectURL(blob);
+        
+        // Crear iframe
+        let iframe = document.createElement("iframe");
+        iframe.src = url;
+        iframe.style.width = "100%";
+        iframe.style.height = "300px";
+        iframe.style.border = "1px solid #ccc";
+        
+        // Limpiar y añadir iframe al contenedor
+        contenedorIframe.innerHTML = "";
+        contenedorIframe.appendChild(iframe);
+        
+        // Descargar automáticamente
+        let a = document.createElement("a");
+        a.href = url;
+        a.download = `scraped_${tipo}.json`;
+        a.click();
     }
 
     // Arrancar la funcion iniciar cuando cargue la pagina
