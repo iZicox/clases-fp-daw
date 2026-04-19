@@ -15,11 +15,112 @@
             body.appendChild(tituloPrinciapal);
 
             // SECCION 1
+
+            seccion1();
+
+            // SECCION 2
+
+            seccion2();
+
+            // SECCION 3
+
+            let seccion3 = document.createElement("div");
+            let titulo = document.createElement("h3");
+            titulo.innerHTML = "Noticias";
+            let btnFetch = document.createElement("button");
+            btnFetch.innerText = "Iniciar peticion en local";
+
+            body.appendChild(seccion3);
+            seccion3.appendChild(titulo);
+            seccion3.appendChild(btnFetch);
+
+            
+
+
+
+        }
+
+        function seccion2() {
+            let body = document.body;
+            let seccion2 = document.createElement("div");
+            let titulo = document.createElement("h3");
+            titulo.innerHTML = "Citas";
+            let btnFetch = document.createElement("button");
+            btnFetch.innerText = "Iniciar peticion";
+
+            body.appendChild(seccion2);
+            seccion2.appendChild(titulo);
+            seccion2.appendChild(btnFetch);
+
+            btnFetch.onclick = () => {
+                const proxy = 'http://185.238.228.156:80';
+                const targetUrl = 'https://quotes.toscrape.com/';
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', targetUrl, true);
+                xhr.onload = function () {
+                    let datos = xhr.responseText;
+                    let parser = new DOMParser();
+                    let dom = parser.parseFromString(datos, "text/html");
+
+                    let nodosCitas = dom.querySelectorAll("span.text");
+                    let arrCitas = [...nodosCitas].map(nodo => nodo.textContent);
+                    console.log(arrCitas);
+
+                    let nodosAutores = dom.querySelectorAll("small.author");
+                    let arrAutores = [...nodosAutores].map(nodo => nodo.textContent);
+                    console.log(arrAutores);
+
+                    exportJson = { data: [] };
+                    arrAutores.forEach((ele, i) => {
+                        let cita = {
+                            cita: arrCitas[i],
+                            autor: arrAutores[i]
+                        };
+                        exportJson.data[i] = cita;
+                    });
+
+                    let iframe = document.createElement("iframe");
+                    iframe.id = "vistaCitas";
+                    iframe.style.display = "block";
+                    iframe.style.width = "800px";
+                    iframe.style.height = "600px";
+                    iframe.style.marginTop = "10px";
+                    let jsonString = JSON.stringify(exportJson, null, 4);
+
+                    let blob = new Blob([jsonString], { type: "application/json" });
+                    let url = URL.createObjectURL(blob);
+
+                    iframe.src = url;
+
+                    seccion2.appendChild(iframe);
+
+                    // crear un elemento <a> oculto para forzar la descarga
+                    let link = document.createElement("a");
+                    link.href = url;
+                    let timeStamp = new Date();
+                    // Nombre del archivo al descargar
+                    link.download = `data-libros-${timeStamp.getTime()}.json`;
+
+                    // simular el clic y limpiar
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    // liberar memoria
+                    window.URL.revokeObjectURL(url);
+
+
+                };
+                xhr.send();
+            };
+        }
+
+        function seccion1() {
+            let body = document.body;
             let seccion1 = document.createElement("div");
             let titulo = document.createElement("h3");
             titulo.innerHTML = "Libros";
             let btnFetch = document.createElement("button");
-            btnFetch.innerText = "Iniciar fetch";
+            btnFetch.innerText = "Iniciar peticion";
 
             body.appendChild(seccion1);
             seccion1.appendChild(titulo);
@@ -70,20 +171,16 @@
                 link.href = url;
                 let timeStamp = new Date();
                 // Nombre del archivo al descargar
-                link.download = `data-libros-${timeStamp.getTime()}.json`; 
-                
+                link.download = `data-libros-${timeStamp.getTime()}.json`;
+
                 // simular el clic y limpiar
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
                 // liberar memoria
-                window.URL.revokeObjectURL(url); 
+                window.URL.revokeObjectURL(url);
 
             };
-
-
-            // SECCION 2
-
         }
 
         async function fetchDatos() {
