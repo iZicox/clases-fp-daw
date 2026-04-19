@@ -10,9 +10,14 @@
         function iniciar() {
             let body = document.body;
 
+            let tituloPrinciapal = document.createElement("h1");
+            tituloPrinciapal.innerText = "Scraping";
+            body.appendChild(tituloPrinciapal);
+
+            // SECCION 1
             let seccion1 = document.createElement("div");
             let titulo = document.createElement("h3");
-            titulo.innerHTML = "Scraping con fetch - Libros";
+            titulo.innerHTML = "Libros";
             let btnFetch = document.createElement("button");
             btnFetch.innerText = "Iniciar fetch";
 
@@ -60,19 +65,25 @@
 
                 seccion1.appendChild(iframe);
 
-                // 4. Crear un elemento <a> oculto para forzar la descarga
+                // crear un elemento <a> oculto para forzar la descarga
                 let link = document.createElement("a");
                 link.href = url;
                 let timeStamp = new Date();
-                link.download = `data-libros-${timeStamp.getTime()}.json`; // Nombre del archivo al descargar
+                // Nombre del archivo al descargar
+                link.download = `data-libros-${timeStamp.getTime()}.json`; 
                 
-                // 5. Simular el clic y limpiar
+                // simular el clic y limpiar
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                window.URL.revokeObjectURL(url); // Liberar memoria
+                // liberar memoria
+                window.URL.revokeObjectURL(url); 
 
             };
+
+
+            // SECCION 2
+
         }
 
         async function fetchDatos() {
