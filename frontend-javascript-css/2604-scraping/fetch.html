@@ -24,20 +24,88 @@
 
             // SECCION 3
 
+            seccion3();
+
+
+
+
+        }
+
+        function seccion3() {
+            let body = document.body;
             let seccion3 = document.createElement("div");
             let titulo = document.createElement("h3");
             titulo.innerHTML = "Noticias";
-            let btnFetch = document.createElement("button");
-            btnFetch.innerText = "Iniciar peticion en local";
+            let input = document.createElement("input");
+            input.type = "file";
+            input.accept = ".html";
 
             body.appendChild(seccion3);
             seccion3.appendChild(titulo);
-            seccion3.appendChild(btnFetch);
+            seccion3.appendChild(input);
 
-            
+            input.onchange = (evento) => {
+                let anterior = document.getElementById("vistaNoticias");
+                if (anterior) {
+                    anterior.remove();
+                }
+                let archivo = evento.target.files[0];
+                let lector = new FileReader();
+                lector.onload = (e) => {
+                    let parser = new DOMParser();
+                    let dom = parser.parseFromString(e.target.result, "text/html");
+
+                    let nodosTitulos = dom.querySelectorAll("span.titleline a");
+                    console.log(nodosTitulos);
+
+                    let arrTitulos = [...nodosTitulos].map(nodo => nodo.textContent);
+                    let arrLinks = [...nodosTitulos].map(nodo => nodo.href);
+                    console.log(arrTitulos);
+                    console.log(arrLinks);
+
+                    exportJson = { data: [] };
+                    arrTitulos.forEach((ele, i) => {
+                        let noticia = {
+                            titulo: arrTitulos[i],
+                            link: arrLinks[i]
+                        };
+                        exportJson.data[i] = noticia;
+                    });
+
+                    let iframe = document.createElement("iframe");
+                    iframe.id = "vistaNoticias";
+                    iframe.style.display = "block";
+                    iframe.style.width = "800px";
+                    iframe.style.height = "600px";
+                    iframe.style.marginTop = "10px";
+                    let jsonString = JSON.stringify(exportJson, null, 4);
+
+                    let blob = new Blob([jsonString], { type: "application/json" });
+                    let url = URL.createObjectURL(blob);
+
+                    iframe.src = url;
+
+                    seccion3.appendChild(iframe);
+
+                    // crear un elemento <a> oculto para forzar la descarga
+                    let link = document.createElement("a");
+                    link.href = url;
+                    let timeStamp = new Date();
+                    // Nombre del archivo al descargar
+                    link.download = `data-libros-${timeStamp.getTime()}.json`;
+
+                    // simular el clic y limpiar
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    // liberar memoria
+                    window.URL.revokeObjectURL(url);
 
 
 
+                };
+                lector.readAsText(archivo);
+            };
         }
 
         function seccion2() {
@@ -53,7 +121,10 @@
             seccion2.appendChild(btnFetch);
 
             btnFetch.onclick = () => {
-                const proxy = 'http://185.238.228.156:80';
+                let anterior = document.getElementById("vistaCitas");
+                if (anterior) {
+                    anterior.remove();
+                }
                 const targetUrl = 'https://quotes.toscrape.com/';
                 const xhr = new XMLHttpRequest();
                 xhr.open('GET', targetUrl, true);
