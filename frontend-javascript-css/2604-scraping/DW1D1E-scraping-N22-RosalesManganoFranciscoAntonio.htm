@@ -51,6 +51,7 @@
                 lector.onload = (e) => {
                     let parser = new DOMParser();
                     let dom = parser.parseFromString(e.target.result, "text/html");
+                    
 
                     let nodosTitulos = dom.querySelectorAll("span.titleline a");
                     console.log(nodosTitulos);
@@ -68,6 +69,9 @@
                         };
                         exportJson.data[i] = noticia;
                     });
+
+                    let tablaJson = crearTabla(exportJson);
+                    seccion3.appendChild(tablaJson);
 
                     let iframe = document.createElement("iframe");
                     iframe.id = "vistaNoticias";
@@ -147,6 +151,9 @@
                         exportJson.data[i] = cita;
                     });
 
+                    let tablaJson = crearTabla(exportJson);
+                    seccion2.appendChild(tablaJson);
+
                     let iframe = document.createElement("iframe");
                     iframe.id = "vistaCitas";
                     iframe.style.display = "block";
@@ -194,74 +201,115 @@
             seccion1.appendChild(titulo);
             seccion1.appendChild(btnFetch);
 
-            btnFetch.onclick = async () => {
+            btnFetch.onclick = () => {
                 let anterior = document.getElementById("vistaLibros");
                 if (anterior) {
                     anterior.remove();
                 }
-                let datos = await fetchDatos();
-                console.log(datos);
 
-                let nodosTitulos = datos.querySelectorAll(".product_pod h3 a");
-                let arrTitulos = Array.from(nodosTitulos).map(nodo => nodo.title);
+                let datos = "";
 
-                console.log(arrTitulos);
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', 'https://books.toscrape.com/', true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        datos = xhr.responseText;
+                        let parser = new DOMParser();
+                        let dom = parser.parseFromString(datos, "text/html");
+                        datos = dom;
+                        console.log(datos);
 
-                let nodosPrecios = datos.querySelectorAll(".product_pod p.price_color");
-                let arrPrecios = [...nodosPrecios].map(nodo => nodo.innerText);
-                console.log(arrPrecios);
+                        let nodosTitulos = datos.querySelectorAll(".product_pod h3 a");
+                        let arrTitulos = Array.from(nodosTitulos).map(nodo => nodo.title);
 
-                let jsonLibros = [...nodosTitulos].forEach((nodosTitulos, i) => {
-                    let libro = {
-                        titulo: arrTitulos[i],
-                        precio: arrPrecios[i]
-                    };
-                    exportJson.data[i] = libro;
-                });
+                        console.log(arrTitulos);
 
-                let iframe = document.createElement("iframe");
-                iframe.id = "vistaLibros";
-                iframe.style.display = "block";
-                iframe.style.width = "800px";
-                iframe.style.height = "600px";
-                iframe.style.marginTop = "10px";
-                let jsonString = JSON.stringify(exportJson, null, 4);
+                        let nodosPrecios = datos.querySelectorAll(".product_pod p.price_color");
+                        let arrPrecios = [...nodosPrecios].map(nodo => nodo.innerText);
+                        console.log(arrPrecios);
 
-                let blob = new Blob([jsonString], { type: "application/json" });
-                let url = URL.createObjectURL(blob);
+                        let jsonLibros = [...nodosTitulos].forEach((nodosTitulos, i) => {
+                            let libro = {
+                                titulo: arrTitulos[i],
+                                precio: arrPrecios[i]
+                            };
+                            exportJson.data[i] = libro;
+                        });
 
-                iframe.src = url;
+                        let tablaJson = crearTabla(exportJson);
+                        seccion1.appendChild(tablaJson);
 
-                seccion1.appendChild(iframe);
+                        let iframe = document.createElement("iframe");
+                        iframe.id = "vistaLibros";
+                        iframe.style.display = "block";
+                        iframe.style.width = "800px";
+                        iframe.style.height = "600px";
+                        iframe.style.marginTop = "10px";
+                        let jsonString = JSON.stringify(exportJson, null, 4);
 
-                // crear un elemento <a> oculto para forzar la descarga
-                let link = document.createElement("a");
-                link.href = url;
-                let timeStamp = new Date();
-                // Nombre del archivo al descargar
-                link.download = `data-libros-${timeStamp.getTime()}.json`;
+                        let blob = new Blob([jsonString], { type: "application/json" });
+                        let url = URL.createObjectURL(blob);
 
-                // simular el clic y limpiar
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                // liberar memoria
-                window.URL.revokeObjectURL(url);
+                        iframe.src = url;
+
+                        seccion1.appendChild(iframe);
+
+                        // crear un elemento <a> oculto para forzar la descarga
+                        let link = document.createElement("a");
+                        link.href = url;
+                        let timeStamp = new Date();
+                        // Nombre del archivo al descargar
+                        link.download = `data-libros-${timeStamp.getTime()}.json`;
+
+                        // simular el clic y limpiar
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        // liberar memoria
+                        window.URL.revokeObjectURL(url);
+
+                    }
+                };
+                xhr.send();
+
+
+
+
 
             };
         }
 
-        async function fetchDatos() {
-            try {
-                let res = await fetch("https://books.toscrape.com/");
-                let html = await res.text();
-                let parser = new DOMParser();
-                let dom = parser.parseFromString(html, "text/html");
-                return dom;
-            } catch (error) {
-                console.log(error);
-            }
+        function crearTabla(json) {
+            const tabla = document.createElement("table");
+            tabla.border = 1;
+
+            const datos = json.data;
+            const columnas = Object.keys(datos[0]);
+
+            // Encabezado
+            const tr = document.createElement("tr");
+            columnas.forEach(c => {
+                const th = document.createElement("th");
+                th.textContent = c;
+                tr.appendChild(th);
+            });
+            tabla.appendChild(tr);
+
+            // Filas
+            datos.forEach(obj => {
+                const tr = document.createElement("tr");
+                columnas.forEach(c => {
+                    const td = document.createElement("td");
+                    td.textContent = obj[c];
+                    tr.appendChild(td);
+                });
+                tabla.appendChild(tr);
+            });
+
+            return tabla;
         }
+
+
         window.onload = iniciar;
     </script>
 </head>
