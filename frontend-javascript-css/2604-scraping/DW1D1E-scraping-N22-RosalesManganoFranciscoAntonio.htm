@@ -26,9 +26,6 @@
 
             seccion3();
 
-
-
-
         }
 
         function seccion3() {
@@ -92,7 +89,7 @@
                     link.href = url;
                     let timeStamp = new Date();
                     // Nombre del archivo al descargar
-                    link.download = `data-libros-${timeStamp.getTime()}.json`;
+                    link.download = `data-noticias-${timeStamp.getTime()}.json`;
 
                     // simular el clic y limpiar
                     document.body.appendChild(link);
@@ -170,7 +167,7 @@
                     link.href = url;
                     let timeStamp = new Date();
                     // Nombre del archivo al descargar
-                    link.download = `data-libros-${timeStamp.getTime()}.json`;
+                    link.download = `data-citas-${timeStamp.getTime()}.json`;
 
                     // simular el clic y limpiar
                     document.body.appendChild(link);
