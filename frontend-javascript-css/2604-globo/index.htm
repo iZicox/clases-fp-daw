@@ -9,10 +9,35 @@
             let body = document.body;
 
             let btn = document.createElement('div');
+
+            let contenedor = crearEle('div','',1,{
+                border: '1px solid',
+                width: '500px',
+                height: '500px',
+                position: 'relative'
+            });
+
+            body.appendChild(contenedor);
+
+            let circulo = crearEle('div','',5,{
+                backgroundColor: 'red',
+                width: '50px',
+                height: '50px',
+                borderRadius: '100%',
+                position: 'absolute'
+            });
+            contenedor.appendChild(circulo);
+
         }
 
-        function crearEle(tipo,inner,styles){
-            let ele = document.createElement('div');
+
+        function crearEle(tipo,inner,id,styles){
+            let ele = document.createElement(tipo);
+            ele.innerText = inner;
+            ele.id = id;
+            for (const key in styles) {
+                ele.style[key] = styles[key];
+            }
             
             return ele;
         }
