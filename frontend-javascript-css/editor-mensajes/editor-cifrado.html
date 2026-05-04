@@ -4,28 +4,24 @@
     <title>Editor de Archivos Cifrados</title>
     <meta charset="UTF-8">
     <script>
-        // ============================================
-        // VARIABLES GLOBALES EN ESPAÑOL (camelCase)
-        // ============================================
+        // variables globales
         var textoSinCifrar = "";   // Guarda el texto original
         var textoCifrado = "";      // Guarda el texto cifrado
         var claveActual = "";       // Guarda la clave ingresada
 
-        // ============================================
-        // FUNCION PRINCIPAL - SE EJECUTA AL CARGAR
-        // ============================================
         function iniciar() {
+            //document.body.style.height = "100vh";
             // Crear contenedor principal
             var contenedor = document.createElement('div');
             contenedor.style.padding = "20px";
 
-            // ---------- TITULO ----------
+            // titulo
             var titulo = document.createElement('h1');
             titulo.innerText = "Editor de Archivos Cifrados";
             titulo.style.textAlign = "center";
             contenedor.appendChild(titulo);
 
-            // ---------- CAMPO PARA LA CLAVE ----------
+            // campo de clave
             var labelClave = document.createElement('label');
             labelClave.innerText = "Clave: ";
             
@@ -49,7 +45,7 @@
             var divBotones = document.createElement('div');
             divBotones.style.marginTop = "10px";
 
-            // CREAR BOTON CON EVENTO "CLICK"
+            // FUNCION PARA CREAR BOTON CON EVENTO "CLICK"
             function crearBoton(texto, accion) {
                 var boton = document.createElement('button');
                 boton.innerText = texto;
@@ -128,7 +124,7 @@
 
             contenedor.appendChild(divBotones);
 
-            // ---------- ZONA DE DROP (Arrastrar archivos) ----------
+            // ZONA DROP: Donde se arrastran los archivos
             var zonaDrop = document.createElement('div');
             zonaDrop.innerText = "Arrastra un archivo de texto aqui";
             zonaDrop.style.border = "2px dashed black";
@@ -145,6 +141,16 @@
             // Evento dragover: se ejecuta al pasar sobre la zona
             // Detener la funcion de abrir archivos al soltar
             zonaDrop.addEventListener('dragover', function(e) {
+                e.preventDefault();
+            });
+
+
+            // evita que se abra si se suelta fuera de la zona drop
+            document.addEventListener('dragover', function(e) {
+                e.preventDefault();
+            });
+            // evita que se abra si se suelta fuera de la zona drop
+            document.addEventListener('drop', function(e) {
                 e.preventDefault();
             });
 
@@ -191,7 +197,7 @@
 
             contenedor.appendChild(zonaDrop);
 
-            // ---------- TEXTAREA (Editor de texto) ----------
+            // area de editar
             var areaTexto = document.createElement('textarea');
             areaTexto.id = "areaTexto";
             areaTexto.placeholder = "El contenido aparecera aqui...";
