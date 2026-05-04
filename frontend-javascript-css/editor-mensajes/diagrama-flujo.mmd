@@ -1,0 +1,48 @@
+flowchart TD
+    A[Inicio: window.onload = iniciar] --> B[Crear contenedor principal]
+    B --> C[Crear título]
+    C --> D[Crear campo de clave]
+    D --> E[Crear botones]
+    E --> F[Crear zona de drop]
+    F --> G[Crear textarea]
+    G --> H[Crear mensaje de estado]
+    H --> I[Página lista para usar]
+
+    J[Usuario arrastra archivo] --> K[Evento: dragover]
+    K --> L[Evento: dragenter - cambiar color]
+    L --> M[Evento: drop]
+    M --> N[FileReader lee el archivo]
+    N --> O[Mostrar contenido en textarea]
+    O --> P[Guardar en textoSinCifrar]
+
+    Q[Usuario escribe clave] --> R[Evento: input]
+    R --> S[Guardar en claveActual]
+
+    T[Usuario hace clic en Cifrar] --> U{¿Hay texto?}
+    U -->|No| V[Mostrar: No hay texto]
+    U -->|Sí| W{¿Hay clave?}
+    W -->|No| X[Mostrar: Escribe una clave]
+    W -->|Sí| Y[Ejecutar cifrarCesarc]
+    Y --> Z[Mostrar resultado en textarea]
+    Z --> AA[Guardar en textoCifrado]
+
+    AB[Usuario hace clic en Descifrar] --> AC{¿Hay texto?}
+    AC -->|No| AD[Mostrar: No hay texto]
+    AC -->|Sí| AE{¿Hay clave?}
+    AE -->|No| AF[Mostrar: Escribe una clave]
+    AE -->|Sí| AG[Ejecutar descifrarCesarc]
+    AG --> AH[Mostrar resultado en textarea]
+    AH --> AI[Guardar en textoSinCifrar]
+
+    AJ[Usuario hace clic en Guardar] --> AK{¿Hay contenido?}
+    AK -->|No| AL[Mostrar: No hay contenido]
+    AK -->|Sí| AM[Crear Blob]
+    AM --> AN[Crear URL temporal]
+    AN --> AO[Crear enlace de descarga]
+    AO --> AP[Simular clic]
+    AP --> AQ[Descargar archivo]
+
+    AR[Usuario hace clic en Limpiar] --> AS[Limpiar textarea]
+    AS --> AT[Limpiar variables]
+    AT --> AU[Limpiar campo clave]
+    AU --> AV[Mostrar: Campos limpiados]

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editor de Archivos Cifrados</title>
+    <meta charset="UTF-8">
+    <script>
+        // ============================================
+        // VARIABLES GLOBALES EN ESPAÑOL (camelCase)
+        // ============================================
+        var textoSinCifrar = "";   // Guarda el texto original
+        var textoCifrado = "";      // Guarda el texto cifrado
+        var claveActual = "";       // Guarda la clave ingresada
+
+        // ============================================
+        // FUNCION PRINCIPAL - SE EJECUTA AL CARGAR
+        // ============================================
+        function iniciar() {
+            // Crear contenedor principal
+            var contenedor = document.createElement('div');
+            contenedor.style.padding = "20px";
+
+            // ---------- TITULO ----------
+            var titulo = document.createElement('h1');
+            titulo.innerText = "Editor de Archivos Cifrados";
+            titulo.style.textAlign = "center";
+            contenedor.appendChild(titulo);
+
+            // ---------- CAMPO PARA LA CLAVE ----------
+            var labelClave = document.createElement('label');
+            labelClave.innerText = "Clave: ";
+            
+            var inputClave = document.createElement('input');
+            inputClave.type = "number";
+            inputClave.id = "campoClave";
+            inputClave.placeholder = "Escribe un numero";
+            inputClave.min = "1";
+            inputClave.max = "25";
+            inputClave.style.width = "120px";
+            
+            // Evento input: se ejecuta al escribir en el campo de clave
+            inputClave.addEventListener('input', function() {
+                claveActual = this.value;
+            });
+
+            labelClave.appendChild(inputClave);
+            contenedor.appendChild(labelClave);
+
+            // CONTENEDOR BOTONES
+            var divBotones = document.createElement('div');
+            divBotones.style.marginTop = "10px";
+
+            // CREAR BOTON CON EVENTO "CLICK"
+            function crearBoton(texto, accion) {
+                var boton = document.createElement('button');
+                boton.innerText = texto;
+                boton.style.marginRight = "5px";
+                // Evento click: se ejecuta al hacer clic en el boton
+                boton.addEventListener('click', accion);
+                return boton;
+            }
+
+            // Boton CIFRAR
+            divBotones.appendChild(crearBoton("Cifrar", function() {
+                var areaTexto = document.getElementById('areaTexto');
+                textoSinCifrar = areaTexto.value;
+                if (textoSinCifrar == "") {
+                    mostrarEstado("No hay texto para cifrar");
+                    return;
+                }
+                if (claveActual == "") {
+                    mostrarEstado("Escribe un numero primero");
+                    return;
+                }
+                var numClave = parseInt(claveActual);
+                if (isNaN(numClave) || numClave < 1 || numClave > 25) {
+                    mostrarEstado("El numero debe estar entre 1 y 25");
+                    return;
+                }
+                textoCifrado = cifrarCesarc(textoSinCifrar, numClave);
+                areaTexto.value = textoCifrado;
+                mostrarEstado("Texto cifrado");
+            }));
+
+            // Boton DESCIFRAR
+            divBotones.appendChild(crearBoton("Descifrar", function() {
+                var areaTexto = document.getElementById('areaTexto');
+                var texto = areaTexto.value;
+                if (texto == "") {
+                    mostrarEstado("No hay texto para descifrar");
+                    return;
+                }
+                if (claveActual == "") {
+                    mostrarEstado("Escribe un numero primero");
+                    return;
+                }
+                var numClave = parseInt(claveActual);
+                if (isNaN(numClave) || numClave < 1 || numClave > 25) {
+                    mostrarEstado("El numero debe estar entre 1 y 25");
+                    return;
+                }
+                var resultado = descifrarCesarc(texto, numClave);
+                areaTexto.value = resultado;
+                textoSinCifrar = resultado;
+                mostrarEstado("Texto descifrado");
+            }));
+
+            // Boton GUARDAR
+            divBotones.appendChild(crearBoton("Guardar", function() {
+                var areaTexto = document.getElementById('areaTexto');
+                if (areaTexto.value == "") {
+                    mostrarEstado("No hay contenido para guardar");
+                    return;
+                }
+                guardarArchivo(areaTexto.value);
+                mostrarEstado("Archivo guardado");
+            }));
+
+            // Boton LIMPIAR
+            divBotones.appendChild(crearBoton("Limpiar", function() {
+                var areaTexto = document.getElementById('areaTexto');
+                areaTexto.value = "";
+                textoSinCifrar = "";
+                textoCifrado = "";
+                inputClave.value = "";
+                claveActual = "";
+                mostrarEstado("Campos limpiados, numero eliminado");
+            }));
+
+            contenedor.appendChild(divBotones);
+
+            // ---------- ZONA DE DROP (Arrastrar archivos) ----------
+            var zonaDrop = document.createElement('div');
+            zonaDrop.innerText = "Arrastra un archivo de texto aqui";
+            zonaDrop.style.border = "2px dashed black";
+            zonaDrop.style.padding = "30px";
+            zonaDrop.style.textAlign = "center";
+            zonaDrop.style.marginTop = "15px";
+            zonaDrop.style.backgroundColor = "#f0f0f0";
+            zonaDrop.style.height = "100px";
+            zonaDrop.style.display = "flex";
+            zonaDrop.style.alignItems = "center";
+            zonaDrop.style.justifyContent = "center";
+            zonaDrop.style.fontSize = "2rem";
+
+            // Evento dragover: se ejecuta al pasar sobre la zona
+            // Detener la funcion de abrir archivos al soltar
+            zonaDrop.addEventListener('dragover', function(e) {
+                e.preventDefault();
+            });
+
+            // Evento dragenter: cuando entra el archivo
+            // Detener la funcion de abrir archivos al soltar
+            // Cambiar de color cuando el clic esta mantenido sobre la zona con el archivo
+            zonaDrop.addEventListener('dragenter', function(e) {
+                e.preventDefault();
+                zonaDrop.style.backgroundColor = "#cccccc";
+            });
+
+            // Evento dragleave: cuando sale el archivo
+            // Detener la funcion de abrir archivos al soltar
+            // Restaurar el color tras salir de la zona con el archivo en drag
+            zonaDrop.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                zonaDrop.style.backgroundColor = "#f0f0f0";
+            });
+
+            // Evento drop: cuando se suelta el archivo
+            // Ejecucion al soltar el archivo sobre la zona
+            zonaDrop.addEventListener('drop', function(e) {
+                e.preventDefault();
+                zonaDrop.style.backgroundColor = "#f0f0f0";
+
+                var archivos = e.dataTransfer.files;
+                if (archivos.length > 0) {
+                    var archivo = archivos[0];
+                    if (archivo.name.endsWith(".txt")) {
+                        var lector = new FileReader();
+                        lector.onload = function(evento) {
+                            var contenido = evento.target.result;
+                            var areaTexto = document.getElementById('areaTexto');
+                            areaTexto.value = contenido;
+                            textoSinCifrar = contenido;
+                            mostrarEstado("Archivo cargado: " + archivo.name);
+                        };
+                        lector.readAsText(archivo);
+                    } else {
+                        mostrarEstado("Solo archivos .txt");
+                    }
+                }
+            });
+
+            contenedor.appendChild(zonaDrop);
+
+            // ---------- TEXTAREA (Editor de texto) ----------
+            var areaTexto = document.createElement('textarea');
+            areaTexto.id = "areaTexto";
+            areaTexto.placeholder = "El contenido aparecera aqui...";
+            areaTexto.style.width = "100%";
+            areaTexto.style.height = "200px";
+            areaTexto.style.marginTop = "10px";
+
+            // Evento change: se ejecuta al cambiar el texto
+            areaTexto.addEventListener('change', function() {
+                textoSinCifrar = this.value;
+            });
+
+            contenedor.appendChild(areaTexto);
+
+            // LOG
+            var mensajeEstado = document.createElement('div');
+            mensajeEstado.id = "mensajeEstado";
+            mensajeEstado.innerText = "Estado: Listo";
+            mensajeEstado.style.marginTop = "10px";
+            mensajeEstado.style.padding = "5px";
+            mensajeEstado.style.backgroundColor = "#eeeeee";
+
+            contenedor.appendChild(mensajeEstado);
+
+            // Agregar todo al body
+            document.body.appendChild(contenedor);
+        }
+
+        // MOSTRAR LOG
+        function mostrarEstado(texto) {
+            var mensaje = document.getElementById('mensajeEstado');
+            if (mensaje) {
+                mensaje.innerText = "Estado: " + texto;
+            }
+        }
+
+        // CIFRADO CESAR
+        function cifrarCesarc(texto, desplazamiento) {
+            var resultado = "";
+            for (var i = 0; i < texto.length; i++) {
+                var codigo = texto.charCodeAt(i);
+                var nuevoCodigo = codigo + desplazamiento;
+                resultado = resultado + String.fromCharCode(nuevoCodigo);
+            }
+            return resultado;
+        }
+
+        // DESCIFRADO CESAR
+        function descifrarCesarc(texto, desplazamiento) {
+            var resultado = "";
+            for (var i = 0; i < texto.length; i++) {
+                var codigo = texto.charCodeAt(i);
+                var nuevoCodigo = codigo - desplazamiento;
+                resultado = resultado + String.fromCharCode(nuevoCodigo);
+            }
+            return resultado;
+        }
+
+
+        // GUARDAR/DESCARGAR ARCHIVO
+        function guardarArchivo(contenido) {
+            var blob = new Blob([contenido], { type: "text/plain" });
+            var url = URL.createObjectURL(blob);
+            var enlace = document.createElement('a');
+            enlace.href = url;
+            enlace.download = "archivoProcesado.txt";
+            document.body.appendChild(enlace);
+            enlace.click();
+            document.body.removeChild(enlace);
+            URL.revokeObjectURL(url);
+        }
+
+       
+        window.onload = iniciar;
+    </script>
+</head>
+<body>
+</body>
+</html>
