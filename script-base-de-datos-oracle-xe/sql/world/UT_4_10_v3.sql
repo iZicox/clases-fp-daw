@@ -1,0 +1,31 @@
+--
+--1
+--
+--Automatic Zoom
+--EJERCICIOS WORLD
+--Para estos ejercicios cuando hablamos de continente nos referimos al campo de la tabla, no a
+--lo que entendemos por continentes.
+--1. Devuelve las ciudades cuya población sea mayor que la ciudad más poblada de América.
+--2. Devuelve país, esperanza de vida, superficie y población del país más pequeño.
+--3. Devuelve país, esperanza de vida, superficie y población del país más pequeño por cada
+--continente.
+--4. Devuelve cuantas ciudades hay cuya población está por encima de la media de población de
+--las ciudades.
+--5. Devuelve los datos del país cuyo año de independencia sea el más alto.
+--6. Devuelve los datos del país cuyo año de independencia sea el más alto para cada forma de
+--gobierno.
+--7. Por cada país devuelve el nombre del país, nombre de la ciudad más poblada de ese país y el
+--lenguaje más hablado en ese país.
+--8. Saca un listado donde se vean los continentes, el número de países de cada continente, el
+--número de ciudades de cada continente (de las que tenemos en las tablas), el número de
+--países de cada continente cuya esperanza de vida es mayor a la media de la esperanza de vida
+--del mundo y el número de países de cada continente cuya esperanza de vida es superior a la
+--media del continente.
+--9. Saca por cada continente el nombre del continente, el nombre del país más grande y el
+--nombre del país más pequeño.
+--10. A la consulta anterior añade un campo con la población de la ciudad más poblada del país
+--más grande.
+--BONUS TRACK
+--11. A la consulta anterior añade un campo con el nombre de la ciudad más poblada del país
+--más grande.
+--1
