@@ -29,6 +29,20 @@ ROLLBACK;
 --2. Escribir un procedimiento que modifique la descripción de un departamento. El
 --procedimiento recibirá como parámetros el número de departamento y la nueva
 --descripción.
+
+CREATE OR REPLACE PROCEDURE cambiar_descripcion_departamento (
+                p_id_departamento DEPARTMENTS.DEPARTMENT_ID%TYPE, 
+                p_descripcion_departamento DEPARTMENTS.DEPARTMENT_NAME%TYPE
+            ) AS
+BEGIN 
+    UPDATE DEPARTMENTS d set d.DEPARTMENT_NAME = p_descripcion_departamento
+    WHERE d.DEPARTMENT_ID = p_id_departamento;
+END;
+/
+EXECUTE CAMBIAR_DESCRIPCION_DEPARTAMENTO(60,'Information Technology');
+select * from DEPARTMENTS;
+ROLLBACK;
+
 --3. Haz un procedimiento donde visualicemos los 2 departamentos más caros y el total de
 --dinero destinado en salarios por esos departamentos (se considera como
 --departamento más caro aquel cuya suma de sueldos de sus empleados sea la más
