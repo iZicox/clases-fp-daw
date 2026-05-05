@@ -170,16 +170,32 @@ END;
 /
 
 selECT codproducto 
-            FROM producto 
-            WHERE stock > 100 
-            AND codproducto NOT IN 
-            (
-                SELECT DISTINCT codproducto 
-                FROM detalle_pedido
-            )
-            FOR UPDATE;
+FROM producto 
+WHERE stock > 100 
+AND codproducto NOT IN 
+(
+    SELECT DISTINCT codproducto 
+    FROM detalle_pedido
+)
+FOR UPDATE;
 --7. Crea una nueva tabla de productos descatalogados (misma estructura que la tabla de
 --productos). Haz un cursor que recorra los productos con stock de menos de 5 unidades
 --y para los que no haya pedidos. Estos productos hay que meterlos en la tabla de
 --productos descatalogados y borrarlos de la tabla de productos.
 --2
+
+
+create table descatalogados as (
+    select * from producto where 1=2
+);
+
+DECLARE
+    CURSOR c_productos IS
+        select * from producto where stock < 5 for update;
+BEGIN
+    FOR registro IN c_productos LOOP
+        INSERT into DESCATALOGADOS values registro;
+    END LOOP;
+END;
+/
+
