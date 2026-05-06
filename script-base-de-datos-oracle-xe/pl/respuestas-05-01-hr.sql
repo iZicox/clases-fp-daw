@@ -111,7 +111,8 @@ CREATE OR REPLACE FUNCTION empleados_A_cargo (p_id EMPLOYEES.EMPLOYEE_ID%TYPE)
 RETURN NUMBER IS
     v_cantidad NUMBER;
 BEGIN
-    SELECT count(*) into v_cantidad from EMPLOYEES e where e.MANAGER_ID = p_id and e.EMPLOYEE_ID != p_id;
+    SELECT count(*) into v_cantidad 
+    from EMPLOYEES e where e.MANAGER_ID = p_id and e.EMPLOYEE_ID != p_id;
     RETURN v_cantidad;
    
 END;

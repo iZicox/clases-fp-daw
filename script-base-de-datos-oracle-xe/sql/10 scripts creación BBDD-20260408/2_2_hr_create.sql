@@ -38,6 +38,8 @@ ADD ( CONSTRAINT countr_reg_fk
           	  REFERENCES regions(region_id) 
     ) ;
 
+    select * from EMPLOYEES;
+
 -- ********************************************************************
 -- Create the LOCATIONS table to hold address information for company departments.
 -- HR.DEPARTMENTS has a foreign key to this table.
