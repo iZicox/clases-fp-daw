@@ -249,7 +249,7 @@ GROUP BY c.IDCAJA;
 
 SELECT  c.IDCAJA, 
         COUNT(dc.IDBOMBON) as total_bomnones,
-        COUNT(distinct p.IDPEDIDO) as total_pedidos
+        COUNT( p.IDPEDIDO) as total_pedidos
 FROM CAJAS c 
 JOIN DETALLE_CAJAS dc ON c.IDCAJA = dc.IDCAJA
 JOIN DETALLE_PEDIDOS dp ON dp.IDCAJA = c.IDCAJA 

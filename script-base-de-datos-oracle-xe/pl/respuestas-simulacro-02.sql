@@ -98,23 +98,134 @@ END;
 ---  Si está en un número bajo de cajas: será del 5% de su coste. 
 -- 
 --Debes utilizar el proceso creado en el ejercicio 2. 
+
+
+CREATE OR REPLACE PROCEDURE pr_llenar_beneficio_estimado AS 
+    CURSOR c_datos IS
+        SELECT  b.IDBOMBON, 
+                F_DISPONIBILIDAD(b.IDBOMBON) as disponibilidad,
+                b.coste
+        FROM BOMBONES b;
+    v_beneficio NUMBER(5,2);
+BEGIN
+    FOR registro IN c_datos LOOP
+        IF registro.disponibilidad = 'Alto' THEN
+            v_beneficio := 0.2 * registro.coste;
+        ELSIF registro.disponibilidad = 'Medio' THEN
+            v_beneficio := 0.1 * registro.coste;
+        ELSE
+            v_beneficio := 0.05 * registro.coste;
+        END IF;
+
+        UPDATE BOMBONES b 
+        SET b.BENEFICIO_ESTIMADO = v_beneficio 
+        WHERE b.IDBOMBON = registro.IDBOMBON;
+    END LOOP;
+END;
+/
+EXECUTE PR_LLENAR_BENEFICIO_ESTIMADO;
+SELECT IDBOMBON, nvl(BENEFICIO_ESTIMADO,0) from bombones;
+
+UPDATE BOMBONES 
+SET BENEFICIO_ESTIMADO = NULL;
 -- 
 --Ejercicio 4   
 --Haz un proceso de BD  que reciba como parámetro un pedido y devuelva el coste de este pedido. El 
 --coste de un pedido es la suma de la cantidad de cada caja que hay en pedido * el precio de la caja.  
 -- 
+CREATE OR REPLACE FUNCTION f_obtener_total_pedido(p_id_pedido PEDIDOS.IDPEDIDO%TYPE) 
+RETURN NUMBER IS
+    v_total_pedido NUMBER;
+BEGIN
+    SELECT  SUM(dp.CANTIDAD * c.PRECIO)
+    into v_total_pedido
+    FROM PEDIDOS p 
+    JOIN DETALLE_PEDIDOS dp ON dp.IDPEDIDO = p.IDPEDIDO 
+    JOIN CAJAS c ON dp.IDCAJA = c.IDCAJA
+    WHERE p.IDPEDIDO = p_id_pedido;
+
+    RETURN v_total_pedido;
+END;
+/
+SELECT
+        F_OBTENER_TOTAL_PEDIDO('44')
+from dual;
+
+
+
 --Ejercicio 5 
 -- 
 --Haz un proceso de BD  que reciba como parámetro una ciudad  y lista todos los clientes (nombre y 
 --apellidos) de esa ciudad. Debajo de cada cliente veremos sus pedidos (id de pedido y fecha) y el 
 --coste del pedido. Se debe usar el proceso hecho en el ejercicio anterior. 
 -- 
+SELECT p.IDPEDIDO, p.FECHA_PEDIDO
+FROM PEDIDOS p 
+JOIN CLIENTES c ON p.IDCLIENTE = c.IDCLIENTE
+WHERE c.IDCLIENTE = '15';
+
+SELECT * from CLIENTES;
+
+CREATE OR REPLACE PROCEDURE pr_listar_clientes_ciudad (p_ciudad clientes.ciudad%type) AS
+    CURSOR c_clientes IS
+        SELECT 
+        c.IDCLIENTE, c.NOMBRE, c.APELLIDOS
+        FROM CLIENTES c
+        WHERE c.CIUDAD = p_ciudad;
+    CURSOR c_pedidos (p_id_cliente CLIENTES.IDCLIENTE%type) IS
+        SELECT p.IDPEDIDO, p.FECHA_PEDIDO
+        FROM PEDIDOS p 
+        JOIN CLIENTES c ON p.IDCLIENTE = c.IDCLIENTE
+        WHERE c.IDCLIENTE = p_id_cliente;
+BEGIN
+    FOR r_cliente IN c_clientes LOOP
+        DBMS_OUTPUT.PUT_LINE('**************************************************************');
+        DBMS_OUTPUT.PUT_LINE('INICIO CIUDAD ' || p_ciudad);
+        DBMS_OUTPUT.PUT_LINE('**************************************************************');
+
+        DBMS_OUTPUT.PUT_LINE('Cliente: ' || r_cliente.NOMBRE || ' - ' || r_cliente.APELLIDOS);
+        FOR r_pedido IN c_pedidos (r_cliente.IDCLIENTE) LOOP
+            DBMS_OUTPUT.PUT_LINE('Pedido: ' 
+                                    || r_pedido.IDPEDIDO || ' - ' 
+                                    || r_pedido.FECHA_PEDIDO || ' - '
+                                    || F_OBTENER_TOTAL_PEDIDO(r_pedido.IDPEDIDO));
+        END LOOP;
+        DBMS_OUTPUT.PUT_LINE('**************************************************************');
+        DBMS_OUTPUT.PUT_LINE('FIN CIUDAD');
+        DBMS_OUTPUT.PUT_LINE('**************************************************************');
+
+    END LOOP;
+END;
+/
+BEGIN
+    FOR r_ciudad IN (
+        SELECT distinct CIUDAD 
+        FROM CLIENTES
+    ) LOOP
+        PR_LISTAR_CLIENTES_CIUDAD(r_ciudad.ciudad);
+    END LOOP;
+END;
+/
 -- 
 --Ejercicio 6  
 -- 
 --Crea un proceso de BD que cuando se modifiquen las existencias de una caja, cuando queden 
 --menos de 100 unidades de existencias, suba el precio de la caja un 10% (su precio * 1.1) 
 -- 
+CREATE OR REPLACE TRIGGER trg_bajo_stock 
+BEFORE UPDATE OF EXISTENCIAS 
+ON CAJAS
+FOR EACH ROW 
+BEGIN
+    IF :new.existencias < 100 THEN
+        :new.precio := :new.precio * 1.1;
+    END IF;
+END;
+/
+SELECT * from cajas;
+UPDATE CAJAS c 
+SET c.EXISTENCIAS = 90 
+WHERE c.IDCAJA = 'FUDG';
 --Ejercicio 7 
 --Ejecuta el script para crear la tabla RESUMEN_CAJAS (es el mismo script que para el ejercicio 3). 
 -- 
@@ -123,6 +234,8 @@ END;
 -- 
 --Crea un proceso  de BD que rellene esta tabla. 
 -- 
+SELECT * FROM RESUMEN_CAJAS;
+SELECT * FROM CAJAS c 
+JOIN 
 -- 
 -- 
- 
