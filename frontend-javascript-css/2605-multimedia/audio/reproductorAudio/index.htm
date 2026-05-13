@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function iniciar() {
+
+            let clickMusica = (element) => {
+                let nodos = document.querySelectorAll('audio');
+                nodos.forEach((e) => {
+                    e.pause();
+                    e.currentTime = 0;
+                });
+
+                document.querySelectorAll('.control').forEach((e)=>{
+                    e.style.backgroundColor = 'white';
+                });
+
+                document.getElementById(element.currentTarget.innerText).play();
+                console.log('play ' + element.currentTarget.innerText);
+            };
+
+
+            let track1 = divAudio('Track1', 'mp3/track1.mp3');
+            track1.addEventListener('mousedown', clickMusica);
+
+            let track2 = divAudio('Track2', 'mp3/track2.mp3');
+            track2.addEventListener('mousedown', clickMusica);
+
+            let track3 = divAudio('Track3', 'mp3/track3.mp3');
+            track3.addEventListener('mousedown', clickMusica);
+
+            let parar = divAudio('parar');
+
+            parar.addEventListener('mousedown', (element) => {
+                let nodos = document.querySelectorAll('audio');
+                nodos.forEach((e) => {
+                    e.pause();
+                    e.currentTime = 0;
+                });
+
+                document.querySelectorAll('.control').forEach((e)=>{
+                    e.style.backgroundColor = 'white';
+                });
+
+                element.currentTarget.style.backgroundColor = 'red';
+                console.log('parar');
+            });
+
+            let timer = divDatos();
+            timer.innerText = '0';
+            timer.id = 'timer';
+
+            let duracion = divDatos();
+            duracion.id = 'duracion';
+
+            document.body.appendChild(track1);
+            document.body.appendChild(track2);
+            document.body.appendChild(track3);
+            document.body.appendChild(parar);
+            document.body.appendChild(timer);
+            document.body.appendChild(duracion);
+
+        }
+
+        function divDatos(){
+            let ele = document.createElement('div');
+            ele.style.width = '100px';
+            ele.style.height = '30px';
+            ele.style.display = 'flex';
+            ele.style.justifyContent = 'center';
+            ele.style.alignItems = 'center';
+            ele.style.border = '1px dotted';
+            ele.style.margin = '10px';
+            return ele;
+        }
+
+
+        function divAudio(inner, audioSrc) {
+            let ele = document.createElement('div');
+            ele.style.width = '100px';
+            ele.style.height = '30px';
+            ele.style.display = 'flex';
+            ele.style.justifyContent = 'center';
+            ele.style.alignItems = 'center';
+            ele.style.border = '1px solid';
+            ele.style.margin = '10px';
+            ele.style.cursor = 'pointer';
+            ele.innerText = inner;
+            ele.className = 'control';
+            ele.addEventListener('mouseover', () => {
+                ele.style.backgroundColor = 'yellow';
+            });
+            
+            let audio = document.createElement('audio');
+            audio.setAttribute('src', audioSrc);
+            audio.id = inner;
+
+            audio.addEventListener('play', (e) => {
+                let padre = e.currentTarget.parentElement;
+                padre.style.backgroundColor = 'red';
+                let audio = e.currentTarget;
+                let total = audio.duration;
+                let min = Math.floor(total / 60);
+                let seg = Math.floor(total % 60);
+                document.getElementById('duracion').innerText = min + ':' + seg;
+                console.log(min,':',seg);
+            });
+
+            audio.addEventListener('pause', (e) => {
+                let padre = e.currentTarget.parentElement;
+                padre.style.backgroundColor = 'white';
+            });
+
+            audio.addEventListener('timeupdate', (e) => {
+                let timer = document.getElementById('timer');
+                let total = e.currentTarget.currentTime;
+                let min = Math.floor(total / 60);
+                let seg = Math.floor(total % 60);
+                timer.innerText = min + ':' + seg;
+            });
+
+            audio.addEventListener('ended', (e) => {
+                let timer = document.getElementById('timer');
+                timer.innerText = '0';
+                document.getElementById('duracion').innerText = '0';
+            });
+
+            ele.appendChild(audio);
+            return ele;
+        }
+
+
+
+        window.onload = iniciar;
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
