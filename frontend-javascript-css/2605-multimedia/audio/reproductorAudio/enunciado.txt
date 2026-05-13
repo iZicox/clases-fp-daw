@@ -1,0 +1,26 @@
+nombre: DW2E-EJC21-expediente-Apellido1Apellido2Nombre.htm
+tiempo: 90 minutos
+acceso a internet: si 
+nota: anteriormente los alumnos han trabajado 90 minutos en los mismos conceptos.
+
+- Cada apartado completado es un punto.
+- Archivos con nombre mal o entregados fuera de plazo tienen un cero.
+
+Apartados:
+1- Cajas
+a.  Dimensiones
+b.  Alineación
+c.  Texto centrado horizontal
+d.  Texto centrado vertical
+e.  Estilos de los textos
+f.  Bordes
+g.  Al pasar poner color amarillo
+h.  El último botón pulsado queda en color rojo al salir
+2- Evento: mousedown en cada caja para reproducir cada archivo
+3- Evento: mousedown caja activa reinicia la cancion, otra caja inicia la otra cancion
+4- Mostrar el segundo de la reproducción
+5- Mostrar la duración en mm:ss
+6- Barra de progreso, inicio y fin correctos.
+7- Boton de parar detiene el audio.
+8- Añadir nuevas funcionalidades no contempladas en los apartados anteriores
+   Indicar con un texto bajo la barra de progreso. 

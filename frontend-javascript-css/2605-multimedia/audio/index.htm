@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function iniciar (){
+
+            let track1 = divAudio('Track1');
+            let track2 = divAudio('Track2');
+            let track3 = divAudio('Track3');
+            document.body.appendChild(track1);
+            document.body.appendChild(track2);
+            document.body.appendChild(track3);
+        }
+
+        function divAudio(inner){
+            let ele = document.createElement('div');
+            ele.style.width = '100px';
+            ele.style.height = '30px';
+            ele.style.display = 'flex';
+            ele.style.justifyContent = 'center';
+            ele.style.alignItems = 'center';
+            ele.style.border = '1px solid';
+            ele.style.margin = '10px';
+            ele.innerText = inner;
+            return ele;
+        }
+
+
+        window.onload=iniciar;
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
