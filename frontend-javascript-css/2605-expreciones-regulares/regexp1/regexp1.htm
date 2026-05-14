@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>expRegulares</title>
+
+
+<script>
+/*
+lenguaje: textarea,match,expresiones regulares,leer archivo,pre
+fuente: https://es.stackoverflow.com/questions/54734/c%C3%B3mo-leer-un-archivo-txt-desde-javascript
+texto1.txt https://www.idealista.com/venta-viviendas/santander/alisal-cazona-san-roman/
+*/
+
+
+/*
+nota: 
+*/
+
+/* NOTAS 
+
+1. para una expresion regular como cadena hay que escapar los \ con \\ 
+2. expresion regular, descripcion 
+3. los parentesis para extraccion retornan la subcadena pero solo sin /g
+4. combinando /g y () podemos extraer cadenas de una lista de patrones en dos pasos
+5. /gm , multilinea aplica para inicio, fin de linea busca en cada linea en todo el documento
+
+*/
+
+/*
+Actividad:
+Extraer cadenas de una lista cadenas que cumplen un patrón:
+-Los textos dentro de un title
+-Las partes un email
+-Las partes de una url
+-El id de youtube
+'/title="[ a-zA-Z0-9]+"/g',	    'extraer patrones de una pagina web con /g todos',
+'/title="([ a-zA-Z0-9]+)"/',	'extraer patrones de una pagina web sin /g el primero y la subcadena \1',
+
+*/
+
+var ejemplos=[
+/* opcion por defecto */
+'selecciona',	'',
+/* sobre texto3 que es una pagina web */
+'/title="[ a-zA-Z0-9]+"/g','extraer patrones de una pagina web',
+'/title="([ a-zA-Z0-9]+)"/','extraer nombre del hoteles de una cadena',
+'/ingresó/','busca un texto',
+'/ingreso/','busca un texto',
+'/\\d+/g'
+];
+
+function principal(){
+
+    /* 
+    Ejemplos directos de uso de march y uso de /g /gm
+    - /g es una sola cadena incluidos saltos de linea
+    - /m hay tantas cadenas como lineas separadas por \n
+    - /g busca en toda la cadena
+    - /gm busca en cada linea
+    */
+    console.log('hola ktal\nhola ktal'.match(/l/)); 			// buscar l
+	console.log('hola ktal\nhola ktal'.match(/l/g));			// buscar todas las l
+	console.log('hola ktal\nhola ktal'.match(/l$/));			// busa terminado en l
+	console.log('hola ktal\nhola ktal'.match(/l$/gm));			// buscar terminado en l en cada linea
+	console.log('hola k tal\nhola k tal'.match(/\b\w+\b/g));    // buscar palabras
+
+	limpiar();
+	cargarFichero(document.getElementById('fileFichero').files[0]);
+	//console.log(document.getElementById('fileFichero'));
+	cargarEjemplos();
+	document.getElementById('fileFichero').addEventListener('change',leerArchivo,false);	
+	document.getElementById('textoExp').addEventListener('click',clickReg,false);
+	document.getElementById('botonRun').addEventListener('click',run,false);
+	document.getElementById('selector').addEventListener('change',cambiaSelector);
+}
+function limpiar(){
+	document.getElementById('textoSalida').value='';
+	//document.getElementById('textoExp').value='escribe aqui tu expresion ..';
+	document.getElementById('textoTitulo').value='';
+}
+function cambiaSelector(){
+	var ele1=document.getElementById('selector');
+	var ele2=document.getElementById('textoExp');
+	var ele3=document.getElementById('textoTitulo');	
+	if (ele1.selectedIndex==0){
+		limpiar();
+	}else{
+		ele2.value=ele1.options[ele1.selectedIndex].text;
+		ele3.value=ele1.options[ele1.selectedIndex].value;		
+	}
+}
+function clickReg(){
+	/*
+	if (document.getElementById('selector').selectedIndex==0){
+		document.getElementById('textoExp').value='';
+	}
+	*/
+}
+function cargarEjemplos(){
+	var ele2=document.getElementById('textoExp');
+	ele2.value='';
+	var ele=document.getElementById('selector');
+	//ele.addEventListener('change',cambiaSelector);
+	for (j=0;j<ejemplos.length;j=j+2){
+		var opcion=document.createElement('option');
+		opcion.value=ejemplos[j+1];
+		opcion.text=ejemplos[j];
+		ele.add(opcion);
+		//console.log(j,opcion,ele);
+	}
+}
+function cargarFichero(archivo){
+	if (!archivo) {	return;	}
+	var lector = new FileReader(); 		// objeto para leer el fichero
+	lector.onload = function(e) { 		// callback con el evento de carga del archivo
+	var contenido = e.target.result;
+	mostrarContenido(contenido);
+	//leerResultado(lector.result);	
+	};
+	lector.readAsText(archivo);
+}
+
+function leerArchivo(e) {
+	// esta funcion lee un archivo de texto local y lo deja en la variable contenido
+	cargarFichero(e.target.files[0]);
+}
+function mostrarContenido(contenido) {
+	// usar el dom para mostrar el contenido
+	//console.log('ccc:',contenido);
+	var elemento = document.getElementById('textoEntrada');
+	elemento.value=contenido; // refresca en pantalla
+	elemento.innerHTML=contenido; // necesario para el dom
+	// https://stackoverflow.com/questions/19986290/should-i-use-innerhtml-or-value-for-textarea
+}
+function leerResultado(a){	
+	// leer la entrada y procesar
+	var t=a.split('\n');
+	for (i = 0; i < t.length; i++) { 
+		var linea=t[i].split(',');
+		for (j = 0; j < linea.length; j++) { 
+			//console.log(i,j,linea[j]);
+		}   
+	}		
+}
+function run(){
+
+	// construir la expresion regular
+	var f=document.getElementById('textoExp').value.split('/');
+	//console.log(f);	
+	var er=new RegExp(f[1],f[2]); 
+	//console.log('RegExp ',er);
+	//var x=document.getElementById('textoEntrada').innerHTML.match(er);
+	//textContent no escapa las html entities
+	
+
+
+	var x=document.getElementById('textoEntrada').value.match(er);
+	//console.log(':',x,'',er,'',document.getElementById('textoEntrada').value);
+
+	//var x=er.exec(document.getElementById('textoEntrada').textContent);
+	//console.log('DDD ',document.getElementById('textoEntrada').textContent);
+	//console.log('DDD ',er,':',x);
+	var txt=0;
+	if (x!=null){txt=x.length+' \n'+x}
+	//console.log('XXX ',txt);
+	document.getElementById('textoSalida').value='encontre '+txt;	
+}
+window.onload=principal;
+</script>
+<style>
+	#textoTitulo{
+		margin-top:4px; /* separacion de la anterior linea */		
+	}
+	textarea,#textoTitulo{
+		width:614px; /* mismo que la linea anterior*/
+	}
+	select,button{
+		position: relative; /* alinear los botones verticalmente */
+    	top: -2px;
+	}
+	#botonRun{
+		position: relative;
+		top: 0px;
+	}
+</style>
+
+</head>
+ 
+<body>
+
+<h3>Archivo de entrada</h3>
+<!-- carga del archivo -->
+<input type="file" id="fileFichero" />
+
+<h3>Entrada</h3>
+<textarea id="textoEntrada"></textarea>
+
+<h3>Expresion regular</h3>
+<select id='selector'></select>
+<input id="textoExp" type="text"></input>
+<button id="botonRun">match</button>
+<input id="textoTitulo" readonly="true" type="text"></input>
+
+<h3>Salida</h3>
+<textarea id="textoSalida"></textarea>
+
+
+</body>
+</html>

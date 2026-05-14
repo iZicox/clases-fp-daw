@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>expRegulares</title>
+
+<script>
+/*
+- los array nos permiten mezclar cadenas y expreg
+- las expreg son /()/
+- match retorna un array con los resultados
+- ponermos en un array datos todos los casos de prueba
+lenguaje: pre, \n, match
+
+/^([^]+)@(\w+)\.(\w+)$/
+- que empiece y termine conteniendo
+- (grupo1)@(grupo2).(grupo3)
+- grupo1: uno o mas de cualquier caracter
+- grupo2 y 3: letters/digits/underscore
+
+
+*/
+function principal(){
+	var datos=[
+	'juan.sanchez@gmail.com',/^([^]+)@(\w+).(\w+)$/,'extraer partes de un email',
+	'2',/()/,'titulo2',
+	'3',/()/,'titulo3'
+	];
+
+	var ele=document.createElement('div');
+	ele.innerHTML='ejemplos de expresiones regulares';
+	document.body.appendChild(ele);
+	for (let j=0;j<datos.length-1;j+=3){
+		var ele=document.createElement('div');
+		var res=datos[j].match(datos[j+1]);
+		ele.innerHTML='<pre>titulo: '+datos[j+2]+'\ncadena: '+datos[j]+'\nregexp: '+datos[j+1]+'\nmatch : '+res+'</pre>';
+		document.body.appendChild(ele);
+	}
+}
+window.onload=principal;
+</script>
+
+</head>
+ 
+<body>
+</body>
+</html>
