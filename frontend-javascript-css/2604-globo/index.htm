@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script>
+        let idCirculo = 0;
         function iniciar(){
             let body = document.body;
 
@@ -19,15 +20,27 @@
 
             body.appendChild(contenedor);
 
-            let circulo = crearEle('div','',5,{
-                backgroundColor: 'red',
+            let circulo = crearCirculo();
+            contenedor.appendChild(circulo);
+
+        }
+
+        function generarColorHex () {
+            const colorAleatorio = Math.floor(Math.random() * 16777215).toString(16);
+            return `#${colorAleatorio.padStart(6, '0')}`;
+        };
+
+        function crearCirculo(){
+            
+            let circulo = crearEle('div','','c'+idCirculo,{
+                backgroundColor: `${generarColorHex()}`,
                 width: '50px',
                 height: '50px',
                 borderRadius: '100%',
                 position: 'absolute'
             });
-            contenedor.appendChild(circulo);
-
+            idCirculo++;
+            return circulo;
         }
 
 

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circulos movimiento suave</title>
+
+    <script>
+
+        // =========================================================
+        // VARIABLE GLOBAL
+        // =========================================================
+
+        // Esta variable servirá para darle un id único
+        // a cada círculo que se cree.
+        let idCirculo = 0;
+
+
+
+        // =========================================================
+        // FUNCIÓN PRINCIPAL
+        // =========================================================
+        function iniciar(){
+
+            // Referencia al body.
+            let body = document.body;
+
+
+
+            // =====================================================
+            // CONTENEDOR PADRE
+            // =====================================================
+            // position: relative es importante porque los círculos
+            // con position:absolute usarán este contenedor como
+            // referencia para moverse.
+            let contenedor = crearEle('div','',1,{
+                border: '1px solid',
+                width: '500px',
+                height: '500px',
+                position: 'relative',
+
+                // Oculta cualquier parte del círculo que pudiera
+                // salir visualmente del contenedor.
+                overflow: 'hidden'
+            });
+
+            body.appendChild(contenedor);
+
+
+
+            // Creamos el primer círculo.
+            let circulo = crearCirculo(contenedor);
+
+            // Lo agregamos al contenedor.
+            contenedor.appendChild(circulo);
+
+        }
+
+
+
+        // =========================================================
+        // GENERAR COLOR ALEATORIO HEXADECIMAL
+        // =========================================================
+        function generarColorHex () {
+
+            // Genera un número aleatorio entre 0 y 16777215.
+            // Ese rango representa todos los colores hexadecimales.
+            const colorAleatorio = Math.floor(Math.random() * 16777215).toString(16);
+
+            // padStart asegura que siempre existan 6 caracteres.
+            return `#${colorAleatorio.padStart(6, '0')}`;
+        };
+
+
+
+        // =========================================================
+        // CREAR CÍRCULO
+        // =========================================================
+        function crearCirculo(contenedor){
+
+            let circulo = crearEle('div','','c'+idCirculo,{
+
+                backgroundColor: `${generarColorHex()}`,
+
+                width: '50px',
+                height: '50px',
+
+                borderRadius: '100%',
+
+                position: 'absolute',
+
+                left: '0px',
+                top: '0px',
+
+                cursor: 'pointer',
+
+
+
+                // =================================================
+                // MOVIMIENTO SUAVE
+                // =================================================
+                // transition hace que el cambio de posición no sea
+                // instantáneo sino animado.
+                //
+                // left 0.5s:
+                // el cambio horizontal tardará 0.5 segundos.
+                //
+                // top 0.5s:
+                // el cambio vertical tardará 0.5 segundos.
+                //
+                // linear:
+                // mantiene velocidad constante durante el movimiento.
+                transition: 'left 0.5s linear, top 0.5s linear'
+            });
+
+            idCirculo++;
+
+
+
+
+            // =====================================================
+            // EVENTO CLICK
+            // =====================================================
+            // Cada círculo puede crear otro círculo.
+            // Los nuevos círculos también tendrán:
+            // - movimiento
+            // - evento click
+            circulo.addEventListener('click',function(e){
+
+                // Evita propagación del click.
+                e.stopPropagation();
+
+                // Creamos un nuevo círculo.
+                let nuevoCirculo = crearCirculo(contenedor);
+
+                // Lo agregamos al contenedor.
+                contenedor.appendChild(nuevoCirculo);
+
+            });
+
+
+
+
+            // =====================================================
+            // TIMER DE MOVIMIENTO
+            // =====================================================
+            // Cada 600ms el círculo irá a una nueva posición.
+            //
+            // IMPORTANTE:
+            // Como la transición dura 0.5s y el timer 0.6s,
+            // el círculo termina casi completamente el movimiento
+            // antes de empezar el siguiente.
+            setInterval(function(){
+
+                moverCirculo(circulo,contenedor);
+
+            },600);
+
+
+
+
+            return circulo;
+        }
+
+
+
+
+        // =========================================================
+        // MOVER CÍRCULO
+        // =========================================================
+        function moverCirculo(circulo,contenedor){
+
+            // ============================================
+            // TAMAÑOS DEL CONTENEDOR
+            // ============================================
+
+            // Ancho interno del contenedor.
+            let anchoContenedor = contenedor.clientWidth;
+
+            // Alto interno del contenedor.
+            let altoContenedor = contenedor.clientHeight;
+
+
+
+            // ============================================
+            // TAMAÑOS DEL CÍRCULO
+            // ============================================
+
+            // Ancho real del círculo.
+            let anchoCirculo = circulo.offsetWidth;
+
+            // Alto real del círculo.
+            let altoCirculo = circulo.offsetHeight;
+
+
+
+
+            // ============================================
+            // LÍMITES MÁXIMOS
+            // ============================================
+
+            // Si el contenedor mide 500px y el círculo 50px:
+            //
+            // 500 - 50 = 450
+            //
+            // Así evitamos que el círculo se salga.
+            let maxX = anchoContenedor - anchoCirculo;
+            let maxY = altoContenedor - altoCirculo;
+
+
+
+
+            // ============================================
+            // NUEVA POSICIÓN ALEATORIA
+            // ============================================
+
+            // Math.random() devuelve un número entre:
+            // 0 y 0.99999...
+            //
+            // Multiplicándolo por maxX obtenemos:
+            // 0 hasta maxX
+            //
+            // floor elimina decimales.
+            let nuevaX = Math.floor(Math.random() * maxX);
+            let nuevaY = Math.floor(Math.random() * maxY);
+
+
+
+
+            // ============================================
+            // MOVER EL CÍRCULO
+            // ============================================
+
+            // Cambiamos posición horizontal.
+            circulo.style.left = nuevaX + 'px';
+
+            // Cambiamos posición vertical.
+            circulo.style.top = nuevaY + 'px';
+
+        }
+
+
+
+
+        // =========================================================
+        // CREAR ELEMENTO HTML
+        // =========================================================
+        function crearEle(tipo,inner,id,styles){
+
+            let ele = document.createElement(tipo);
+
+            ele.innerText = inner;
+
+            ele.id = id;
+
+
+
+            // Recorremos todos los estilos del objeto.
+            for (const key in styles) {
+
+                // Aplicamos cada estilo dinámicamente.
+                ele.style[key] = styles[key];
+            }
+
+            return ele;
+        }
+
+
+
+        // Ejecutar iniciar cuando cargue la página.
+        window.onload = iniciar;
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
