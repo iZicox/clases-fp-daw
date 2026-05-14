@@ -46,6 +46,8 @@
                     e.style.backgroundColor = 'white';
                 });
 
+                document.getElementById('duracion').innerText = '0';
+
                 element.currentTarget.style.backgroundColor = 'red';
                 console.log('parar');
             });
@@ -57,12 +59,24 @@
             let duracion = divDatos();
             duracion.id = 'duracion';
 
+            let progreso = divDatos();
+            progreso.style.display = 'flex';
+            progreso.style.justifyContent = 'start';
+            progreso.style.alignContent = 'start';
+            let progresoHijo = document.createElement('div');
+            progresoHijo.style.height = '100%';
+            progresoHijo.style.width = '0%';
+            progresoHijo.style.backgroundColor = 'red';
+            progreso.id = 'progreso';
+            progreso.appendChild(progresoHijo);
+
             document.body.appendChild(track1);
             document.body.appendChild(track2);
             document.body.appendChild(track3);
             document.body.appendChild(parar);
             document.body.appendChild(timer);
             document.body.appendChild(duracion);
+            document.body.appendChild(progreso);
 
         }
 
@@ -121,6 +135,13 @@
                 let min = Math.floor(total / 60);
                 let seg = Math.floor(total % 60);
                 timer.innerText = min + ':' + seg;
+
+                let barraProgreso = document.getElementById('progreso').children[0];
+
+                let porcentaje = ( total / e.currentTarget.duration ) * 100;
+
+                barraProgreso.style.width = `${porcentaje}%`;
+
             });
 
             audio.addEventListener('ended', (e) => {
