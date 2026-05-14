@@ -1,0 +1,61 @@
+* entrega: DW1D1E-NBR-ApellidosNombre.htm
+* Tiempo: 100m
+* Acceso a internet: SI
+
+Instrucciones ==
+-Leer detenidamente este enunciado
+-Una vez comenzada la prueba no hay preguntas
+-Acceso a internet y material de clase esta permitido
+-Entregas fuera de tiempo no puntuan. Se corrige la última entrega en tiempo
+-Solo js el resto de código html será eliminado.
+
+Criterios, la prueba es un cero si ==
+A-No envia ningún fichero
+B-Envia algo diferente al fichero indicado
+C-Nombre del fichero incorrecto
+D-No hay histórico desde minuto cero, cada 10 minutos
+F-Uso de IDEs/IA no permitidos ( react, angular, chatGPT, ... )
+G-Copiar código entre compañeros es un cero para ambos
+
+Estilo ==
+
+<style>
+.z {
+	margin: 10px;
+	border: 1px solid black;
+	width: 300px;
+	padding: 10px;
+	}
+#mapid {
+	width: 600px;
+	height: 300px;
+}	
+</style>
+
+Apartados ==
+Realizar un página web siguiendo los apartados, y capturas dadas
+
+** mapa inicial al cargar la página (1 puntos)
+01- contenedor del mapa, dimensiones y posición.
+02- estilo del mapa
+03- control del zoom y niveles
+04- posición del centro del mapa
+
+** marcador al cargar la página (2 puntos)
+05- posición en el mapa
+06- icono personalizado 
+07- popup y su texto
+
+** click en los checkboxs y sus etiquetas (3 puntos)
+08- pinta y oculta circulo1
+09- pinta y oculta circulo2
+10- pinta y oculta rectangulo
+
+** dibujo de las figuras (2 puntos)
+11- circulo1: posicion, tamaño, estilo
+12- circulo2: posicion, tamaño, estilo
+13- rectangulo: posicion, tamaño, estilo
+14- popups: posicion, tamaño, estilo
+
+* coordenadas (2 punto)
+15-presentar las coordenadas al hacer click en cualquier lugar del mapa
