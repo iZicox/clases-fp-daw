@@ -122,6 +122,30 @@ on cl.countrycode = co.code
 --media del continente.
 
 
+
+SELECT co.CONTINENT,
+        count(distinct co.code) paises, count(distinct c.id) ciudades,
+        (
+          select count(distinct co2.code)
+          from COUNTRY co2
+          where co2.LIFEEXPECTANCY > (select avg(co3.LIFEEXPECTANCY) from COUNTRY co3)
+          and co2.CONTINENT = co.CONTINENT
+        ) as paises_esperanza_mayor_media_mundial,
+        (
+          select count(distinct co2.code)
+          from COUNTRY co2
+          where co2.LIFEEXPECTANCY > (
+            select avg(co3.LIFEEXPECTANCY)
+            from COUNTRY co3
+            where co3.CONTINENT = co.CONTINENT
+          )
+          and co2.CONTINENT = co.CONTINENT
+        ) as paises_esperanza_mayor_media_continente
+FROM CITY c 
+JOIN COUNTRY co ON c.COUNTRYCODE = co.CODE
+GROUP BY co.CONTINENT;
+
+
 --9. Saca por cada continente el nombre del continente, el nombre del país más grande y el
 --nombre del país más pequeño.
 
@@ -135,7 +159,7 @@ select distinct co.continent,
                  where co3.continent = co.continent
              )
              and co2.continent = co.continent
-      --       AND ROWNUM = 1
+             AND ROWNUM = 1
        ) as ciudad_mas_grande,
        (
           select co2.name
@@ -146,7 +170,7 @@ select distinct co.continent,
                  where co3.continent = co.continent
              )
              and co2.continent = co.continent
-        --     AND ROWNUM = 1
+             AND ROWNUM = 1
        ) as ciudad_mas_pequena
   from country co;
 
@@ -169,10 +193,27 @@ select distinct co.continent,
                 join COUNTRY co4 on co4.CODE = ci3.COUNTRYCODE
                 where co4.CONTINENT = co.CONTINENT
             ) and co2.CONTINENT = co.CONTINENT
-       )
+       ) as pob_ciudad_mas_grande
   from country co;
 
 --BONUS TRACK
 --11. A la consulta anterior añade un campo con el nombre de la ciudad más poblada del país
 --más grande.
 --1
+select distinct co.continent,
+       (
+            select ci2.population 
+            from CITY ci2 
+            JOIN COUNTRY co2 on co2.CODE = ci2.COUNTRYCODE
+            where co2.SURFACEAREA = (
+                SELECT max(co3.surfacearea)
+                from COUNTRY co3
+                WHERE co3.CONTINENT = co.CONTINENT
+            ) and ci2.POPULATION = (
+                select max(ci3.population)
+                from CITY ci3
+                join COUNTRY co4 on co4.CODE = ci3.COUNTRYCODE
+                where co4.CONTINENT = co.CONTINENT
+            ) and co2.CONTINENT = co.CONTINENT
+       )
+  from country co;
