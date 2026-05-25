@@ -217,6 +217,7 @@ JOIN ALUMNO_SE_MATRICULA_ASIGNATURA ama ON ama.ID_ALUMNO = p.ID
 JOIN CURSO_ESCOLAR ce ON ce.ID = ama.ID_CURSO_ESCOLAR
 WHERE p.TIPO = 'alumno'
 GROUP BY ce.ANYO_INICIO;
+
 --9.  Devuelve un listado con el número de asignaturas que imparte cada profesor. 
 --El listado debe tener en cuenta aquellos profesores que no imparten ninguna 
 --asignatura. El resultado mostrará cinco columnas: id, nombre, primer apellido, 
@@ -378,7 +379,7 @@ JOIN (
     SELECT id_alumno
     FROM alumno_se_matricula_asignatura
     GROUP BY id_alumno, id_curso_escolar
-    HAVING COUNT(id_asignatura) >= 3
+    HAVING COUNT(id_asignatura) > 3
 ) matriculados ON p.id = matriculados.id_alumno;
 --10. Devuelve el nombre y apellidos de los alumnos que se han matriculado en 
 --asignaturas de, al menos, 3 grados distintos a lo largo de toda su trayectoria. 
@@ -395,6 +396,16 @@ JOIN (
 --11. Devuelve el nombre del departamento que tenga la mayor cantidad de 
 --alumnos matriculados en asignaturas impartidas por profesores de dicho 
 --departamento. 
+SELECT 
+    d.nombre, 
+    COUNT(m.id_alumno) AS total_alumnos
+FROM departamento d
+JOIN profesor p ON d.id = p.id_departamento
+JOIN asignatura a ON p.id_profesor = a.id_profesor
+JOIN alumno_se_matricula_asignatura m ON a.id = m.id_asignatura
+GROUP BY d.id, d.nombre
+ORDER BY total_alumnos DESC
+FETCH FIRST 1 ROWS ONLY;
 
 --12. Devuelve el nombre de aquellos profesores que imparten asignaturas en 
 --todos los grados que tienen asignaturas de tipo 'básica'. 
@@ -405,6 +416,24 @@ where p.id in (
     from asignatura a 
     where a.tipo = 'básica'
 );
+
+select distinct a.ID_GRADO
+    from asignatura a 
+    where a.tipo = 'básica';
+
+select distinct p1.nombre
+from persona p1
+join profesor pf1 on pf1.ID_PROFESOR = p1.id 
+join ASIGNATURA a1 on a1.ID_PROFESOR = pf1.ID_PROFESOR
+where a1.ID_GRADO in (
+    select g.id
+    from GRADO g 
+    WHERE g.id in (
+        select distinct a.ID_GRADO
+        from asignatura a 
+        where a.tipo = 'básica'
+    )
+) and a1.tipo = 'básica';
 --13. Devuelve el nombre del grado cuya media de edad de los alumnos 
 --matriculados (considerando la fecha de nacimiento de la tabla persona) sea 
 --la menor de toda la universidad. 
