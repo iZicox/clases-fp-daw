@@ -116,21 +116,54 @@ group by a.NAME, al.TITLE;
 --8. Haz un listado de artistas, su álbum más largo y si ha venido o no alguna canción de ese
 --álbum
 --1
-SELECT al.ARTISTID, al.ALBUMID, SUM(t.MILLISECONDS)
-FROM ALBUM al 
-JOIN TRACK t ON t.ALBUMID = al.ALBUMID
-group by al.ARTISTID, al.ALBUMID order by al.ARTISTID, al.ALBUMID;
-
-SELECT *
-FROM ALBUM al2 
-JOIN TRACK t2 ON t2.ALBUMID = al2.ALBUMID
-group by al2.ALBUMID
-having sum(t2.MILLISECONDS) = (
-    
-);
+SELECT ar.Name AS Artista,
+       al.Title AS Album_Mas_Largo,
+       CASE 
+           WHEN COUNT(t.TrackId) > 0 THEN 'Sí'
+           ELSE 'No'
+       END AS Tiene_Canciones
+FROM Artist ar
+JOIN Album al 
+    ON ar.ArtistId = al.ArtistId
+JOIN (
+    SELECT AlbumId,
+           SUM(Milliseconds) AS DuracionTotal
+    FROM Track
+    GROUP BY AlbumId
+) dur 
+    ON al.AlbumId = dur.AlbumId
+LEFT JOIN Track t
+    ON al.AlbumId = t.AlbumId
+WHERE dur.DuracionTotal = (
+    SELECT MAX(SUM(t2.Milliseconds))
+    FROM Album a2
+    JOIN Track t2 
+        ON a2.AlbumId = t2.AlbumId
+    WHERE a2.ArtistId = ar.ArtistId
+    GROUP BY a2.AlbumId
+)
+GROUP BY ar.Name, al.Title
+ORDER BY ar.Name;
 --.
 --9. Sacar las listas y los álbumes que están completos dentro de una lista (sólo para álbumes de
 --más de 10 canciones). Sacar nombre de la lista, nombre del álbum, número de canciones del
 --álbum y número de canciones totales que tiene la lista.
+
 --10. Artista, álbum que más ingresos le ha generado e ingresos que le ha generado.
 --2
+with facturacion as (
+    SELECT t.AlbumId, sum(il.UNITPRICE * il.QUANTITY) as facturacion
+    FROM TRACK t 
+    JOIN INVOICELINE il ON il.TRACKID = t.TRACKID
+    group by t.ALBUMID
+
+)
+SELECT ar.name
+FROM facturacion f
+join album al ON al.ALBUMID = f.AlbumId
+join artist ar on ar.ARTISTID = al.ARTISTID
+join TRACK t2 on t2.albumid = f.albumid
+JOIN INVOICELINE il2 ON il2.TRACKID = t2.TRACKID
+group by ar.name
+order by ar.NAME, al.ALBUMID
+having sum(il2.UNITPRICE * il2.QUANTITY) = 100;
